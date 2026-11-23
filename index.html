@@ -363,7 +363,6 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
     <h3>Tabla por año</h3><p class="sub" id="h-tbl-s"></p>
     <div class="tblwrap" id="h-table"></div>
   </div>
-  <div class="note mt" id="h-notes"></div>
 </section>
 
 
@@ -513,7 +512,7 @@ $$('[data-pop]').forEach(b=>b.onclick=()=>{const k=b.dataset.pop;
 $('#sl-q').oninput=e=>{F.q=e.target.value.trim().toLowerCase();renderSL()};
 
 /* =========================== HISTÓRICO =========================== */
-const METRICS=[['pts','Puntaje oficial'],['p26','Puntaje escala 2026'],['pos','Posición'],['GP','Grand Prix'],['O','Oros'],['P','Platas'],['B','Bronces'],['SL','Shortlist'],['met','Total metales']];
+const METRICS=[['pts','Puntaje oficial'],['pos','Posición'],['GP','Grand Prix'],['O','Oros'],['P','Platas'],['B','Bronces'],['SL','Shortlist'],['met','Total metales']];
 const H={years:new Set(YEARS),ags:new Set(),metric:'pts',top:10,unify:true,touched:false};
 function histRows(){const out=[];YEARS.forEach(y=>HIST[y].forEach((r,i)=>{const [name,gp,o,p,b,sl,pts]=r;const has=gp!=null;
   out.push({year:y,name,fam:H.unify?(FAMILY[name]||name):name,pos:i+1,GP:gp,O:o,P:p,B:b,SL:sl,pts,met:has?gp+o+p+b:null,p26:has?gp*15+o*10+p*5+b*3+sl:null})}));return out}
@@ -573,7 +572,6 @@ function renderH(){
   $('#h-tbl-s').textContent=`${mlabel} por año. La última columna muestra cuántas piezas tiene cada agencia en el shortlist 2026.`;
   $('#h-table').innerHTML=`<table class="ht"><thead><tr><th>Agencia</th>${yrs.map(y=>`<th>${y}</th>`).join('')}<th>${H.metric==='pos'?'Prom.':'Total'}</th><th>Shortlist 2026</th></tr></thead><tbody>`+
     fams.map(f=>{const t=tot.find(x=>x.fam===f);return`<tr class="${H.ags.has(f)?'sel':''}"><td>${esc(f)}</td>${yrs.map(y=>{const a=agg.find(x=>x.fam===f&&x.year===y);const v=a?val(a,H.metric):null;return`<td class="${v==null?'na':''}" title="${a?esc(a.names.join(' + ')):'No aparece en el ranking publicado'}">${v==null?'—':fmt(v)}</td>`}).join('')}<td><b>${fmt(H.metric==='pos'?Math.round(t.sum*10)/10:t.sum)}</b></td><td>${sl26.get(f)||'—'}</td></tr>`}).join('')+'</tbody></table>';
-  $('#h-notes').innerHTML=`<b>Cómo leer estos datos.</b> Cada año usó su propia escala de puntos: 2019 y 2021 (GP 30, Oro 15, Plata 7, Bronce 3, SL 1), 2023 y 2024 (GP 15, Oro 15, Plata 7, Bronce 3, SL 1) y 2025 y 2026 (GP 15, Oro 10, Plata 5, Bronce 3, SL 1). “Puntaje escala 2026” recalcula los años con desglose para compararlos con la misma regla. No hay ranking cargado para 2020 ni 2022. Los rankings publicados incluyen entre 10 y 16 agencias por año.<br><br><b>Nombres unidos</b> (desactiva la casilla para verlos por separado): Paradais DDB y Paradais TBWA → Paradais; Norlop JWT, Norlop Wunderman Thompson y Norlop VML → Norlop; McCann Erickson y McCann Ecuador → McCann; Grupo Creativo Herrera / FCB&Fire y Herrera Havas → Herrera; BBDO Ecuador y Garnier BBDO Ecuador → Garnier BBDO; MullenLowe Delta y Delta Flint → Delta. “Ogilvy Ecuador / Herrera Havas” (2025) se mantiene aparte.`;
 }
 function lineChart(el,agg,yrs){
   const W=Math.max(320,el.clientWidth||800),Hh=W<600?280:340,ml=44,mr=W<600?90:140,mt=16,mb=34;

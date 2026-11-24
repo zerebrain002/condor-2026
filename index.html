@@ -6,6 +6,12 @@
 <title>Cóndor 2026</title>
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-V35CEX24ZH"></script>
+<script>
+window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}
+gtag('js',new Date());gtag('config','G-V35CEX24ZH',{send_page_view:false});
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
@@ -431,6 +437,8 @@ const YEARS=Object.keys(HIST).map(Number);
 const FAMILY={'Paradais DDB':'Paradais','Paradais TBWA':'Paradais','Maruri':'Maruri','Norlop JWT':'Norlop','Norlop Wunderman Thompson':'Norlop','Norlop VML Ecuador':'Norlop','Norlop VML':'Norlop','McCann Erickson':'McCann','McCann Ecuador':'McCann','McCann':'McCann','Draftline Ecuador':'Draftline','Draftline':'Draftline','Grupo Creativo Herrera / FCB&Fire':'Herrera','GC Herrera / FCB&Fire':'Herrera','Herrera Havas':'Herrera','Garnier BBDO Ecuador':'Garnier BBDO','BBDO Ecuador':'Garnier BBDO','Garnier':'Garnier BBDO','MullenLowe Delta':'Delta','Delta Flint':'Delta','Publicitas Saatchi & Saatchi':'Publicitas','Publicitas':'Publicitas','Límbiko':'Límbiko','Agencia Límbiko':'Límbiko','Beflamingo':'Be Flamingo'};
 
 /* =========================== UTILIDADES =========================== */
+function track(ev,params){try{if(window.gtag)gtag('event',ev,params||{})}catch(e){}}
+const TABNAME={inicio:'Inicio',shortlist:'Shortlist 2026',historico:'Histórico'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const SERIES=['--s1','--s2','--s3','--s4','--s5','--s6'].map(v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim());
@@ -478,7 +486,7 @@ const F={cat:new Set(),ag:new Set(),adv:new Set(),cmp:new Set(),q:''};
 const FLAB={cat:'Categoría',ag:'Agencia',adv:'Anunciante',cmp:'Campaña'};
 function slFiltered(skip){return SL.filter(r=>(skip==='cat'||!F.cat.size||F.cat.has(r.cat))&&(skip==='ag'||!F.ag.size||r.agencies.some(a=>F.ag.has(a)))&&(skip==='adv'||!F.adv.size||F.adv.has(r.adv))&&(skip==='cmp'||!F.cmp.size||F.cmp.has(r.cmp))&&(!F.q||(r.title+' '+r.agency+' '+r.adv+' '+r.cat).toLowerCase().includes(F.q)))}
 function medalOf(r){const m=RESULTS.find(x=>(x.id===r.id)||(x.cat===r.cat&&x.title===r.title&&x.agency===r.agency));return m&&m.metal}
-function toggleF(k,v){F[k].has(v)?F[k].delete(v):F[k].add(v);renderSL()}
+function toggleF(k,v,via){const on=!F[k].has(v);on?F[k].add(v):F[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'shortlist',dimension:FLAB[k],valor:v,origen:via||'grafico'});renderSL()}
 function renderSL(){
   const rows=slFiltered();
   const ags=new Set(rows.flatMap(r=>r.agencies)),advs=new Set(rows.map(r=>r.adv)),cmps=new Set(rows.map(r=>r.cmp)),cats=new Set(rows.map(r=>r.cat));
@@ -504,14 +512,14 @@ function renderSL(){
     html+=`<div class="catblock"><div class="cathead"><span class="dot" style="background:${col}"></span><h4>${esc(cat)}</h4><span class="n">${rr.length} en shortlist</span></div><table class="sl"><tbody>`+
     rr.map(r=>{const m=medalOf(r);return`<tr><td>${r.agencies.map(a=>`<span class="lk" data-k="ag" data-v="${esc(a)}">${esc(a)}</span>`).join(' / ')}</td><td><span class="lk" data-k="adv" data-v="${esc(r.adv)}">${esc(r.adv)}</span></td><td><span class="lk" data-k="cmp" data-v="${esc(r.cmp)}">${esc(r.title)}</span>${m?`<span class="medal" style="background:${MCOL[m]}">${MNAME[m]}</span>`:''}</td></tr>`}).join('')+'</tbody></table></div>'});
   $('#sl-list').innerHTML=html||'<p class="hint">Ninguna pieza coincide con los filtros.</p>';
-  $$('#sl-list .lk').forEach(s=>s.onclick=()=>{F[s.dataset.k].add(s.dataset.v);renderSL();$('#v-shortlist .filters').scrollIntoView({behavior:'smooth'})});
+  $$('#sl-list .lk').forEach(s=>s.onclick=()=>{F[s.dataset.k].add(s.dataset.v);track('filtro_agregar',{seccion:'shortlist',dimension:FLAB[s.dataset.k],valor:s.dataset.v,origen:'lista'});renderSL();$('#v-shortlist .filters').scrollIntoView({behavior:'smooth'})});
 }
 $$('[data-pop]').forEach(b=>b.onclick=()=>{const k=b.dataset.pop;
   const opts=countBy(slFiltered(k),r=>k==='cat'?r.cat:k==='ag'?r.agencies:k==='adv'?r.adv:r.cmp).map(d=>({key:d.key,label:d.label,count:d.value}));
   if(k==='cat')opts.sort((a,b)=>CATS.findIndex(c=>c[0]===a.key)-CATS.findIndex(c=>c[0]===b.key));
   F[k].forEach(v=>{if(!opts.find(o=>o.key===v))opts.unshift({key:v,label:v,count:0})});
-  popover(b,opts,F[k],(v,on)=>{on?F[k].add(v):F[k].delete(v);renderSL()})});
-$('#sl-q').oninput=e=>{F.q=e.target.value.trim().toLowerCase();renderSL()};
+  popover(b,opts,F[k],(v,on)=>{on?F[k].add(v):F[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'shortlist',dimension:FLAB[k],valor:v,origen:'menu'});renderSL()})});
+let qT;$('#sl-q').oninput=e=>{F.q=e.target.value.trim().toLowerCase();renderSL();clearTimeout(qT);if(F.q)qT=setTimeout(()=>track('busqueda',{seccion:'shortlist',termino:F.q}),1200)};
 
 /* =========================== HISTÓRICO =========================== */
 const METRICS=[['pts','Puntaje oficial'],['pos','Posición'],['GP','Grand Prix'],['O','Oros'],['P','Platas'],['B','Bronces'],['SL','Shortlist'],['met','Total metales']];
@@ -542,9 +550,9 @@ function renderH(){
   $('#h-aoy').innerHTML=YEARS.map(y=>{const r=HIST[y][0],lg=AOYLOGO[r[0]];return`<div><div class="y">${y}</div>${lg?`<div class="lg"><img src="${lg}" alt="${esc(r[0])}"></div>`:`<div class="a">${esc(r[0])}</div>`}<div class="p">${r[6]} puntos</div></div>`}).join('');
   // controles
   $('#h-metric').innerHTML=METRICS.map(([k,l])=>`<button class="${H.metric===k?'on':''}" data-m="${k}">${l}</button>`).join('');
-  $$('#h-metric button').forEach(b=>b.onclick=()=>{H.metric=b.dataset.m;renderH()});
+  $$('#h-metric button').forEach(b=>b.onclick=()=>{H.metric=b.dataset.m;track('metrica_cambiar',{seccion:'historico',metrica:b.textContent});renderH()});
   $('#h-top').innerHTML=[[5,'Top 5'],[10,'Top 10'],[99,'Todas']].map(([k,l])=>`<button class="${H.top===k?'on':''}" data-t="${k}">${l}</button>`).join('');
-  $$('#h-top button').forEach(b=>b.onclick=()=>{H.top=+b.dataset.t;renderH()});
+  $$('#h-top button').forEach(b=>b.onclick=()=>{H.top=+b.dataset.t;track('top_cambiar',{seccion:'historico',top:b.textContent});renderH()});
   // chips
   const chips=[];
   if(H.years.size!==YEARS.length)yrs.forEach(y=>chips.push(`<span class="chip c-yr"><span class="k">Año:</span> ${y} <button data-y="${y}">×</button></span>`));
@@ -563,11 +571,11 @@ function renderH(){
   const shown=tot.slice(0,H.top);
   $('#h-bar-t').textContent=H.metric==='pos'?'Posición promedio':'Acumulado · '+mlabel;
   $('#h-bar-s').textContent=`Años: ${yrs.join(', ')}. ${H.metric==='pos'?'Promedio de posiciones en los años en que aparece (menor es mejor).':'Suma de los años seleccionados.'} Toca una barra para sumarla o quitarla del gráfico de evolución.`;
-  bars($('#h-bars'),shown.map(t=>({key:t.fam,label:t.fam,value:H.metric==='pos'?Math.round(t.sum*10)/10:t.sum,n:t.n,color:H.ags.has(t.fam)?colorFor(t.fam):'#B9ABA3'})),{limit:99,selected:H.ags,onClick:d=>{H.touched=true;if(H.ags.has(d.key))H.ags.delete(d.key);else if(H.ags.size<6)H.ags.add(d.key);else{showToast('Máximo 6 agencias en el gráfico de evolución');return}renderH()},tipFn:d=>`<b>${esc(d.label)}</b><br>${mlabel}: ${fmt(d.value)}<br>Aparece en ${d.n} de ${yrs.length} años seleccionados`});
+  bars($('#h-bars'),shown.map(t=>({key:t.fam,label:t.fam,value:H.metric==='pos'?Math.round(t.sum*10)/10:t.sum,n:t.n,color:H.ags.has(t.fam)?colorFor(t.fam):'#B9ABA3'})),{limit:99,selected:H.ags,onClick:d=>{H.touched=true;track(H.ags.has(d.key)?'agencia_quitar':'agencia_agregar',{seccion:'historico',agencia:d.key,origen:'grafico'});if(H.ags.has(d.key))H.ags.delete(d.key);else if(H.ags.size<6)H.ags.add(d.key);else{showToast('Máximo 6 agencias en el gráfico de evolución');return}renderH()},tipFn:d=>`<b>${esc(d.label)}</b><br>${mlabel}: ${fmt(d.value)}<br>Aparece en ${d.n} de ${yrs.length} años seleccionados`});
   // medallero
   $('#h-mleg').innerHTML=['GP','O','P','B'].map(k=>`<span><i style="background:${MCOL[k]};height:10px;width:10px"></i>${MNAME[k]}</span>`).join('');
   const med=[...tot].map(t=>({key:t.fam,label:t.fam,value:t.GP+t.O+t.P+t.B,segs:['GP','O','P','B'].map(k=>({v:t[k],c:MCOL[k]})),t})).filter(d=>d.value>0||d.t.SL>0).sort((a,b)=>b.t.GP-a.t.GP||b.t.O-a.t.O||b.t.P-a.t.P||b.t.B-a.t.B).slice(0,H.top);
-  bars($('#h-medals'),med,{limit:99,selected:H.ags,tipFn:d=>`<b>${esc(d.label)}</b><br>${['GP','O','P','B','SL'].map(k=>`<span class="sw" style="background:${MCOL[k]}"></span>${MNAME[k]}: ${d.t[k]}`).join('<br>')}`,onClick:d=>{H.touched=true;if(H.ags.has(d.key))H.ags.delete(d.key);else if(H.ags.size<6)H.ags.add(d.key);renderH()}});
+  bars($('#h-medals'),med,{limit:99,selected:H.ags,tipFn:d=>`<b>${esc(d.label)}</b><br>${['GP','O','P','B','SL'].map(k=>`<span class="sw" style="background:${MCOL[k]}"></span>${MNAME[k]}: ${d.t[k]}`).join('<br>')}`,onClick:d=>{H.touched=true;track(H.ags.has(d.key)?'agencia_quitar':'agencia_agregar',{seccion:'historico',agencia:d.key,origen:'grafico'});if(H.ags.has(d.key))H.ags.delete(d.key);else if(H.ags.size<6)H.ags.add(d.key);renderH()}});
   // tabla
   const sl26=new Map();SL.forEach(r=>r.agencies.forEach(a=>{const f=H.unify?(FAMILY[a]||a):a;sl26.set(f,(sl26.get(f)||0)+1)}));
   const fams=tot.slice(0,H.top).map(t=>t.fam);
@@ -608,13 +616,13 @@ function lineChart(el,agg,yrs){
     r.onmouseleave=()=>{xh.setAttribute('opacity',0);hideTip()}});
 }
 $$('[data-hpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.hpop;
-  if(k==='yr')popover(b,YEARS.map(y=>({key:String(y),label:String(y),count:HIST[y].length+' agencias'})),new Set([...H.years].map(String)),(v,on)=>{if(on)H.years.add(+v);else if(H.years.size>1)H.years.delete(+v);renderH()});
-  else{const tot=famTotals(aggregate(histRows()));popover(b,tot.map(t=>({key:t.fam,label:t.fam,count:t.n+' años'})),H.ags,(v,on)=>{H.touched=true;if(on){if(H.ags.size>=6){showToast('Máximo 6 agencias en el gráfico de evolución');closePop();return}H.ags.add(v)}else H.ags.delete(v);renderH()})}});
-$('#h-unify').onchange=e=>{H.unify=e.target.checked;H.touched=false;colorOf.clear();renderH()};
+  if(k==='yr')popover(b,YEARS.map(y=>({key:String(y),label:String(y),count:HIST[y].length+' agencias'})),new Set([...H.years].map(String)),(v,on)=>{track(on?'anio_agregar':'anio_quitar',{seccion:'historico',anio:v});if(on)H.years.add(+v);else if(H.years.size>1)H.years.delete(+v);renderH()});
+  else{const tot=famTotals(aggregate(histRows()));popover(b,tot.map(t=>({key:t.fam,label:t.fam,count:t.n+' años'})),H.ags,(v,on)=>{H.touched=true;track(on?'agencia_agregar':'agencia_quitar',{seccion:'historico',agencia:v,origen:'menu'});if(on){if(H.ags.size>=6){showToast('Máximo 6 agencias en el gráfico de evolución');closePop();return}H.ags.add(v)}else H.ags.delete(v);renderH()})}});
+$('#h-unify').onchange=e=>{H.unify=e.target.checked;track('unir_nombres',{seccion:'historico',activo:H.unify?'si':'no'});H.touched=false;colorOf.clear();renderH()};
 function showToast(t){const d=document.createElement('div');d.className='tip';d.style.cssText='display:block;left:50%;bottom:24px;top:auto;transform:translateX(-50%)';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
 
 /* =========================== NAVEGACIÓN =========================== */
-function route(){const v=(location.hash||'#inicio').slice(1);const ok=['inicio','shortlist','historico'].includes(v)?v:'inicio';
+let lastView='';function route(){const v=(location.hash||'#inicio').slice(1);const ok=['inicio','shortlist','historico'].includes(v)?v:'inicio';if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
   $$('section.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+ok));document.body.classList.toggle('on-inicio',ok==='inicio');$$('nav.tabs a').forEach(a=>a.classList.toggle('on',a.dataset.v===ok));
   if(ok==='historico')renderH();closePop();hideTip();if(ok!=='inicio')scrollTo(0,0)}
 addEventListener('hashchange',route);

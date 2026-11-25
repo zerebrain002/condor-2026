@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cóndor 2026 · Pruebas</title>
+<link rel="icon" type="image/png" href="img/favicon.png">
+<link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:wght@400;500;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme: light;
+  --mg:20px;
+  --bg:#F2EDE8; --card:#FBF8F5; --ink:#2B140F; --ink2:#5E4A44; --muted:#8C7B75;
+  --line:#DCD2CB; --grid:#E6DED8;
+  --orange:#FF4D00; --red:#EE0A16; --yellow:#EDBF00; --blue:#0A36C8; --green:#05A812; --sand:#EDD9A5;
+  --gp:#2B140F; --oro:#C99A00; --plata:#8E969E; --bronce:#A9612C; --sl:#D9CBBF;
+  --s1:#2F5BE0; --s2:#FF5A0A; --s3:#0E9F45; --s4:#C2185B; --s5:#D9A400; --s6:#7A4FD0;
+  --bar:#0A36C8;
+  --r:14px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:Barlow,system-ui,sans-serif;font-size:16px;line-height:1.45}
+button,input,select{font:inherit;color:inherit}
+a{color:var(--blue)}
+.stripe{display:flex;height:8px}.stripe i{flex:1}
+.wrap{max-width:1180px;margin:0 auto;padding:0 20px}
+header.top{padding:22px 0 0}
+.brand{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand img.logo{height:74px;width:auto}
+.brand .tt{flex:1;min-width:240px}
+.display{font-family:Anton,Impact,sans-serif;font-weight:400;letter-spacing:.2px;text-transform:uppercase;line-height:1.18;padding-top:.08em}
+.kicker+.display,.kicker+h2{margin-top:6px}
+h1.display{font-size:clamp(34px,5.4vw,58px);margin:4px 0 2px}
+.kicker{font-size:13px;letter-spacing:2.4px;text-transform:uppercase;font-weight:700;color:var(--ink2)}
+.zb{font-family:Poppins,sans-serif;font-weight:500;color:var(--ink2);font-size:14px}
+.zb b{font-weight:700;background:linear-gradient(90deg,#E08A50,#DB4739);-webkit-background-clip:text;background-clip:text;color:transparent}
+nav.tabs{display:flex;gap:6px;margin:22px 0 0;border-bottom:3px solid var(--ink);overflow-x:auto}
+nav.tabs a{font-family:Anton,sans-serif;text-transform:uppercase;font-size:19px;line-height:1.25;text-decoration:none;color:var(--ink2);padding:10px 16px 8px;border-radius:10px 10px 0 0;white-space:nowrap}
+nav.tabs a.on{background:var(--ink);color:#fff}
+section.view{display:none;padding:26px 0 40px}
+section.view.on{display:block}
+.hero{display:grid;grid-template-columns:1fr;gap:20px;align-items:center;margin-bottom:22px}
+.hero h2{font-size:clamp(28px,4vw,44px);margin:0 0 8px}
+.hero p{margin:0;color:var(--ink2);max-width:60ch}
+.hero .art{position:relative;height:190px}
+.hero .art img{position:absolute;right:0;bottom:0;max-height:190px;max-width:100%}
+.kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin:0 0 22px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px 16px}
+.kpi .v{font-family:Anton,sans-serif;font-size:38px;line-height:1}
+.kpi .l{font-size:13px;color:var(--ink2);margin-top:4px}
+.kpi:nth-child(1){border-top:5px solid var(--yellow)}.kpi:nth-child(2){border-top:5px solid var(--orange)}.kpi:nth-child(3){border-top:5px solid var(--blue)}.kpi:nth-child(4){border-top:5px solid var(--red)}.kpi:nth-child(5){border-top:5px solid var(--ink)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.card h3{font-family:Anton,sans-serif;text-transform:uppercase;font-weight:400;font-size:22px;line-height:1.2;margin:0 0 4px}
+.card .sub{font-size:13px;color:var(--muted);margin:0 0 12px}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px}
+.mt{margin-top:16px}
+/* filters */
+.filters{position:sticky;top:0;z-index:5;background:var(--bg);padding:10px 0 12px;border-bottom:1px solid var(--line);margin-bottom:16px}
+.frow{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.fbtn{background:#fff;border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;font-weight:600;font-size:14px;cursor:pointer;display:inline-flex;gap:6px;align-items:center}
+.fbtn:hover{background:var(--sand)}
+.fbtn.on{background:var(--ink);color:#fff}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;min-height:30px;align-items:center}
+.chip{display:inline-flex;align-items:center;gap:6px;background:var(--ink);color:#fff;border-radius:999px;padding:4px 6px 4px 12px;font-size:13px;font-weight:600}
+.chip .k{opacity:.65;font-weight:500}
+.chip button{background:rgba(255,255,255,.18);border:0;border-radius:999px;width:22px;height:22px;cursor:pointer;color:#fff;line-height:1}
+.chip.c-yr{background:var(--blue)}.chip.c-ag{background:var(--orange)}.chip.c-cat{background:var(--red)}.chip.c-adv{background:#7A4FD0}.chip.c-cmp{background:#0E7A3A}
+.hint{font-size:13px;color:var(--muted)}
+.clear{background:none;border:0;color:var(--red);font-weight:700;cursor:pointer;font-size:13px}
+.search{border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;background:#fff;min-width:200px;font-size:14px}
+.seg{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden;background:#fff;flex-wrap:wrap}
+.seg button{border:0;background:none;padding:6px 12px;font-size:13px;font-weight:600;cursor:pointer}
+.seg button.on{background:var(--ink);color:#fff}
+/* popover */
+.pop{position:absolute;z-index:30;background:#fff;border:1.5px solid var(--ink);border-radius:12px;box-shadow:0 10px 30px rgba(43,20,15,.18);padding:8px;width:300px;max-height:360px;display:flex;flex-direction:column}
+.pop input{border:1px solid var(--line);border-radius:8px;padding:7px 10px;margin-bottom:6px}
+.pop .lst{overflow:auto}
+.pop label{display:flex;gap:8px;align-items:center;padding:5px 6px;border-radius:6px;cursor:pointer;font-size:14px}
+.pop label:hover{background:var(--bg)}
+.pop .cnt{margin-left:auto;color:var(--muted);font-size:12px}
+/* bars */
+.bars{display:flex;flex-direction:column;gap:6px}
+.brow{display:grid;grid-template-columns:minmax(110px,170px) 1fr 44px;gap:10px;align-items:center;cursor:pointer;padding:2px 4px;border-radius:6px}
+.brow:hover{background:rgba(43,20,15,.05)}
+.brow.sel .bl{font-weight:700}
+.brow .bl{font-size:14px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brow .bt{height:16px;position:relative}
+.brow .bf{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--bar);min-width:2px}
+.brow .bv{font-weight:700;font-size:14px;text-align:right;font-variant-numeric:tabular-nums}
+.stack{display:flex;height:16px;gap:2px}
+.stack span{display:block;height:100%}
+.stack span:last-child{border-radius:0 4px 4px 0}
+.more{background:none;border:0;color:var(--blue);font-weight:700;cursor:pointer;margin-top:8px;padding:0}
+/* list */
+.catblock{margin-top:18px}
+.cathead{display:flex;align-items:center;gap:10px;border-bottom:2px solid var(--ink);padding-bottom:4px}
+.cathead .dot{width:14px;height:14px;border-radius:50%}
+.cathead h4{font-family:Anton,sans-serif;font-weight:400;text-transform:uppercase;font-size:24px;line-height:1.2;margin:0;flex:1}
+.cathead .n{font-size:13px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase}
+table.sl{width:100%;border-collapse:collapse;font-size:15px}
+table.sl td{padding:8px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+table.sl td:first-child{font-weight:700;width:28%}
+table.sl td:nth-child(2){color:var(--ink2);width:30%}
+table.sl tr:hover td{background:rgba(237,217,165,.35)}
+.lk{cursor:pointer;text-decoration:underline dotted;text-underline-offset:3px}
+.medal{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:1px 8px;margin-left:6px;color:#fff;vertical-align:middle}
+/* line chart */
+.chartbox{position:relative;width:100%}
+.chartbox svg{display:block;width:100%;height:auto;overflow:visible}
+.tip{position:fixed;pointer-events:none;z-index:50;background:var(--ink);color:#fff;border-radius:10px;padding:8px 10px;font-size:13px;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.25);max-width:260px;display:none}
+.tip b{font-weight:700}
+.tip .sw{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:6px;vertical-align:middle}
+.legend{display:flex;flex-wrap:wrap;gap:12px;font-size:13px;margin:4px 0 8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:4px;border-radius:2px;display:inline-block}
+/* hist table */
+.tblwrap{overflow:auto}
+table.ht{border-collapse:collapse;font-size:14px;min-width:100%}
+table.ht th,table.ht td{padding:7px 10px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+table.ht th{font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--ink2);border-bottom:2px solid var(--ink);position:sticky;top:0;background:var(--card)}
+table.ht td:first-child,table.ht th:first-child{text-align:left}
+table.ht tr.sel td{background:rgba(237,191,0,.18)}
+table.ht td.na{color:var(--muted)}
+.aoy{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.aoy div{background:var(--ink);color:#fff;border-radius:12px;padding:12px}
+.aoy .y{font-family:Anton,sans-serif;font-size:26px;line-height:1;color:var(--yellow)}
+.aoy .a{font-weight:700;margin-top:4px}
+.aoy .p{font-size:13px;opacity:.75}
+.aoy .lg{height:58px;margin:8px 0 6px;display:flex;align-items:center;justify-content:flex-start;padding:4px 0}
+.aoy .lg img{max-height:100%;max-width:100%;object-fit:contain}
+.note{font-size:13px;color:var(--ink2);background:#fff;border-left:4px solid var(--yellow);padding:10px 12px;border-radius:0 8px 8px 0}
+/* polla */
+.pgrid{display:grid;grid-template-columns:1fr 360px;gap:18px;align-items:start}
+.side{position:sticky;top:12px;display:flex;flex-direction:column;gap:14px}
+.ag{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin-bottom:10px}
+.ag .h{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.ag .h b{font-family:Anton,sans-serif;font-weight:400;font-size:22px;line-height:1.2;text-transform:uppercase}
+.ag .h .s{font-size:13px;color:var(--muted)}
+.ag .h .pp{margin-left:auto;font-family:Anton,sans-serif;font-size:24px}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+.st{border-radius:10px;border:1.5px solid var(--line);background:#fff;padding:6px 8px;text-align:center}
+.st .lab{font-size:12px;font-weight:700;letter-spacing:1px;text-transform:uppercase}
+.st .ctl{display:flex;align-items:center;justify-content:space-between;margin-top:4px}
+.st button{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;font-weight:700;font-size:18px;cursor:pointer;line-height:1}
+.st button:disabled{opacity:.3;cursor:default}
+.st .num{font-family:Anton,sans-serif;font-size:24px}
+.st.gp{border-color:var(--gp)}.st.o{border-color:var(--oro)}.st.p{border-color:var(--plata)}.st.b{border-color:var(--bronce)}
+.ag .slleft{font-size:12px;color:var(--muted);margin-top:6px}
+.rank li{display:flex;justify-content:space-between;padding:5px 0;border-bottom:1px dashed var(--line)}
+.rank{list-style:none;margin:0;padding:0;counter-reset:r}
+.rank li::before{counter-increment:r;content:counter(r);font-family:Anton,sans-serif;width:26px;color:var(--orange)}
+.rank li span:first-of-type{flex:1}
+.form label{display:block;font-size:13px;font-weight:700;margin:8px 0 3px}
+.form input,.form select{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:8px 10px;background:#fff}
+.form .chk{display:flex;gap:8px;align-items:flex-start;font-weight:500;font-size:13px}
+.form .chk input{width:auto;margin-top:3px}
+.cta{display:block;width:100%;border:0;border-radius:999px;padding:12px 16px;line-height:1.25;font-family:Anton,sans-serif;text-transform:uppercase;font-size:19px;cursor:pointer;margin-top:10px}
+.cta.main{background:var(--orange);color:#fff}
+.cta.sec{background:var(--ink);color:#fff}
+.cta.ghost{background:#fff;border:1.5px solid var(--ink);color:var(--ink)}
+.cta:disabled{opacity:.4;cursor:default}
+.msg{font-size:14px;margin-top:8px}
+.msg.ok{color:#0E7A3A}.msg.err{color:var(--red)}
+.ticket{background:var(--ink);color:#fff;border-radius:var(--r);padding:16px;position:relative;overflow:hidden}
+.ticket .big{font-family:Anton,sans-serif;font-size:44px;line-height:1.15;padding-top:4px;color:var(--yellow)}
+.ticket .code{font-family:ui-monospace,monospace;background:rgba(255,255,255,.12);padding:3px 8px;border-radius:6px}
+/* portada */
+.intro{display:grid;grid-template-columns:1fr;gap:24px;align-items:center;margin:6px 0 26px}
+.intro h2{font-size:clamp(34px,5vw,60px);margin:0 0 10px}
+.intro p{color:var(--ink2);max-width:52ch;margin:0}
+.intro img{width:100%;max-height:300px;object-fit:contain}
+.home{display:grid;grid-template-columns:1.05fr 1fr;gap:36px;align-items:start;margin-top:8px}
+.home .intro{margin:0}
+.home .intro h2{font-size:clamp(46px,5.6vw,84px);line-height:1.12}
+.doors{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:1fr;gap:12px;min-height:0}
+.doors .door:nth-child(3){grid-column:1 / -1}
+.doors .door:nth-child(3) p{display:block;grid-column:1;margin:0;font-size:14px;color:var(--ink2)}
+.doors .door:nth-child(-n+2){grid-template-columns:1fr}
+.doors .door:nth-child(-n+2) .facts{grid-column:1;grid-row:auto}
+.doors .door p{display:block!important;grid-column:1;margin:0;font-size:14px;color:var(--ink2)}
+.doors .door{align-content:space-between}
+.doors .door{display:grid;grid-template-columns:1fr auto;align-items:center;gap:2px 16px;padding:14px 18px 10px}
+.doors .door .kicker{grid-column:1;font-size:11px}
+.doors .door h3{grid-column:1;margin:0;font-size:26px}
+.doors .door p{display:none}
+.doors .door .facts{grid-column:2;grid-row:1 / span 3;gap:14px}
+.doors .door .facts b{font-size:24px}
+.doors .door .facts{flex-wrap:nowrap}
+.doors .door .facts div{font-size:12px}
+.doors .door{overflow:hidden}
+.doors .door .go{grid-column:1;margin-top:2px;font-size:15px}
+.door{display:block;text-decoration:none;color:var(--ink);background:var(--card);border:1.5px solid var(--ink);border-radius:18px;padding:20px;position:relative;overflow:hidden;transition:transform .15s}
+.door:hover{transform:translateY(-3px)}
+.door .bar{position:absolute;left:0;top:0;right:0;height:8px}
+.door h3{font-family:Anton,sans-serif;font-weight:400;text-transform:uppercase;font-size:30px;line-height:1.2;margin:8px 0 6px}
+.door p{margin:0 0 14px;color:var(--ink2);font-size:15px}
+.door .facts{display:flex;gap:16px;flex-wrap:wrap}
+.door .facts div{font-size:13px;color:var(--ink2)}
+.door .facts b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:30px;line-height:1.15;color:var(--ink)}
+.door .go{margin-top:14px;font-family:Anton,sans-serif;text-transform:uppercase;font-size:18px;color:var(--orange)}
+@media (max-width:900px){.home{grid-template-columns:1fr}.home .intro{position:static}}
+.condorbg{display:none}
+@media (min-width:1100px){
+  .wrap{max-width:min(1180px,calc(100vw - 320px))}
+  :root{--mg:calc((100vw - min(1180px, 100vw - 320px)) / 2 + 20px)}
+  .condorbg{display:block;position:fixed;left:calc((100vw - min(1180px, 100vw - 320px)) / 2 - 290px);bottom:-20px;width:270px;height:372px;pointer-events:none;z-index:0;
+    background:url(img/condor1.png) right bottom/contain no-repeat}
+  main,header.top,footer{position:relative;z-index:2}
+}
+.partner{margin-left:auto;text-align:right}
+.partner .kicker{font-size:10px;letter-spacing:2px;color:var(--muted)}
+.partner img{height:30px;opacity:.85;margin-top:6px;display:block;margin-left:auto}
+@media (max-width:700px){.partner{margin-left:0;text-align:left}.partner img{margin-left:0;height:36px}}
+.hkick{font-family:Anton,sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:4px;font-size:clamp(18px,2.2vw,26px);line-height:1.3;margin:0;color:var(--ink2)}
+/* portada v2 */
+.home2{display:grid;grid-template-columns:minmax(220px,30%) 1fr;grid-template-areas:"t t" "c k";column-gap:40px;row-gap:22px;margin-top:6px}
+.h-title{grid-area:t}
+.h-title h2{font-size:clamp(44px,6vw,84px);margin:0}
+.h-sub{display:flex;align-items:center;gap:10px;font-weight:600;color:var(--ink2);letter-spacing:1px;text-transform:uppercase;font-size:14px;margin-top:4px}
+.h-sub img{height:24px}
+.h-condor{grid-area:c;position:relative;overflow:hidden;margin-left:calc(-1 * var(--mg))}
+.h-condor img{position:absolute;right:0;top:0;width:calc(100% + 60px);height:auto;max-width:none}
+.h-cards{grid-area:k;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.door2{display:block;position:relative;overflow:hidden;text-decoration:none;color:var(--ink);background:var(--card);border:1.5px solid var(--ink);border-radius:18px;padding:18px 18px 14px;transition:transform .15s}
+.door2:hover{transform:translateY(-3px)}
+.door2 .bar{position:absolute;left:0;top:0;right:0;height:8px}
+.door2 .kicker{margin-top:4px;font-size:11px}
+.door2 h3{font-family:Anton,sans-serif;font-weight:400;text-transform:uppercase;font-size:30px;line-height:1.2;margin:4px 0 2px}
+.door2 p{margin:0;color:var(--ink2);font-size:14px}
+.door2 p b{color:var(--ink)}
+.door2 .thumb{margin:12px 0 8px}
+.door2 .thumb svg{display:block;width:100%;height:auto}
+.door2 .go{font-family:Anton,sans-serif;text-transform:uppercase;font-size:16px;color:var(--orange)}
+.door2.wide{grid-column:1 / -1;display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px 20px}
+.door2.wide .go{grid-column:1 / -1}
+.medals{display:flex;gap:8px;flex-wrap:wrap}
+.medals span{color:#fff;border-radius:12px;padding:8px 12px;font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;text-align:center}
+.medals b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:24px;line-height:1.15;letter-spacing:0}
+body{overflow-x:hidden}
+@media (max-width:900px){.home2{grid-template-columns:1fr;grid-template-areas:"t" "k"}.h-condor{display:none}.h-cards{grid-template-columns:1fr}.door2.wide{grid-template-columns:1fr}}
+.htitle{font-size:clamp(26px,3.4vw,42px)!important;margin:0!important}
+/* en vivo */
+.livedot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle;animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(238,10,22,.55)}70%{box-shadow:0 0 0 9px rgba(238,10,22,0)}100%{box-shadow:0 0 0 0 rgba(238,10,22,0)}}
+.livedot.off{background:var(--muted);animation:none}
+.livehead{display:grid;grid-template-columns:1fr 1.1fr;gap:20px;align-items:center;margin-bottom:18px}
+.livehead h2{font-size:clamp(34px,4.6vw,56px);margin:4px 0 2px}
+.lastaward{background:var(--ink);color:#fff;border-radius:18px;padding:16px 18px;min-height:120px}
+.lastaward .k{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--sand);font-weight:700}
+.lastaward .t{font-family:Anton,sans-serif;font-size:30px;line-height:1.2;margin:6px 0 2px}
+.lastaward .m{font-size:14px;opacity:.85}
+.feed{display:flex;flex-direction:column;gap:8px;max-height:640px;overflow:auto;padding-right:4px}
+.win{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;border-bottom:1px solid var(--line);padding:8px 2px}
+.win .mb{border-radius:999px;color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;min-width:64px;text-align:center}
+.win .tt{font-weight:700}
+.win .ds{grid-column:2;font-size:13px;color:var(--ink2)}
+.win .hr{font-size:12px;color:var(--muted);grid-row:1 / span 2;grid-column:3}
+.win.new{animation:flash 2.4s ease-out}
+@keyframes flash{0%{background:rgba(237,191,0,.55)}100%{background:transparent}}
+@media (max-width:900px){.livehead{grid-template-columns:1fr}}
+footer{border-top:3px solid var(--ink);padding:18px 0 40px;font-size:14px;color:var(--ink2)}
+footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media (max-width:900px){
+  .hero{grid-template-columns:1fr}.hero .art{height:140px}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .grid2,.grid3,.pgrid{grid-template-columns:1fr}
+  .side{position:static}
+  .aoy{grid-template-columns:repeat(2,1fr)}
+  table.sl td:first-child{width:auto}
+}
+@media (max-width:600px){.hero .art{display:none}.brand img.logo{height:56px}.kpi .v{font-size:30px}.steps{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+<div class="stripe"><i style="background:var(--yellow)"></i><i style="background:var(--orange)"></i><i style="background:var(--blue)"></i><i style="background:var(--red)"></i><i style="background:var(--ink)"></i></div>
+<header class="top wrap">
+  <div class="brand">
+    <img class="logo" src="img/logo.png" alt="Cóndor 2026">
+    <div class="tt">
+      <h1 class="display htitle">El festival oficial<br>de la publicidad ecuatoriana</h1>
+    </div>
+    <div class="partner"><div class="kicker">Partner tecnológico</div><img src="img/zerebralab_mono.png" alt="Zerebralab"></div>
+  </div>
+  <nav class="tabs" role="tablist">
+    <a href="#inicio" data-v="inicio">Inicio</a>
+    <a href="#envivo" data-v="envivo"><span class="livedot"></span>En vivo</a>
+    <a href="#shortlist" data-v="shortlist">Shortlist 2026</a>
+    <a href="#historico" data-v="historico">Histórico</a>
+  </nav>
+</header>
+
+<main class="wrap">
+<!-- INICIO -->
+<section class="view" id="v-inicio">
+  <div class="home">
+  <div class="intro">
+    <div>
+      <div class="kicker">Gala Cóndor 2026</div>
+      <h2 class="display">Explora el Cóndor antes de la gala</h2>
+      <p>Revisa quién llega con más piezas al shortlist, compara cómo se movió el ranking de agencias desde 2019 y quién llega con más fuerza a la gala.</p>
+    </div>
+  </div>
+  <div class="doors">
+    <a class="door" href="#shortlist"><span class="bar" style="background:var(--orange)"></span><div class="kicker">2026</div><h3>Shortlist</h3><p>Agencias, campañas y categorías con más presencia.</p><div class="facts" id="d-sl"></div><div class="go">Ver estadísticas →</div></a>
+    <a class="door" href="#historico"><span class="bar" style="background:var(--blue)"></span><div class="kicker">2019 → 2025</div><h3>Histórico</h3><p>Rankings oficiales y agencia del año.</p><div class="facts" id="d-h"></div><div class="go">Comparar años →</div></a>
+  </div>
+  </div>
+</section>
+
+<!-- EN VIVO -->
+<section class="view" id="v-envivo">
+  <div class="note" id="lv-test" style="display:none;margin-bottom:14px"><b>Datos de prueba.</b> Estos premios no son reales; sirven para ensayar la carga en vivo.</div>
+  <div class="livehead">
+    <div>
+      <div class="kicker"><span class="livedot"></span><span id="lv-status">En vivo</span></div>
+      <h2 class="display">Premios Cóndor 2026</h2>
+      <p class="hint" id="lv-upd"></p>
+    </div>
+    <div class="lastaward" id="lv-last"></div>
+  </div>
+  <div class="kpis" id="lv-kpis"></div>
+  <div class="filters">
+    <div class="frow">
+      <span class="seg" id="lv-metal"></span>
+      <button class="fbtn" data-lpop="cat">+ Categoría</button>
+      <button class="fbtn" data-lpop="ag">+ Agencia</button>
+    </div>
+    <div class="chips" id="lv-chips"></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Ranking de agencias</h3><p class="sub" id="lv-rank-s"></p><div class="legend" id="lv-leg"></div><div id="lv-rank-ag" class="bars"></div></div>
+    <div class="card"><h3>Ganadores</h3><p class="sub" id="lv-feed-s"></p><div id="lv-feed" class="feed"></div></div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card"><h3>Campañas con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-cmp" class="bars"></div></div>
+    <div class="card"><h3>Anunciantes con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-adv" class="bars"></div></div>
+  </div>
+</section>
+
+<!-- SHORTLIST -->
+<section class="view" id="v-shortlist">
+  <div class="hero">
+    <div>
+      <div class="kicker">Antes de la gala</div>
+      <h2 class="display">¿Quién llega con más piezas?</h2>
+      <p>Las 134 piezas en shortlist de las 19 categorías del Cóndor 2026. Combina filtros o toca cualquier barra para sumarla como filtro.</p>
+    </div>
+  </div>
+  <div class="kpis" id="sl-kpis"></div>
+  <div class="filters">
+    <div class="frow">
+      <button class="fbtn" data-pop="cat">+ Categoría</button>
+      <button class="fbtn" data-pop="ag">+ Agencia</button>
+      <button class="fbtn" data-pop="adv">+ Anunciante</button>
+      <button class="fbtn" data-pop="cmp">+ Campaña</button>
+      <input class="search" id="sl-q" type="search" placeholder="Buscar título, marca o agencia">
+    </div>
+    <div class="chips" id="sl-chips"></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3>Agencias con más shortlist</h3><p class="sub">Piezas en shortlist · 1 punto cada una según el reglamento</p><div id="sl-b-ag" class="bars"></div></div>
+    <div class="card"><h3>Campañas con más shortlist</h3><p class="sub">Piezas en shortlist por campaña</p><div id="sl-b-cmp" class="bars"></div></div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card"><h3>Anunciantes con más shortlist</h3><p class="sub">Piezas en shortlist por anunciante</p><div id="sl-b-adv" class="bars"></div></div>
+    <div class="card"><h3>Categorías con más anunciantes</h3><p class="sub">Cantidad de anunciantes distintos en shortlist por categoría</p><div id="sl-b-cat" class="bars"></div></div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card"><h3>Campañas más diversas</h3><p class="sub">Cantidad de categorías en las que entró cada campaña</p><div id="sl-b-cdiv" class="bars"></div></div>
+    <div class="card"><h3>Agencias más diversas</h3><p class="sub">Cantidad de categorías en las que tiene piezas cada agencia</p><div id="sl-b-adiv" class="bars"></div></div>
+  </div>
+  <div class="card mt">
+    <h3>Lista completa</h3><p class="sub" id="sl-count"></p>
+    <div id="sl-list"></div>
+  </div>
+</section>
+
+<!-- HISTORICO -->
+<section class="view" id="v-historico">
+  <div class="hero">
+    <div>
+      <div class="kicker">2019 → 2025</div>
+      <h2 class="display">Así se movió el ranking de agencias</h2>
+      <p>Rankings oficiales publicados por El Cóndor. Suma años, agencias y métricas para comparar; toca una barra para agregar o quitar esa agencia del gráfico de evolución.</p>
+    </div>
+  </div>
+  <div class="card"><h3>Agencia del año</h3><p class="sub">Primer lugar del ranking oficial de cada edición</p><div class="aoy" id="h-aoy"></div></div>
+  <div class="filters mt">
+    <div class="frow">
+      <button class="fbtn" data-hpop="yr">+ Año</button>
+      <button class="fbtn" data-hpop="ag">+ Agencia</button>
+      <span class="seg" id="h-metric"></span>
+    </div>
+    <div class="frow" style="margin-top:8px">
+      <span class="seg" id="h-top"></span>
+      <label class="hint" style="display:inline-flex;gap:6px;align-items:center"><input type="checkbox" id="h-unify" checked> Unir nombres de la misma agencia</label>
+    </div>
+    <div class="chips" id="h-chips"></div>
+  </div>
+  <div class="card">
+    <h3 id="h-line-t">Evolución</h3><p class="sub" id="h-line-s"></p>
+    <div class="legend" id="h-legend"></div>
+    <div class="chartbox" id="h-line"></div>
+  </div>
+  <div class="grid2 mt">
+    <div class="card"><h3 id="h-bar-t">Acumulado</h3><p class="sub" id="h-bar-s"></p><div id="h-bars" class="bars"></div></div>
+    <div class="card"><h3>Medallero acumulado</h3><p class="sub">Grand Prix, oros, platas y bronces en los años seleccionados; ordenado por metal más alto</p><div class="legend" id="h-mleg"></div><div id="h-medals" class="bars"></div></div>
+  </div>
+  <div class="card mt">
+    <h3>Tabla por año</h3><p class="sub" id="h-tbl-s"></p>
+    <div class="tblwrap" id="h-table"></div>
+  </div>
+</section>
+
+
+</main>
+
+<footer class="wrap">
+  <div>© 2026 Zerebralab para El Cóndor 2026. Se permite compartirlo citando la fuente.</div>
+</footer>
+<div class="condorbg" aria-hidden="true"></div>
+<div class="tip" id="tip"></div>
+
+<script>
+/* =========================== DATOS =========================== */
+const CATS=[
+ ['Film','#EDBF00'],['Radio & Audio','#FF4D00'],['Experiencia de Marca & Activación','#0A36C8'],['PR','#EE0A16'],
+ ['For Good','#05A812'],['Creative Data','#EDBF00'],['Redes Sociales & Influencer','#FF4D00'],['Deportes','#EE0A16'],
+ ['Inteligencia Artificial','#EDBF00'],['Direct','#FF4D00'],['Print & Publishing','#0A36C8'],['Design','#EE0A16'],
+ ['Outdoor','#05A812'],['Health & Wellness','#0A36C8'],['Media','#FF4D00'],['Gran Campaña','#2B140F'],
+ ['Culture & Context: Ecuatorianidad','#EE0A16'],['Entretenimiento','#EDBF00'],['Craft','#0A36C8']];
+// Abreviaturas de agencias y anunciantes para los datos
+const A={G:'Garnier',B:'BBA',M:'Maruri',P:'Paradais TBWA',GP:'Granidea / Paradais TBWA',H:'Herrera Havas',D:'Draftline',N:'Norlop VML',MC:'McCann',PU:'Publicis Groupe',BR:'Breinjart',PA:'Paper',W:'WMG',C:'Circo',P99:'Punto 99',DF:'Delta Flint',CF:'Cafeína'};
+const NG='Natures Garden',AB='AB InBev Ecuador',BK='Burger King',PH='Pizza Hut',KS='Kara Solar',DU='Duoprint',EC='Ecuasal',QM='Quito Motors',HE='Heineken Ecuador',BG='Banco Guayaquil',MI='Minutocorp',PI='Pica Plásticos Industriales',RM='Fundación Casa Ronald McDonald Ecuador',BA='Backer',SU='Suzuki',ECB='Ecuabet',SG='Secretaría General de Comunicación – Viceministerio de Turismo';
+const NLQ='Nada les quita el sueño',NB="It's not a beer yet",SC='Silent River',SA='Safety Ads',EY='Eat Your Words',FA='Burger King vs. FAFI',SO='Say Our Name',CS='Cromos Salados',SS='Salty Snack',PP='Pizza Platform',AP='Asistente en pendientes',RB='Ruido Blanco',ECA='El cáncer juega a esconderse',MG='El Banco del Año es Magenta';
+// [categoría índice, agencia, anunciante, título, campaña (opcional)]
+const RAW=[
+[0,'G',MI,'Match Point'],[0,'B','Nutri','Supera esto IA'],[0,'M','Lavazza','But First Coffee'],[0,'G',MI,ECA],
+[1,'M',NG,NLQ+' – Presidente',NLQ],[1,'M',NG,NLQ+' – Familia',NLQ],[1,'P',SU,SO],[1,'B',PH,'Free Mentions by Pete Zahat'],[1,'GP',RM,RB],[1,'M',KS,SC],[1,'B','Mercado Libre','Ding Dong Discount'],[1,'B',PH,'Free Mentions by Pete Zahat'],[1,'M','Lotería Nacional','Mamá'],[1,'H','El Futbolero','¿Apostamos?'],
+[2,'P',EC,SS],[2,'D',AB,'Te las Yebo Ah'],[2,'H',DU,SA],[2,'B',PH,PP],[2,'N',PI,'Feetfluencers'],[2,'M',BA,EY],[2,'B',PH,PP],
+[3,'B',BK,FA],[3,'B',BK,'Donut Burger'],
+[4,'M',KS,SC],[4,'G',MI,ECA],[4,'H',DU,SA],[4,'B','Tim Ballard Foundation Ecuador','The Missing Generation Yearbook'],
+[5,'M',KS,SC],[5,'B','Beelup','IA Scout'],
+[6,'N','Banco Bolivariano','Back on your Feed'],[6,'N',PI,'Merch no Oficial: Wrapped'],[6,'G','Produbanco','Perrito Financiero'],[6,'P',SU,SO],[6,'D',AB,'Te las Yebo Ah'],
+[7,'P',EC,CS],[7,'P',EC,SS],[7,'P',SU,SO],[7,'MC',ECB,'Betliever'],[7,'B',BK,FA],[7,'P',EC,CS],[7,'P',EC,SS],[7,'MC',ECB,'Betliever'],[7,'B',BK,FA],[7,'B','Beelup','IA Scout'],
+[8,'PU','Nestlé Ecuador','Libera tu cocodrilo'],[8,'B','Beelup','IA Scout'],
+[9,'P',SU,SO],[9,'H',DU,SA],[9,'M',BA,EY],[9,'B','Mercado Libre','Ding Dong Discount'],[9,'BR','Dove / Junta de Beneficencia','The Other Reminder'],
+[10,'MC',ECB,'Ecuador – Alemania','Ecuabet: partidos'],[10,'MC',ECB,'Brasil – Japón','Ecuabet: partidos'],[10,'D',AB,NB+' – Club Premium',NB],[10,'D',AB,NB+' – Pilsener',NB],[10,'D',AB,NB+' – Corona',NB],[10,'MC',ECB,'España – Argentina','Ecuabet: partidos'],[10,'H',QM,AP],[10,'PA',HE,'Bienvenida la piscina','Bienvenida la temporada'],[10,'H',QM,AP],[10,'D',AB,NB+' – Pilsener',NB],[10,'D',AB,NB+' – Club Premium',NB],[10,'PA',HE,'Bienvenido el sol','Bienvenida la temporada'],[10,'D',AB,NB+' – Corona',NB],[10,'H',QM,AP],[10,'PA',HE,'Bienvenido el amor','Bienvenida la temporada'],[10,'MC',ECB,'Ecuador – Alemania','Ecuabet: partidos'],[10,'MC',ECB,'Brasil – Japón','Ecuabet: partidos'],[10,'B',BK,'Pacha King'],[10,'W','Almacenes Tía','Laberinto'],[10,'N','Solca','Sol que Cocina: Alas'],
+[11,'C',BG,MG],[11,'M',BA,EY],[11,'B',PH,PP],[11,'P',EC,CS],[11,'P',EC,SS],[11,'M',BA,EY],[11,'G',MI,'Built for China'],
+[12,'P','Alimentos Real','Apoyo Escondido'],[12,'P',SG,'Ecuador 2026'],[12,'D',AB,NB+' – Corona & Pilsener',NB],[12,'C',BG,MG],[12,'B','MartiDerm','Urban Sunscreen'],[12,'P99','KFC','KFEC'],[12,'P','Alimentos Real','Apoyo Escondido'],[12,'H',QM,AP],[12,'H',QM,AP],[12,'H',QM,AP],[12,'B',PH,PP],[12,'P',SG,'Ecuador 2026'],[12,'H',DU,SA],
+[13,'G',MI,ECA],[13,'H',DU,SA],[13,'B','MartiDerm','Urban Sunscreen'],[13,'BR','Dove / Junta de Beneficencia','The Other Reminder'],[13,'GP',RM,RB],[13,'M',NG,NLQ+' – Jerkzzz',NLQ],[13,'M',NG,NLQ+' – Presidente',NLQ],[13,'M',NG,NLQ+' – Familia',NLQ],[13,'M',NG,NLQ+' – Toppers',NLQ],[13,'M',KS,SC],
+[14,'P',SU,SO],[14,'C',BG,MG],[14,'DF','Banco Pichincha','Password Goats'],[14,'N',PI,'Feetfluencers'],[14,'C',BG,'Cámbiate de banco'],[14,'B','Marcimex','Capture Bad Acting'],[14,'B',BK,FA],[14,'P',EC,CS],[14,'H',DU,SA],[14,'PU',HE,'El vaso de la historia'],[14,'M',BA,EY],
+[15,'D',AB,'Te las Yebo Ah'],[15,'M',BA,EY],[15,'B',BK,FA],[15,'B','Nutri','Supera esto IA'],
+[16,'C',BG,'Ecuador es Ecuavoley'],[16,'N',PI,'Feetfluencers'],[16,'M',KS,SC],[16,'B',BK,'Pacha King'],[16,'DF','Banco Pichincha','In The Name Of Messi'],[16,'P',EC,SS],
+[17,'P99','KFC','Dating con la Community Manager'],[17,'B','Mercedes-Benz','Precision Sight'],[17,'H','Licoram','Una de Norteño'],
+[18,'N','MINTUR','Profetas'],[18,'D',AB,'Duelo de Energías'],[18,'M','Lavazza','Elizabeth Street'],[18,'GP',RM,RB],[18,'M',NG,NLQ+' – Presidente',NLQ],[18,'M',NG,NLQ+' – Familia',NLQ],[18,'G',MI,'Built for China'],[18,'PA',HE,'Bienvenida la temporada','Bienvenida la temporada'],[18,'CF','Cinta Scotch','Mirror Experiments']
+];
+const SL=RAW.map((r,i)=>{const ag=A[r[1]];return{id:i,cat:CATS[r[0]][0],agency:ag,agencies:ag.split(' / '),adv:r[2],title:r[3],cmp:r[4]||r[3]}});
+
+// Resultados en vivo (se completan durante la gala): {id de pieza o título, cat, metal:'GP'|'O'|'P'|'B'}
+// Premios en vivo: se cargan desde data/resultados.json y se actualizan solos cada 30 s
+let RES=[],RESMETA={},seenN=new Set(),firstLoad=true;
+const MRANK={GP:4,O:3,P:2,B:1};
+const MPTS={GP:15,O:10,P:5,B:3};
+
+// Puntaje por año (reglamentos de cada edición, deducido de los rankings publicados)
+const PTS26={GP:15,O:10,P:5,B:3,SL:1};
+const SCALES={2019:{GP:30,O:15,P:7,B:3,SL:1},2021:{GP:30,O:15,P:7,B:3,SL:1},2023:{GP:15,O:15,P:7,B:3,SL:1},2024:{GP:15,O:15,P:7,B:3,SL:1},2025:{GP:15,O:10,P:5,B:3,SL:1}};
+// [agencia, GP, oro, plata, bronce, SL, puntaje oficial]
+const HIST={
+2019:[['Maruri',3,4,5,6,7,210],['Ogilvy',0,3,2,5,5,79],['McCann Erickson',2,1,0,0,3,78],['Paradais DDB',0,0,4,1,3,34],['BBA',0,0,2,4,2,28],['Publicitas Saatchi & Saatchi',0,0,0,2,7,13],['Límbiko',0,0,0,2,1,7],['Central',0,0,0,1,3,6],['Grupo Creativo Herrera / FCB&Fire',0,0,0,2,0,6],['Koenig Comunicación',0,0,0,1,1,4],['Norlop JWT',0,0,0,1,0,3],['Chalaco Films',0,0,0,0,2,2],['Léttera',0,0,0,0,1,1],['Ludikom',0,0,0,0,1,1],['Santuario Agencia',0,0,0,0,1,1]],
+2021:[['Maruri',1,4,6,9,6,165],['Paradais DDB',0,7,2,3,11,139],['Paper',1,2,1,7,5,93],['Agencia Límbiko',0,1,2,0,0,29],['BBA',0,0,2,1,5,22],['GC Herrera / FCB&Fire',0,1,1,0,0,22],['Bombai Ecuador',0,0,3,0,0,21],['McCann',0,0,0,4,3,15],['Laika',0,0,1,1,3,13],['Publicitas',0,0,0,4,1,13],['BPN',0,0,1,0,0,7],['Levector S.A.',0,0,0,1,4,7],['Amperson',0,0,0,2,0,6],['Mayday AD',0,0,0,1,1,4],['Norlop JWT',0,0,0,1,1,4]],
+2023:[['Paradais DDB',1,12,9,0,1,259],['McCann',0,0,11,1,1,81],['MullenLowe Delta',0,2,4,3,9,76],['BBA',0,2,1,3,13,59],['Draftline Ecuador',0,0,2,6,5,37],['Punto 99',0,0,3,2,2,29],['GOD',0,1,1,0,0,22],['BBDO Ecuador',0,1,0,1,2,20],['Paper',0,0,0,5,4,19],['Geeks Ecuador',0,1,0,0,0,15],['Central',0,0,1,2,1,14],['WMG',0,0,0,3,5,14],['Napkin',0,0,0,2,1,7],['Mayday AD',0,0,0,2,0,6],['Norlop Wunderman Thompson',0,0,0,0,5,5]],
+2024:[['Maruri',1,7,6,7,8,191],['Paradais DDB',1,5,5,5,11,151],['BBA',0,1,6,5,14,86],['BBDO Ecuador',0,1,0,6,2,35],['Norlop VML Ecuador',0,0,3,2,6,33],['La Facultad',0,0,2,1,1,18],['Beflamingo',0,0,2,0,2,16],['McCann Ecuador',0,0,0,2,5,11],['Draftline',0,0,1,1,0,10],['Herrera Havas',0,0,0,2,4,10]],
+2025:[['Paradais DDB',1,6,8,5,5,135],['Maruri',0,2,6,6,17,85],['Draftline',0,1,1,7,5,41],['Breinjart',0,0,2,4,11,33],['Norlop VML',0,1,1,2,3,24],['Paper',0,0,1,4,2,19],['Garnier BBDO Ecuador',0,0,0,5,0,15],['Ogilvy Ecuador / Herrera Havas',0,1,1,0,0,15],['McCann',0,0,0,2,2,8],['Cafeína',0,0,0,1,0,3],['WMG',0,0,0,0,2,2],['Destilería',0,0,0,0,0,0],['Herrera Havas',0,0,0,0,0,0],['Initiative',0,0,0,0,0,0],['LUP Studio',0,0,0,0,0,0],['Neo Ambiental',0,0,0,0,0,0]]
+};
+const YEARS=Object.keys(HIST).map(Number);
+// Nombres que corresponden a la misma agencia a lo largo de los años
+const FAMILY={'Paradais DDB':'Paradais','Paradais TBWA':'Paradais','Maruri':'Maruri','Norlop JWT':'Norlop','Norlop Wunderman Thompson':'Norlop','Norlop VML Ecuador':'Norlop','Norlop VML':'Norlop','McCann Erickson':'McCann','McCann Ecuador':'McCann','McCann':'McCann','Draftline Ecuador':'Draftline','Draftline':'Draftline','Grupo Creativo Herrera / FCB&Fire':'Herrera','GC Herrera / FCB&Fire':'Herrera','Herrera Havas':'Herrera','Garnier BBDO Ecuador':'Garnier BBDO','BBDO Ecuador':'Garnier BBDO','Garnier':'Garnier BBDO','MullenLowe Delta':'Delta','Delta Flint':'Delta','Publicitas Saatchi & Saatchi':'Publicitas','Publicitas':'Publicitas','Límbiko':'Límbiko','Agencia Límbiko':'Límbiko','Beflamingo':'Be Flamingo'};
+
+/* =========================== UTILIDADES =========================== */
+function track(ev,params){try{if(window.gtag)gtag('event',ev,params||{})}catch(e){}}
+const TABNAME={inicio:'Inicio',envivo:'En vivo',shortlist:'Shortlist 2026',historico:'Histórico'};
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SERIES=['--s1','--s2','--s3','--s4','--s5','--s6'].map(v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim());
+const MCOL={GP:'#2B140F',O:'#C99A00',P:'#8E969E',B:'#A9612C',SL:'#D9CBBF'};
+const MNAME={GP:'Grand Prix',O:'Oro',P:'Plata',B:'Bronce',SL:'Shortlist'};
+const tip=$('#tip');
+function showTip(e,html){tip.innerHTML=html;tip.style.display='block';const w=tip.offsetWidth,h=tip.offsetHeight;let x=e.clientX+14,y=e.clientY+14;if(x+w>innerWidth-8)x=e.clientX-w-14;if(y+h>innerHeight-8)y=e.clientY-h-14;tip.style.left=x+'px';tip.style.top=y+'px'}
+function hideTip(){tip.style.display='none'}
+const fmt=n=>n==null?'—':(Math.round(n*10)/10).toLocaleString('es-EC');
+
+function bars(el,items,{onClick,selected=new Set(),limit=10,color='var(--bar)',unit='',tipFn}={}){
+  const max=Math.max(1,...items.map(d=>d.value));
+  let shown=el._expanded?items:items.slice(0,limit);
+  el.innerHTML=shown.map((d,i)=>`<div class="brow${selected.has(d.key)?' sel':''}" data-i="${i}" role="button" tabindex="0" aria-label="${esc(d.label)}: ${fmt(d.value)} ${unit}">
+    <div class="bl" title="${esc(d.label)}">${esc(d.label)}</div>
+    <div class="bt">${d.segs?`<div class="stack" style="width:${Math.max(.5,d.value/max*100)}%">${d.segs.filter(s=>s.v>0).map(s=>`<span style="flex:${s.v};background:${s.c}"></span>`).join('')}</div>`:`<div class="bf" style="width:${d.value/max*100}%;background:${d.color||color}"></div>`}</div>
+    <div class="bv">${fmt(d.value)}</div></div>`).join('')+(items.length>limit?`<button class="more">${el._expanded?'Ver menos':'Ver todas ('+items.length+')'}</button>`:'')+(items.length?'':'<div class="hint">Sin datos con estos filtros.</div>');
+  el.querySelectorAll('.brow').forEach(r=>{const d=shown[+r.dataset.i];
+    r.onmousemove=e=>showTip(e,tipFn?tipFn(d):`<b>${esc(d.label)}</b><br>${fmt(d.value)} ${unit}`);r.onmouseleave=hideTip;
+    if(onClick){r.onclick=()=>{hideTip();onClick(d)};r.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();onClick(d)}}}});
+  const m=el.querySelector('.more');if(m)m.onclick=()=>{el._expanded=!el._expanded;bars(el,items,{onClick,selected,limit,color,unit,tipFn})};
+}
+function countBy(rows,fn){const m=new Map();rows.forEach(r=>[].concat(fn(r)).forEach(k=>m.set(k,(m.get(k)||0)+1)));return[...m].map(([k,v])=>({key:k,label:k,value:v})).sort((a,b)=>b.value-a.value||a.label.localeCompare(b.label))}
+
+/* popover multi-select */
+let openPop=null;
+function popover(btn,options,selected,onToggle){
+  closePop();const p=document.createElement('div');p.className='pop';
+  p.innerHTML=`<input placeholder="Buscar…" aria-label="Buscar"><div class="lst"></div>`;
+  document.body.appendChild(p);const r=btn.getBoundingClientRect();
+  p.style.left=Math.min(r.left+scrollX,innerWidth-310+scrollX)+'px';p.style.top=(r.bottom+scrollY+6)+'px';
+  const lst=p.querySelector('.lst'),inp=p.querySelector('input');
+  const draw=()=>{const q=inp.value.toLowerCase();lst.innerHTML=options.filter(o=>o.label.toLowerCase().includes(q)).map(o=>`<label><input type="checkbox" value="${esc(o.key)}" ${selected.has(o.key)?'checked':''}> ${esc(o.label)}<span class="cnt">${o.count??''}</span></label>`).join('')||'<div class="hint" style="padding:6px">Sin resultados</div>';
+    lst.querySelectorAll('input').forEach(c=>c.onchange=()=>onToggle(c.value,c.checked))};
+  inp.oninput=draw;draw();inp.focus();openPop=p;
+  setTimeout(()=>document.addEventListener('mousedown',outside),0);
+  function outside(e){if(!p.contains(e.target)&&e.target!==btn){closePop()}}
+  p._off=()=>document.removeEventListener('mousedown',outside);
+}
+function closePop(){if(openPop){openPop._off();openPop.remove();openPop=null}}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePop()});
+
+/* =========================== SHORTLIST =========================== */
+const F={cat:new Set(),ag:new Set(),adv:new Set(),cmp:new Set(),q:''};
+const FLAB={cat:'Categoría',ag:'Agencia',adv:'Anunciante',cmp:'Campaña'};
+function slFiltered(skip){return SL.filter(r=>(skip==='cat'||!F.cat.size||F.cat.has(r.cat))&&(skip==='ag'||!F.ag.size||r.agencies.some(a=>F.ag.has(a)))&&(skip==='adv'||!F.adv.size||F.adv.has(r.adv))&&(skip==='cmp'||!F.cmp.size||F.cmp.has(r.cmp))&&(!F.q||(r.title+' '+r.agency+' '+r.adv+' '+r.cat).toLowerCase().includes(F.q)))}
+function medalOf(r){const ms=RES.filter(x=>x.sl===r.id).map(x=>x.metal).sort((a,b)=>MRANK[b]-MRANK[a]);return ms[0]}
+function toggleF(k,v,via){const on=!F[k].has(v);on?F[k].add(v):F[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'shortlist',dimension:FLAB[k],valor:v,origen:via||'grafico'});renderSL()}
+function renderSL(){
+  const rows=slFiltered();
+  const ags=new Set(rows.flatMap(r=>r.agencies)),advs=new Set(rows.map(r=>r.adv)),cmps=new Set(rows.map(r=>r.cmp)),cats=new Set(rows.map(r=>r.cat));
+  $('#sl-kpis').innerHTML=[[rows.length,'piezas en shortlist'],[cats.size,'categorías'],[ags.size,'agencias'],[advs.size,'anunciantes'],[cmps.size,'campañas']].map(([v,l])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+  const chips=[];for(const k of ['cat','ag','adv','cmp'])F[k].forEach(v=>chips.push(`<span class="chip c-${k}"><span class="k">${FLAB[k]}:</span> ${esc(v)} <button aria-label="Quitar" data-k="${k}" data-v="${esc(v)}">×</button></span>`));
+  if(F.q)chips.push(`<span class="chip"><span class="k">Texto:</span> “${esc(F.q)}” <button data-k="q">×</button></span>`);
+  $('#sl-chips').innerHTML=chips.length?chips.join('')+'<button class="clear" id="sl-clear">Limpiar todo</button>':'<span class="hint">Sin filtros: mostrando las 134 piezas. Los filtros se suman entre sí.</span>';
+  $$('#sl-chips .chip button').forEach(b=>b.onclick=()=>{if(b.dataset.k==='q'){F.q='';$('#sl-q').value=''}else F[b.dataset.k].delete(b.dataset.v);renderSL()});
+  const c=$('#sl-clear');if(c)c.onclick=()=>{['cat','ag','adv','cmp'].forEach(k=>F[k].clear());F.q='';$('#sl-q').value='';renderSL()};
+  const agItems=countBy(rows,r=>r.agencies).map(d=>{const cs=new Set(rows.filter(r=>r.agencies.includes(d.key)).map(r=>r.cat));return{...d,cats:cs.size}});
+  bars($('#sl-b-ag'),agItems,{onClick:d=>toggleF('ag',d.key),selected:F.ag,unit:'piezas',limit:10,color:'var(--orange)',tipFn:d=>`<b>${esc(d.label)}</b><br>${d.value} piezas · ${d.cats} categorías<br><span style="opacity:.7">Toca para filtrar</span>`});
+  const distinct=(keyFn,valFn)=>{const m=new Map();rows.forEach(r=>[].concat(keyFn(r)).forEach(k=>{if(!m.has(k))m.set(k,{set:new Set(),n:0});const o=m.get(k);o.set.add(valFn(r));o.n++}));return[...m].map(([k,o])=>({key:k,label:k,value:o.set.size,n:o.n,list:[...o.set]})).sort((a,b)=>b.value-a.value||b.n-a.n||a.label.localeCompare(b.label))};
+  const cmpInfo=k=>{const r=rows.find(x=>x.cmp===k);return r?`${esc(r.adv)} · ${esc(r.agency)}`:''};
+  const cmpItems=countBy(rows,r=>r.cmp);
+  bars($('#sl-b-cmp'),cmpItems,{onClick:d=>toggleF('cmp',d.key),selected:F.cmp,unit:'piezas',limit:10,color:'var(--green)',tipFn:d=>`<b>${esc(d.label)}</b><br>${cmpInfo(d.key)}<br>${d.value} piezas en shortlist`});
+  bars($('#sl-b-adv'),countBy(rows,r=>r.adv),{onClick:d=>toggleF('adv',d.key),selected:F.adv,unit:'piezas',limit:10,color:'#7A4FD0'});
+  const catItems=distinct(r=>r.cat,r=>r.adv).map(d=>({...d,color:(CATS.find(c=>c[0]===d.key)||[])[1]}));
+  bars($('#sl-b-cat'),catItems,{onClick:d=>toggleF('cat',d.key),selected:F.cat,unit:'anunciantes',limit:10,tipFn:d=>`<b>${esc(d.label)}</b><br>${d.value} anunciantes · ${d.n} piezas<br><span style="opacity:.75">${d.list.slice(0,8).map(esc).join(', ')}${d.list.length>8?'…':''}</span>`});
+  bars($('#sl-b-cdiv'),distinct(r=>r.cmp,r=>r.cat),{onClick:d=>toggleF('cmp',d.key),selected:F.cmp,unit:'categorías',limit:10,color:'var(--red)',tipFn:d=>`<b>${esc(d.label)}</b><br>${cmpInfo(d.key)}<br>${d.value} categorías · ${d.n} piezas<br><span style="opacity:.75">${d.list.map(esc).join(', ')}</span>`});
+  bars($('#sl-b-adiv'),distinct(r=>r.agencies,r=>r.cat),{onClick:d=>toggleF('ag',d.key),selected:F.ag,unit:'categorías',limit:10,color:'var(--blue)',tipFn:d=>`<b>${esc(d.label)}</b><br>${d.value} de 19 categorías · ${d.n} piezas`});
+  $('#sl-count').textContent=`${rows.length} piezas${rows.length!==SL.length?' con los filtros activos':''}. Toca una agencia, anunciante o campaña para filtrar.`;
+  let html='';CATS.forEach(([cat,col])=>{const rr=rows.filter(r=>r.cat===cat);if(!rr.length)return;
+    html+=`<div class="catblock"><div class="cathead"><span class="dot" style="background:${col}"></span><h4>${esc(cat)}</h4><span class="n">${rr.length} en shortlist</span></div><table class="sl"><tbody>`+
+    rr.map(r=>{const m=medalOf(r);return`<tr><td>${r.agencies.map(a=>`<span class="lk" data-k="ag" data-v="${esc(a)}">${esc(a)}</span>`).join(' / ')}</td><td><span class="lk" data-k="adv" data-v="${esc(r.adv)}">${esc(r.adv)}</span></td><td><span class="lk" data-k="cmp" data-v="${esc(r.cmp)}">${esc(r.title)}</span>${m?`<span class="medal" style="background:${MCOL[m]}">${MNAME[m]}</span>`:''}</td></tr>`}).join('')+'</tbody></table></div>'});
+  $('#sl-list').innerHTML=html||'<p class="hint">Ninguna pieza coincide con los filtros.</p>';
+  $$('#sl-list .lk').forEach(s=>s.onclick=()=>{F[s.dataset.k].add(s.dataset.v);track('filtro_agregar',{seccion:'shortlist',dimension:FLAB[s.dataset.k],valor:s.dataset.v,origen:'lista'});renderSL();$('#v-shortlist .filters').scrollIntoView({behavior:'smooth'})});
+}
+$$('[data-pop]').forEach(b=>b.onclick=()=>{const k=b.dataset.pop;
+  const opts=countBy(slFiltered(k),r=>k==='cat'?r.cat:k==='ag'?r.agencies:k==='adv'?r.adv:r.cmp).map(d=>({key:d.key,label:d.label,count:d.value}));
+  if(k==='cat')opts.sort((a,b)=>CATS.findIndex(c=>c[0]===a.key)-CATS.findIndex(c=>c[0]===b.key));
+  F[k].forEach(v=>{if(!opts.find(o=>o.key===v))opts.unshift({key:v,label:v,count:0})});
+  popover(b,opts,F[k],(v,on)=>{on?F[k].add(v):F[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'shortlist',dimension:FLAB[k],valor:v,origen:'menu'});renderSL()})});
+let qT;$('#sl-q').oninput=e=>{F.q=e.target.value.trim().toLowerCase();renderSL();clearTimeout(qT);if(F.q)qT=setTimeout(()=>track('busqueda',{seccion:'shortlist',termino:F.q}),1200)};
+
+/* =========================== HISTÓRICO =========================== */
+const METRICS=[['pts','Puntaje oficial'],['pos','Posición'],['GP','Grand Prix'],['O','Oros'],['P','Platas'],['B','Bronces'],['SL','Shortlist'],['met','Total metales']];
+const H={years:new Set(YEARS),ags:new Set(),metric:'pts',top:10,unify:true,touched:false};
+function histRows(){const out=[];YEARS.forEach(y=>HIST[y].forEach((r,i)=>{const [name,gp,o,p,b,sl,pts]=r;const has=gp!=null;
+  out.push({year:y,name,fam:H.unify?(FAMILY[name]||name):name,pos:i+1,GP:gp,O:o,P:p,B:b,SL:sl,pts,met:has?gp+o+p+b:null,p26:has?gp*15+o*10+p*5+b*3+sl:null})}));return out}
+function aggregate(rows){const m=new Map();rows.forEach(r=>{const k=r.fam+'|'+r.year;const a=m.get(k)||{fam:r.fam,year:r.year,names:[],pos:r.pos,GP:0,O:0,P:0,B:0,SL:0,pts:0,met:0,p26:0,nd:false};
+  a.names.push(r.name);a.pos=Math.min(a.pos,r.pos);['GP','O','P','B','SL','met','p26'].forEach(k2=>{if(r[k2]==null)a.nd=true;else a[k2]+=r[k2]});a.pts+=r.pts;m.set(k,a)});
+  const arr=[...m.values()];arr.forEach(a=>{if(a.nd){['GP','O','P','B','SL','met','p26'].forEach(k=>a[k]=null)}});
+  // posición recalculada al unir nombres
+  YEARS.forEach(y=>{arr.filter(a=>a.year===y).sort((x,z)=>z.pts-x.pts).forEach((a,i)=>a.pos=i+1)});return arr}
+const val=(a,m)=>a?a[m]:null;
+function famTotals(agg){const m=new Map();agg.filter(a=>H.years.has(a.year)).forEach(a=>{const t=m.get(a.fam)||{fam:a.fam,sum:0,n:0,pos:[],GP:0,O:0,P:0,B:0,SL:0,nd:0};
+  const v=val(a,H.metric);if(H.metric==='pos'){t.pos.push(a.pos)}else if(v!=null)t.sum+=v;t.n++;['GP','O','P','B','SL'].forEach(k=>{if(a[k]!=null)t[k]+=a[k]});m.set(a.fam,t)});
+  const arr=[...m.values()];arr.forEach(t=>{if(H.metric==='pos')t.sum=t.pos.reduce((s,x)=>s+x,0)/t.pos.length});
+  return arr.sort((a,b)=>H.metric==='pos'?a.sum-b.sum||b.n-a.n:b.sum-a.sum)}
+let colorOf=new Map(); // color fijo por agencia
+function colorFor(fam){if(!colorOf.has(fam)){const used=new Set(colorOf.values());const c=SERIES.find(s=>!used.has(s));if(c)colorOf.set(fam,c)}return colorOf.get(fam)}
+function renderH(){
+  const agg=aggregate(histRows());
+  const tot=famTotals(agg);
+  if(!H.touched){H.ags=new Set(famTotals(aggregate(histRows())).filter(()=>true).slice(0,5).map(t=>t.fam))}
+  // limpiar colores de agencias no seleccionadas
+  [...colorOf.keys()].forEach(k=>{if(!H.ags.has(k))colorOf.delete(k)});[...H.ags].forEach(colorFor);
+  const yrs=[...H.years].sort();
+  // agencia del año
+  const AOYLOGO={'Maruri':'img/maruri.png','Paradais DDB':'img/paradais.png'};
+  $('#h-aoy').innerHTML=YEARS.map(y=>{const r=HIST[y][0],lg=AOYLOGO[r[0]];return`<div><div class="y">${y}</div>${lg?`<div class="lg"><img src="${lg}" alt="${esc(r[0])}"></div>`:`<div class="a">${esc(r[0])}</div>`}<div class="p">${r[6]} puntos</div></div>`}).join('');
+  // controles
+  $('#h-metric').innerHTML=METRICS.map(([k,l])=>`<button class="${H.metric===k?'on':''}" data-m="${k}">${l}</button>`).join('');
+  $$('#h-metric button').forEach(b=>b.onclick=()=>{H.metric=b.dataset.m;track('metrica_cambiar',{seccion:'historico',metrica:b.textContent});renderH()});
+  $('#h-top').innerHTML=[[5,'Top 5'],[10,'Top 10'],[99,'Todas']].map(([k,l])=>`<button class="${H.top===k?'on':''}" data-t="${k}">${l}</button>`).join('');
+  $$('#h-top button').forEach(b=>b.onclick=()=>{H.top=+b.dataset.t;track('top_cambiar',{seccion:'historico',top:b.textContent});renderH()});
+  // chips
+  const chips=[];
+  if(H.years.size!==YEARS.length)yrs.forEach(y=>chips.push(`<span class="chip c-yr"><span class="k">Año:</span> ${y} <button data-y="${y}">×</button></span>`));
+  [...H.ags].forEach(a=>chips.push(`<span class="chip c-ag" style="background:${colorFor(a)||'var(--orange)'}"><span class="k">Agencia:</span> ${esc(a)} <button data-a="${esc(a)}">×</button></span>`));
+  chips.push(`<span class="chip"><span class="k">Métrica:</span> ${METRICS.find(m=>m[0]===H.metric)[1]}</span>`);
+  $('#h-chips').innerHTML=chips.join('')+'<button class="clear" id="h-clear">Restablecer</button>';
+  $$('#h-chips button[data-y]').forEach(b=>b.onclick=()=>{if(H.years.size>1){H.years.delete(+b.dataset.y);renderH()}});
+  $$('#h-chips button[data-a]').forEach(b=>b.onclick=()=>{H.touched=true;H.ags.delete(b.dataset.a);renderH()});
+  $('#h-clear').onclick=()=>{H.years=new Set(YEARS);H.metric='pts';H.top=10;H.touched=false;H.unify=true;$('#h-unify').checked=true;colorOf.clear();renderH()};
+  // línea
+  const mlabel=METRICS.find(m=>m[0]===H.metric)[1];
+  $('#h-line-t').textContent='Evolución · '+mlabel;
+  $('#h-line-s').textContent=(H.metric==='pos'?'Lugar en el ranking oficial de cada año (1 = agencia del año). ':'')+'Máximo 6 agencias a la vez; un punto faltante significa que la agencia no aparece en el ranking publicado ese año.';
+  lineChart($('#h-line'),agg,yrs);
+  // barras acumuladas
+  const shown=tot.slice(0,H.top);
+  $('#h-bar-t').textContent=H.metric==='pos'?'Posición promedio':'Acumulado · '+mlabel;
+  $('#h-bar-s').textContent=`Años: ${yrs.join(', ')}. ${H.metric==='pos'?'Promedio de posiciones en los años en que aparece (menor es mejor).':'Suma de los años seleccionados.'} Toca una barra para sumarla o quitarla del gráfico de evolución.`;
+  bars($('#h-bars'),shown.map(t=>({key:t.fam,label:t.fam,value:H.metric==='pos'?Math.round(t.sum*10)/10:t.sum,n:t.n,color:H.ags.has(t.fam)?colorFor(t.fam):'#B9ABA3'})),{limit:99,selected:H.ags,onClick:d=>{H.touched=true;track(H.ags.has(d.key)?'agencia_quitar':'agencia_agregar',{seccion:'historico',agencia:d.key,origen:'grafico'});if(H.ags.has(d.key))H.ags.delete(d.key);else if(H.ags.size<6)H.ags.add(d.key);else{showToast('Máximo 6 agencias en el gráfico de evolución');return}renderH()},tipFn:d=>`<b>${esc(d.label)}</b><br>${mlabel}: ${fmt(d.value)}<br>Aparece en ${d.n} de ${yrs.length} años seleccionados`});
+  // medallero
+  $('#h-mleg').innerHTML=['GP','O','P','B'].map(k=>`<span><i style="background:${MCOL[k]};height:10px;width:10px"></i>${MNAME[k]}</span>`).join('');
+  const med=[...tot].map(t=>({key:t.fam,label:t.fam,value:t.GP+t.O+t.P+t.B,segs:['GP','O','P','B'].map(k=>({v:t[k],c:MCOL[k]})),t})).filter(d=>d.value>0||d.t.SL>0).sort((a,b)=>b.t.GP-a.t.GP||b.t.O-a.t.O||b.t.P-a.t.P||b.t.B-a.t.B).slice(0,H.top);
+  bars($('#h-medals'),med,{limit:99,selected:H.ags,tipFn:d=>`<b>${esc(d.label)}</b><br>${['GP','O','P','B','SL'].map(k=>`<span class="sw" style="background:${MCOL[k]}"></span>${MNAME[k]}: ${d.t[k]}`).join('<br>')}`,onClick:d=>{H.touched=true;track(H.ags.has(d.key)?'agencia_quitar':'agencia_agregar',{seccion:'historico',agencia:d.key,origen:'grafico'});if(H.ags.has(d.key))H.ags.delete(d.key);else if(H.ags.size<6)H.ags.add(d.key);renderH()}});
+  // tabla
+  const sl26=new Map();SL.forEach(r=>r.agencies.forEach(a=>{const f=H.unify?(FAMILY[a]||a):a;sl26.set(f,(sl26.get(f)||0)+1)}));
+  const fams=tot.slice(0,H.top).map(t=>t.fam);
+  $('#h-tbl-s').textContent=`${mlabel} por año. La última columna muestra cuántas piezas tiene cada agencia en el shortlist 2026.`;
+  $('#h-table').innerHTML=`<table class="ht"><thead><tr><th>Agencia</th>${yrs.map(y=>`<th>${y}</th>`).join('')}<th>${H.metric==='pos'?'Prom.':'Total'}</th><th>Shortlist 2026</th></tr></thead><tbody>`+
+    fams.map(f=>{const t=tot.find(x=>x.fam===f);return`<tr class="${H.ags.has(f)?'sel':''}"><td>${esc(f)}</td>${yrs.map(y=>{const a=agg.find(x=>x.fam===f&&x.year===y);const v=a?val(a,H.metric):null;return`<td class="${v==null?'na':''}" title="${a?esc(a.names.join(' + ')):'No aparece en el ranking publicado'}">${v==null?'—':fmt(v)}</td>`}).join('')}<td><b>${fmt(H.metric==='pos'?Math.round(t.sum*10)/10:t.sum)}</b></td><td>${sl26.get(f)||'—'}</td></tr>`}).join('')+'</tbody></table>';
+}
+function lineChart(el,agg,yrs){
+  const W=Math.max(320,el.clientWidth||800),Hh=W<600?280:340,ml=44,mr=W<600?90:140,mt=16,mb=34;
+  const fams=[...H.ags];const m=H.metric;
+  const pts=fams.map(f=>({f,c:colorFor(f),v:yrs.map(y=>{const a=agg.find(x=>x.fam===f&&x.year===y);return a?val(a,m):null})}));
+  const all=pts.flatMap(p=>p.v).filter(v=>v!=null);
+  if(!fams.length||!all.length){el.innerHTML='<p class="hint">Elige al menos una agencia con datos para esta métrica (toca una barra o usa “+ Agencia”).</p>';$('#h-legend').innerHTML='';return}
+  const inv=m==='pos';let maxV=Math.max(...all),minV=inv?1:0;if(inv)maxV=Math.max(maxV,5);
+  const nice=v=>{const p=Math.pow(10,Math.floor(Math.log10(v||1)));return Math.ceil(v/p)*p};
+  if(!inv)maxV=nice(maxV*1.05);
+  const X=i=>ml+(yrs.length===1?(W-ml-mr)/2:i*(W-ml-mr)/(yrs.length-1));
+  const Y=v=>inv?mt+(v-1)/(maxV-1||1)*(Hh-mt-mb):Hh-mb-(v-minV)/(maxV-minV||1)*(Hh-mt-mb);
+  const ticks=inv?[...new Set([1,Math.round((maxV+1)/2),maxV])]:[0,.25,.5,.75,1].map(t=>Math.round(t*maxV));
+  let s=`<svg viewBox="0 0 ${W} ${Hh}" role="img" aria-label="Evolución de ${METRICS.find(x=>x[0]===m)[1]}">`;
+  ticks.forEach(t=>{s+=`<line x1="${ml}" x2="${W-mr}" y1="${Y(t)}" y2="${Y(t)}" stroke="var(--grid)"/><text x="${ml-8}" y="${Y(t)+4}" text-anchor="end" font-size="12" fill="var(--muted)">${inv?t+'º':t}</text>`});
+  yrs.forEach((y,i)=>s+=`<text x="${X(i)}" y="${Hh-10}" text-anchor="middle" font-size="13" font-weight="600" fill="var(--ink2)">${y}</text>`);
+  pts.forEach(p=>{let d='',pen=false;p.v.forEach((v,i)=>{if(v==null){pen=false;return}d+=(pen?'L':'M')+X(i)+','+Y(v);pen=true});s+=`<path d="${d}" fill="none" stroke="${p.c}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/>`;
+    p.v.forEach((v,i)=>{if(v!=null)s+=`<circle cx="${X(i)}" cy="${Y(v)}" r="5" fill="${p.c}" stroke="var(--card)" stroke-width="2"/>`})});
+  // etiquetas directas al final
+  const lab=pts.map(p=>{let i=p.v.length-1;while(i>=0&&p.v[i]==null)i--;return i<0?null:{p,y:Y(p.v[i]),x:X(i)}}).filter(Boolean).sort((a,b)=>a.x-b.x||a.y-b.y);
+  for(let i=1;i<lab.length;i++)if(lab[i].x===lab[i-1].x&&lab[i].y-lab[i-1].y<15)lab[i].y=lab[i-1].y+15;
+  lab.forEach(l=>s+=`<text x="${l.x+10}" y="${l.y+(l.x<W-mr-1?-8:4)}" paint-order="stroke" stroke="var(--card)" stroke-width="4" font-size="13" font-weight="700" fill="var(--ink)">${esc(l.p.f.length>16?l.p.f.slice(0,15)+'…':l.p.f)}</text>`);
+  s+=`<line id="xh" x1="0" x2="0" y1="${mt}" y2="${Hh-mb}" stroke="var(--ink)" stroke-width="1" stroke-dasharray="3 3" opacity="0"/>`;
+  const colW=yrs.length===1?W-ml-mr:(W-ml-mr)/(yrs.length-1);
+  yrs.forEach((y,i)=>s+=`<rect class="hit" data-i="${i}" x="${X(i)-colW/2}" y="${mt}" width="${colW}" height="${Hh-mt-mb}" fill="transparent"/>`);
+  s+='</svg>';el.innerHTML=s;
+  $('#h-legend').innerHTML=pts.map(p=>`<span><i style="background:${p.c}"></i>${esc(p.f)}</span>`).join('');
+  const xh=el.querySelector('#xh');
+  el.querySelectorAll('.hit').forEach(r=>{const i=+r.dataset.i;r.onmousemove=e=>{xh.setAttribute('x1',X(i));xh.setAttribute('x2',X(i));xh.setAttribute('opacity',.5);
+    const rows=pts.map(p=>({p,v:p.v[i]})).sort((a,b)=>(a.v==null)-(b.v==null)||(inv?a.v-b.v:b.v-a.v));
+    showTip(e,`<b>${yrs[i]}</b><br>`+rows.map(r=>`<span class="sw" style="background:${r.p.c}"></span>${esc(r.p.f)}: ${r.v==null?'sin dato':(inv?r.v+'º':fmt(r.v))}`).join('<br>'))};
+    r.onmouseleave=()=>{xh.setAttribute('opacity',0);hideTip()}});
+}
+$$('[data-hpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.hpop;
+  if(k==='yr')popover(b,YEARS.map(y=>({key:String(y),label:String(y),count:HIST[y].length+' agencias'})),new Set([...H.years].map(String)),(v,on)=>{track(on?'anio_agregar':'anio_quitar',{seccion:'historico',anio:v});if(on)H.years.add(+v);else if(H.years.size>1)H.years.delete(+v);renderH()});
+  else{const tot=famTotals(aggregate(histRows()));popover(b,tot.map(t=>({key:t.fam,label:t.fam,count:t.n+' años'})),H.ags,(v,on)=>{H.touched=true;track(on?'agencia_agregar':'agencia_quitar',{seccion:'historico',agencia:v,origen:'menu'});if(on){if(H.ags.size>=6){showToast('Máximo 6 agencias en el gráfico de evolución');closePop();return}H.ags.add(v)}else H.ags.delete(v);renderH()})}});
+$('#h-unify').onchange=e=>{H.unify=e.target.checked;track('unir_nombres',{seccion:'historico',activo:H.unify?'si':'no'});H.touched=false;colorOf.clear();renderH()};
+function showToast(t){const d=document.createElement('div');d.className='tip';d.style.cssText='display:block;left:50%;bottom:24px;top:auto;transform:translateX(-50%)';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
+
+/* =========================== EN VIVO =========================== */
+const LF={metal:'',cat:new Set(),ag:new Set()};
+function pieceOf(p){const r=p.sl!=null?SL[p.sl]:null;return r?{title:r.title,cat:r.cat,agencies:r.agencies,agency:r.agency,adv:r.adv,cmp:r.cmp}:{title:p.title,cat:p.cat,agencies:(p.agency||'').split(' / '),agency:p.agency,adv:p.adv,cmp:p.cmp||p.title}}
+// Si una misma pieza gana Oro y Grand Prix, cuenta solo el Grand Prix
+function effective(list){const gp=new Set(list.filter(p=>p.metal==='GP'&&p.sl!=null).map(p=>p.sl));return list.filter(p=>!(p.metal==='O'&&p.sl!=null&&gp.has(p.sl)))}
+function liveRank(){
+  const catOk=c=>!LF.cat.size||LF.cat.has(c);
+  const ag=new Map(),cmp=new Map(),adv=new Map();
+  const add=(m,k,pts,metal)=>{const o=m.get(k)||{key:k,label:k,value:0,GP:0,O:0,P:0,B:0,SL:0};o.value+=pts;o[metal]+=metal==='SL'?1:1;m.set(k,o)};
+  effective(RES).forEach(p=>{const x=pieceOf(p);if(!catOk(x.cat))return;if(LF.metal&&p.metal!==LF.metal)return;
+    x.agencies.forEach(a=>add(ag,a,MPTS[p.metal],p.metal));add(cmp,x.cmp,MPTS[p.metal],p.metal);add(adv,x.adv,MPTS[p.metal],p.metal)});
+  if(!LF.metal){const won=new Set(RES.filter(p=>p.sl!=null).map(p=>p.sl));
+    SL.forEach(r=>{if(won.has(r.id)||!catOk(r.cat))return;r.agencies.forEach(a=>add(ag,a,1,'SL'));add(cmp,r.cmp,1,'SL');add(adv,r.adv,1,'SL')})}
+  const sort=m=>[...m.values()].sort((a,b)=>b.value-a.value||b.GP-a.GP||b.O-a.O||b.P-a.P||b.B-a.B||a.label.localeCompare(b.label));
+  return{ag:sort(ag),cmp:sort(cmp),adv:sort(adv)}}
+function renderLive(){
+  const has=RES.length>0;
+  $('#lv-test').style.display=RESMETA.prueba?'block':'none';
+  $('#lv-status').textContent=RESMETA.estado||(has?'En vivo':'La gala aún no empieza');
+  $$('.livedot').forEach(d=>d.classList.toggle('off',!has));
+  $('#lv-upd').textContent=(RESMETA.actualizado?'Actualizado '+RESMETA.actualizado+' · ':'')+'La página se actualiza sola cada 30 segundos.';
+  const cnt=k=>RES.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
+  $('#lv-kpis').innerHTML=[[RES.length,'premios entregados'],[cnt('GP'),'Grand Prix'],[cnt('O'),'oros'],[cnt('P'),'platas'],[cnt('B'),'bronces']].map(([v,l])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
+  const last=[...RES].sort((a,b)=>b.n-a.n)[0];
+  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div>`})():`<div class="k">Último premio</div><div class="t">Aquí aparecerá cada premio apenas se anuncie</div><div class="m">${SL.length} piezas en shortlist esperan su turno.</div>`;
+  $('#lv-metal').innerHTML=[['','Todos'],['GP','Grand Prix'],['O','Oro'],['P','Plata'],['B','Bronce']].map(([k,l])=>`<button class="${LF.metal===k?'on':''}" data-m="${k}">${l}</button>`).join('');
+  $$('#lv-metal button').forEach(b=>b.onclick=()=>{LF.metal=b.dataset.m;track('filtro_agregar',{seccion:'envivo',dimension:'Metal',valor:b.textContent});renderLive()});
+  const chips=[];LF.cat.forEach(v=>chips.push(`<span class="chip c-cat"><span class="k">Categoría:</span> ${esc(v)} <button data-k="cat" data-v="${esc(v)}">×</button></span>`));LF.ag.forEach(v=>chips.push(`<span class="chip c-ag"><span class="k">Agencia:</span> ${esc(v)} <button data-k="ag" data-v="${esc(v)}">×</button></span>`));
+  $('#lv-chips').innerHTML=chips.length?chips.join('')+'<button class="clear" id="lv-clear">Limpiar</button>':'<span class="hint">Filtra por metal, categoría o agencia. Los filtros se suman.</span>';
+  $$('#lv-chips .chip button').forEach(b=>b.onclick=()=>{LF[b.dataset.k].delete(b.dataset.v);renderLive()});
+  const c=$('#lv-clear');if(c)c.onclick=()=>{LF.cat.clear();LF.ag.clear();LF.metal='';renderLive()};
+  const R=liveRank();
+  $('#lv-rank-s').textContent=LF.metal?`Solo ${MNAME[LF.metal].toLowerCase()}s (${MPTS[LF.metal]} pts c/u).`:'Puntaje oficial 2026: GP 15 · Oro 10 · Plata 5 · Bronce 3 · Shortlist 1. Si una pieza gana Oro y Grand Prix, cuenta solo el Grand Prix.';
+  $('#lv-leg').innerHTML=['GP','O','P','B','SL'].map(k=>`<span><i style="background:${MCOL[k]};height:10px;width:10px"></i>${MNAME[k]}</span>`).join('');
+  const seg=d=>['GP','O','P','B','SL'].map(k=>({v:d[k]*(k==='SL'?1:MPTS[k]),c:MCOL[k]}));
+  const tipR=d=>`<b>${esc(d.label)}</b><br>${d.value} puntos<br>${['GP','O','P','B','SL'].filter(k=>d[k]).map(k=>`<span class="sw" style="background:${MCOL[k]}"></span>${MNAME[k]}: ${d[k]}`).join('<br>')}`;
+  const agItems=R.ag.filter(d=>!LF.ag.size||LF.ag.has(d.key)).map(d=>({...d,segs:seg(d)}));
+  bars($('#lv-rank-ag'),agItems,{limit:12,selected:LF.ag,tipFn:tipR,onClick:d=>{LF.ag.has(d.key)?LF.ag.delete(d.key):LF.ag.add(d.key);track('filtro_agregar',{seccion:'envivo',dimension:'Agencia',valor:d.key,origen:'grafico'});renderLive()}});
+  bars($('#lv-rank-cmp'),R.cmp.map(d=>({...d,segs:seg(d)})),{limit:10,tipFn:tipR});
+  bars($('#lv-rank-adv'),R.adv.map(d=>({...d,segs:seg(d)})),{limit:10,tipFn:tipR});
+  const feed=[...RES].sort((a,b)=>b.n-a.n).filter(p=>{const x=pieceOf(p);return(!LF.metal||p.metal===LF.metal)&&(!LF.cat.size||LF.cat.has(x.cat))&&(!LF.ag.size||x.agencies.some(a=>LF.ag.has(a)))});
+  $('#lv-feed-s').textContent=has?`${feed.length} premio${feed.length===1?'':'s'}, del más reciente al más antiguo`:'Todavía no hay premios anunciados.';
+  $('#lv-feed').innerHTML=feed.map(p=>{const x=pieceOf(p);const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}"><span class="mb" style="background:${MCOL[p.metal]}">${MNAME[p.metal]}</span><div class="tt">${esc(x.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(x.cat)} · ${esc(x.adv)} · ${esc(x.agency)}${effSet.has(p)?'':' · <i>no suma: cuenta su Grand Prix</i>'}</div></div>`}).join('')||'<p class="hint">Sin premios con estos filtros.</p>';
+  RES.forEach(p=>seenN.add(p.n));firstLoad=false;
+}
+$$('[data-lpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.lpop;
+  const opts=k==='cat'?CATS.map(c=>({key:c[0],label:c[0],count:RES.filter(p=>pieceOf(p).cat===c[0]).length+' premios'})):[...new Set(SL.flatMap(r=>r.agencies))].sort().map(a=>({key:a,label:a}));
+  popover(b,opts,LF[k],(v,on)=>{on?LF[k].add(v):LF[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'envivo',dimension:k==='cat'?'Categoría':'Agencia',valor:v,origen:'menu'});renderLive()})});
+async function loadRes(){try{const r=await fetch('data/resultados.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();
+  const sig=JSON.stringify(j);if(sig===loadRes.last)return;loadRes.last=sig;RESMETA=j;RES=(j.premios||[]).filter(p=>MPTS[p.metal]);renderLive();renderSL()}catch(e){if(firstLoad)renderLive()}}
+loadRes();setInterval(loadRes,30000);
+
+/* =========================== NAVEGACIÓN =========================== */
+let lastView='';function route(){const v=(location.hash||'#inicio').slice(1);const ok=['inicio','envivo','shortlist','historico'].includes(v)?v:'inicio';if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
+  $$('section.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+ok));document.body.classList.toggle('on-inicio',ok==='inicio');$$('nav.tabs a').forEach(a=>a.classList.toggle('on',a.dataset.v===ok));
+  if(ok==='historico')renderH();closePop();hideTip();if(ok!=='inicio')scrollTo(0,0)}
+addEventListener('hashchange',route);
+let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{if($('#v-historico').classList.contains('on'))renderH()},150)});
+renderSL();
+if($('#d-sl'))$('#d-sl').innerHTML=`<div><b>${SL.length}</b>piezas</div><div><b>${new Set(SL.flatMap(r=>r.agencies)).size}</b>agencias</div><div><b>${CATS.length}</b>categorías</div>`;
+if($('#d-h'))$('#d-h').innerHTML=`<div><b>${YEARS.length}</b>ediciones</div><div><b>${new Set(YEARS.flatMap(y=>HIST[y].map(r=>FAMILY[r[0]]||r[0]))).size}</b>agencias</div>`;
+function syncHome(){const i=document.querySelector('.home .intro > div'),d=document.querySelector('.home .doors');if(!i||!d)return;d.style.height=innerWidth>900?i.getBoundingClientRect().height+'px':'auto'}
+addEventListener('resize',syncHome);if(document.fonts)document.fonts.ready.then(syncHome);
+route();syncHome();addEventListener('hashchange',()=>setTimeout(syncHome,0));
+</script>
+</body>
+</html>

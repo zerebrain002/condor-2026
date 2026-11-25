@@ -1,0 +1,55 @@
+{
+ "prueba": true,
+ "premios": [
+  {
+   "n": 1,
+   "hora": "20:05",
+   "cat": "Film",
+   "metal": "O",
+   "sl": 3
+  },
+  {
+   "n": 2,
+   "hora": "20:06",
+   "cat": "Film",
+   "metal": "GP",
+   "sl": 3
+  },
+  {
+   "n": 3,
+   "hora": "20:10",
+   "cat": "Radio & Audio",
+   "metal": "P",
+   "sl": 6
+  },
+  {
+   "n": 4,
+   "hora": "20:14",
+   "cat": "Print & Publishing",
+   "metal": "B",
+   "sl": 57
+  },
+  {
+   "n": 5,
+   "hora": "20:20",
+   "cat": "Gran Campaña",
+   "metal": "O",
+   "sl": 112
+  },
+  {
+   "n": 6,
+   "hora": "20:24",
+   "cat": "Outdoor",
+   "metal": "P",
+   "sl": 88
+  },
+  {
+   "n": 7,
+   "hora": "20:30",
+   "cat": "Deportes",
+   "metal": "O",
+   "sl": 37
+  }
+ ],
+ "actualizado": "22:00"
+}

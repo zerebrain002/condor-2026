@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cóndor 2026</title>
+<title>El Cóndor 2026</title>
 <link rel="icon" type="image/png" href="img/favicon.png">
 <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
 <!-- Google Analytics 4 -->
@@ -345,7 +345,7 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
 <section class="view" id="v-envivo">
   <div class="note" id="lv-test" style="display:none;margin-bottom:14px"><b>Datos de prueba.</b> Estos premios no son reales; sirven para ensayar la carga en vivo.</div>
   <div class="countdown" id="lv-count" style="display:none">
-    <div class="kicker"><span class="livedot"></span>Hoy · Premios Cóndor 2026</div>
+    <div class="kicker"><span class="livedot"></span>Hoy · Premios El Cóndor 2026</div>
     <h2 class="display">La ceremonia empieza a las 19:30</h2>
     <p class="cd-sub">Faltan</p>
     <div class="cd-boxes"><div><b id="cd-h">00</b><span>horas</span></div><div><b id="cd-m">00</b><span>minutos</span></div><div><b id="cd-s">00</b><span>segundos</span></div></div>
@@ -773,7 +773,7 @@ gate();setInterval(gate,1000);
 loadRes();setInterval(loadRes,30000);
 
 /* =========================== NAVEGACIÓN =========================== */
-let lastView='';function route(){const gala=now()>=START,def=gala?'envivo':'inicio';const v=(location.hash||'#'+def).slice(1);const ok=((['shortlist','historico'].includes(v))||(v==='inicio'&&!gala)||(v==='envivo'&&liveOpen()))?v:def;if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
+let lastView='';function route(){const gala=now()>=START,def=gala?'envivo':'inicio';const v=(location.hash||'#'+def).slice(1);const ok=((['shortlist','historico'].includes(v))||(v==='inicio'&&!gala)||(v==='envivo'&&liveOpen()))?v:def;if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'El Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
   $$('section.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+ok));document.body.classList.toggle('on-inicio',ok==='inicio');$$('nav.tabs a').forEach(a=>a.classList.toggle('on',a.dataset.v===ok));
   if(ok==='historico')renderH();closePop();hideTip();if(ok!=='inicio')scrollTo(0,0)}
 addEventListener('hashchange',route);

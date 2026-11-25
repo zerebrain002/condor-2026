@@ -263,15 +263,18 @@ body{overflow-x:hidden}
 .lvk .kpi{padding:8px 14px}.lvk .kpi .v{font-size:28px}.lvk .kpi .l{margin-top:0}
 .lvf{position:static!important;padding:0 0 6px!important;margin:0!important}
 @media (min-width:901px){.livestats{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding-right:4px}}
-.win{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;border-bottom:1px solid var(--line);padding:8px 2px}
-.win .mb{border-radius:999px;color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;width:96px;text-align:center}
+.win{display:grid;grid-template-columns:34px 1fr auto;gap:2px 12px;align-items:center;border-bottom:1px solid var(--line);padding:8px 2px}
+.win .tr{grid-row:1 / span 2;height:62px;width:34px;object-fit:contain}
+.win .tt .mb{display:inline-block;margin-right:8px;vertical-align:2px}
+.la{display:flex;gap:16px;align-items:center}.la img{height:96px;width:auto;flex:none}
+.win .mb{border-radius:999px;color:#fff;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;text-align:center}
 .win .tt{font-weight:700}
 .win .ds{grid-column:2;font-size:13px;color:var(--ink2)}
 .win .hr{font-size:12px;color:var(--muted);grid-row:1 / span 2;grid-column:3}
 .win.new{animation:flash 2.4s ease-out}
 @keyframes flash{0%{background:rgba(237,191,0,.55)}100%{background:transparent}}
 @media (max-width:900px){.livehead,.livegrid{grid-template-columns:1fr}}
-@media (max-width:600px){.win .mb{width:74px;font-size:10px;letter-spacing:.5px;padding:3px 4px}.win{gap:4px 8px}}
+@media (max-width:600px){.win{gap:2px 8px}.la img{height:72px}}
 footer{border-top:3px solid var(--ink);padding:18px 0 40px;font-size:14px;color:var(--ink2)}
 footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -474,6 +477,7 @@ const SL=RAW.map((r,i)=>{const ag=A[r[1]];return{id:i,cat:CATS[r[0]][0],agency:a
 let RES=[],RESMETA={},seenN=new Set(),firstLoad=true;
 const MRANK={GP:4,O:3,P:2,B:1};
 const MPTS={GP:15,O:10,P:5,B:3};
+const TROFEO={GP:'img/trofeo_O.png',O:'img/trofeo_O.png',P:'img/trofeo_P.png',B:'img/trofeo_B.png'};
 
 // Puntaje por año (reglamentos de cada edición, deducido de los rankings publicados)
 const PTS26={GP:15,O:10,P:5,B:3,SL:1};
@@ -699,7 +703,7 @@ function renderLive(){
   const cnt=k=>RES.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
   $('#lv-kpis').innerHTML=[[RES.length,'premios entregados'],[cnt('GP'),'Grand Prix'],[cnt('O'),'oros'],[cnt('P'),'platas'],[cnt('B'),'bronces']].map(([v,l])=>`<div class="kpi"><div class="v">${v}</div><div class="l">${l}</div></div>`).join('');
   const last=[...RES].sort((a,b)=>b.n-a.n)[0];
-  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div>`})():`<div class="k">Último premio</div><div class="t">Aquí aparecerá cada premio apenas se anuncie</div><div class="m">${SL.length} piezas en shortlist esperan su turno.</div>`;
+  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="la"><img src="${TROFEO[last.metal]}" alt="Trofeo ${MNAME[last.metal]}"><div><div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div></div></div>`})():`<div class="k">Último premio</div><div class="t">Aquí aparecerá cada premio apenas se anuncie</div><div class="m">${SL.length} piezas en shortlist esperan su turno.</div>`;
   $('#lv-metal').innerHTML=[['','Todos'],['GP','Grand Prix'],['O','Oro'],['P','Plata'],['B','Bronce']].map(([k,l])=>`<button class="${LF.metal===k?'on':''}" data-m="${k}">${l}</button>`).join('');
   $$('#lv-metal button').forEach(b=>b.onclick=()=>{LF.metal=b.dataset.m;track('filtro_agregar',{seccion:'envivo',dimension:'Metal',valor:b.textContent});renderLive()});
   const chips=[];LF.cat.forEach(v=>chips.push(`<span class="chip c-cat"><span class="k">Categoría:</span> ${esc(v)} <button data-k="cat" data-v="${esc(v)}">×</button></span>`));LF.ag.forEach(v=>chips.push(`<span class="chip c-ag"><span class="k">Agencia:</span> ${esc(v)} <button data-k="ag" data-v="${esc(v)}">×</button></span>`));
@@ -717,7 +721,7 @@ function renderLive(){
   bars($('#lv-rank-adv'),R.adv.map(d=>({...d,segs:seg(d)})),{limit:10,tipFn:tipR});
   const feed=[...RES].sort((a,b)=>b.n-a.n).filter(p=>{const x=pieceOf(p);return(!LF.metal||p.metal===LF.metal)&&(!LF.cat.size||LF.cat.has(x.cat))&&(!LF.ag.size||x.agencies.some(a=>LF.ag.has(a)))});
   $('#lv-feed-s').textContent=has?`${feed.length} premio${feed.length===1?'':'s'}, del más reciente al más antiguo`:'Todavía no hay premios anunciados.';
-  $('#lv-feed').innerHTML=feed.map(p=>{const x=pieceOf(p);const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}"><span class="mb" style="background:${MCOL[p.metal]}">${MNAME[p.metal]}</span><div class="tt">${esc(x.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(x.cat)} · ${esc(x.adv)} · ${esc(x.agency)}${effSet.has(p)?'':' · <i>no suma: cuenta su Grand Prix</i>'}</div></div>`}).join('')||'<p class="hint">Sin premios con estos filtros.</p>';
+  $('#lv-feed').innerHTML=feed.map(p=>{const x=pieceOf(p);const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}"><img class="tr" src="${TROFEO[p.metal]}" alt=""><div class="tt"><span class="mb" style="background:${MCOL[p.metal]}">${MNAME[p.metal]}</span>${esc(x.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(x.cat)} · ${esc(x.adv)} · ${esc(x.agency)}${effSet.has(p)?'':' · <i>no suma: cuenta su Grand Prix</i>'}</div></div>`}).join('')||'<p class="hint">Sin premios con estos filtros.</p>';
   RES.forEach(p=>seenN.add(p.n));firstLoad=false;
 }
 $$('[data-lpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.lpop;

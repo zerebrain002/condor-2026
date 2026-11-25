@@ -291,6 +291,7 @@ body{overflow-x:hidden}
 .cd-boxes b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,76px);line-height:1.15;color:var(--yellow);font-variant-numeric:tabular-nums}
 .cd-boxes span{font-size:12px;letter-spacing:2px;text-transform:uppercase}
 .cd-tr{display:flex;justify-content:center;gap:10px;margin:16px 0 10px}.cd-tr img{height:110px}
+a.partner{text-decoration:none;color:inherit;display:block;transition:opacity .15s}a.partner:hover{opacity:.7}
 footer{border-top:3px solid var(--ink);padding:18px 0 40px;font-size:14px;color:var(--ink2)}
 footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -313,7 +314,7 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
     <div class="tt">
       <h1 class="display htitle">El festival oficial<br>de la publicidad ecuatoriana</h1>
     </div>
-    <div class="partner"><div class="kicker">Partner tecnológico</div><img src="img/zerebralab_mono.png" alt="Zerebralab"></div>
+    <a class="partner" href="https://www.instagram.com/somoszerebralab/" target="_blank" rel="noopener" aria-label="Zerebralab en Instagram (se abre en otra pestaña)" onclick="track('clic_partner',{destino:'instagram'})"><div class="kicker">Partner tecnológico</div><img src="img/zerebralab_mono.png" alt="Zerebralab"></a>
   </div>
   <nav class="tabs" role="tablist">
     <a href="#inicio" data-v="inicio">Inicio</a>

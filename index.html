@@ -767,13 +767,13 @@ function tickCount(){const ms=Math.max(0,START-now());const h=Math.floor(ms/3600
 let wasOpen=null,wasStarted=null;
 function gate(){const o=liveOpen(),st=now()>=START;
   if(o!==wasOpen){wasOpen=o;$$('nav a[data-v="envivo"]').forEach(a=>a.style.display=o?'':'none');if(!o&&location.hash==='#envivo')location.hash='#inicio'}
-  if(st!==wasStarted){wasStarted=st;if(wasOpen)renderLive()}
+  if(st!==wasStarted){wasStarted=st;$$('nav a[data-v="inicio"]').forEach(a=>a.style.display=st?'none':'');if(st&&(location.hash===''||location.hash==='#inicio'))location.hash='#envivo';if(wasOpen)renderLive()}
   if(o&&!RES.length&&!st&&$('#v-envivo').classList.contains('on'))tickCount()}
 gate();setInterval(gate,1000);
 loadRes();setInterval(loadRes,30000);
 
 /* =========================== NAVEGACIÓN =========================== */
-let lastView='';function route(){const v=(location.hash||'#inicio').slice(1);const ok=(['inicio','shortlist','historico'].includes(v)||(v==='envivo'&&liveOpen()))?v:'inicio';if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
+let lastView='';function route(){const gala=now()>=START,def=gala?'envivo':'inicio';const v=(location.hash||'#'+def).slice(1);const ok=((['shortlist','historico'].includes(v))||(v==='inicio'&&!gala)||(v==='envivo'&&liveOpen()))?v:def;if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
   $$('section.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+ok));document.body.classList.toggle('on-inicio',ok==='inicio');$$('nav.tabs a').forEach(a=>a.classList.toggle('on',a.dataset.v===ok));
   if(ok==='historico')renderH();closePop();hideTip();if(ok!=='inicio')scrollTo(0,0)}
 addEventListener('hashchange',route);

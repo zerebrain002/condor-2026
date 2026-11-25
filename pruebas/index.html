@@ -256,8 +256,13 @@ body{overflow-x:hidden}
 .lastaward .m{font-size:14px;opacity:.85}
 .feed{display:flex;flex-direction:column;gap:4px}
 .livegrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
-.livestats{display:flex;flex-direction:column;gap:16px}
-@media (min-width:901px){.livestats{position:sticky;top:96px;max-height:calc(100vh - 110px);overflow:auto}}
+.livestats{display:flex;flex-direction:column;gap:14px}
+.livefeed{display:flex;flex-direction:column;gap:12px}
+.lvk{grid-template-columns:1fr 1fr!important;margin:0!important;gap:10px!important}
+.lvk .kpi:first-child{grid-column:1 / -1}
+.lvk .kpi{padding:8px 14px}.lvk .kpi .v{font-size:28px}.lvk .kpi .l{margin-top:0}
+.lvf{position:static!important;padding:0 0 6px!important;margin:0!important}
+@media (min-width:901px){.livestats{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding-right:4px}}
 .win{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;border-bottom:1px solid var(--line);padding:8px 2px}
 .win .mb{border-radius:999px;color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;width:96px;text-align:center}
 .win .tt{font-weight:700}
@@ -320,26 +325,23 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
 <!-- EN VIVO -->
 <section class="view" id="v-envivo">
   <div class="note" id="lv-test" style="display:none;margin-bottom:14px"><b>Datos de prueba.</b> Estos premios no son reales; sirven para ensayar la carga en vivo.</div>
-  <div class="livehead">
-    <div>
-      <div class="kicker"><span class="livedot"></span><span id="lv-status">En vivo</span></div>
-      <h2 class="display">Premios Cóndor 2026</h2>
-      <p class="hint" id="lv-upd"></p>
-    </div>
-    <div class="lastaward" id="lv-last"></div>
-  </div>
-  <div class="kpis" id="lv-kpis"></div>
-  <div class="filters">
-    <div class="frow">
-      <span class="seg" id="lv-metal"></span>
-      <button class="fbtn" data-lpop="cat">+ Categoría</button>
-      <button class="fbtn" data-lpop="ag">+ Agencia</button>
-    </div>
-    <div class="chips" id="lv-chips"></div>
-  </div>
   <div class="livegrid">
-    <div class="card"><h3>Ganadores</h3><p class="sub" id="lv-feed-s"></p><div id="lv-feed" class="feed"></div></div>
+    <div class="livefeed">
+      <div class="kicker"><span class="livedot"></span><span id="lv-status">En vivo</span></div>
+      <div class="lastaward" id="lv-last"></div>
+      <div class="card"><h3>Ganadores</h3><p class="sub" id="lv-feed-s"></p><div id="lv-feed" class="feed"></div></div>
+    </div>
     <div class="livestats">
+      <div class="kpis lvk" id="lv-kpis"></div>
+      <div class="filters lvf">
+        <div class="frow">
+          <span class="seg" id="lv-metal"></span>
+          <button class="fbtn" data-lpop="cat">+ Categoría</button>
+          <button class="fbtn" data-lpop="ag">+ Agencia</button>
+        </div>
+        <div class="chips" id="lv-chips"></div>
+        <p class="hint" id="lv-upd" style="margin:4px 0 0"></p>
+      </div>
       <div class="card"><h3>Ranking de agencias</h3><p class="sub" id="lv-rank-s"></p><div class="legend" id="lv-leg"></div><div id="lv-rank-ag" class="bars"></div></div>
       <div class="card"><h3>Campañas con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-cmp" class="bars"></div></div>
       <div class="card"><h3>Anunciantes con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-adv" class="bars"></div></div>

@@ -278,6 +278,14 @@ body{overflow-x:hidden}
 @keyframes flash{0%{background:rgba(237,191,0,.55)}100%{background:transparent}}
 @media (max-width:900px){.livehead,.livegrid{grid-template-columns:1fr}}
 @media (max-width:600px){.win{gap:2px 8px}.la img{height:72px}}
+.countdown{text-align:center;padding:30px 10px 40px;background:var(--card);border:1.5px solid var(--ink);border-radius:22px}
+.countdown h2{font-size:clamp(34px,5vw,64px);margin:10px 0 6px}
+.cd-sub{color:var(--ink2);font-size:17px;margin:6px auto;max-width:52ch}
+.cd-boxes{display:flex;justify-content:center;gap:14px;margin:14px 0}
+.cd-boxes div{background:var(--ink);color:#fff;border-radius:16px;padding:14px 18px;min-width:110px}
+.cd-boxes b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,76px);line-height:1.15;color:var(--yellow);font-variant-numeric:tabular-nums}
+.cd-boxes span{font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.cd-tr{display:flex;justify-content:center;gap:10px;margin:16px 0 10px}.cd-tr img{height:110px}
 footer{border-top:3px solid var(--ink);padding:18px 0 40px;font-size:14px;color:var(--ink2)}
 footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -331,7 +339,16 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
 <!-- EN VIVO -->
 <section class="view" id="v-envivo">
   <div class="note" id="lv-test" style="display:none;margin-bottom:14px"><b>Datos de prueba.</b> Estos premios no son reales; sirven para ensayar la carga en vivo.</div>
-  <div class="livegrid">
+  <div class="countdown" id="lv-count" style="display:none">
+    <div class="kicker"><span class="livedot"></span>Hoy · Premios Cóndor 2026</div>
+    <h2 class="display">La ceremonia empieza a las 19:30</h2>
+    <p class="cd-sub">Faltan</p>
+    <div class="cd-boxes"><div><b id="cd-h">00</b><span>horas</span></div><div><b id="cd-m">00</b><span>minutos</span></div><div><b id="cd-s">00</b><span>segundos</span></div></div>
+    <p class="cd-sub">para conocer a los ganadores. Cuando empiece la gala, aquí verás cada premio apenas se anuncie.</p>
+    <div class="cd-tr"><img src="img/trofeo_O.png" alt=""><img src="img/trofeo_P.png" alt=""><img src="img/trofeo_B.png" alt=""></div>
+    <p class="hint">Mientras tanto, revisa quién llega con más piezas en <a href="#shortlist">Shortlist 2026</a> o compara años en <a href="#historico">Histórico</a>.</p>
+  </div>
+  <div class="livegrid" id="lv-grid">
     <div class="livefeed">
       <div class="kicker"><span class="livedot"></span><span id="lv-status">En vivo</span></div>
       <div class="lastaward" id="lv-last"></div>
@@ -480,6 +497,11 @@ const SL=RAW.map((r,i)=>{const ag=A[r[1]];return{id:i,cat:CATS[r[0]][0],agency:a
 let RES=[],RESMETA={},seenN=new Set(),firstLoad=true;
 const MRANK={GP:4,O:3,P:2,B:1};
 const MPTS={GP:15,O:10,P:5,B:3};
+// Horarios de la gala (hora de Ecuador). ?simular=2026-11-25T18:00 permite probar otros momentos
+const OPEN=new Date('2026-11-25T00:00:00-05:00'),START=new Date('2026-11-25T19:30:00-05:00');
+const SIM=(()=>{try{const v=new URLSearchParams(location.search).get('simular');return v?new Date(v+(v.length<=16?':00':'')+'-05:00').getTime()-Date.now():0}catch(e){return 0}})();
+const now=()=>new Date(Date.now()+SIM);
+const liveOpen=()=>now()>=OPEN;
 const TROFEO={GP:'img/trofeo_O.png',O:'img/trofeo_O.png',P:'img/trofeo_P.png',B:'img/trofeo_B.png'};
 
 // Puntaje por año (reglamentos de cada edición, deducido de los rankings publicados)
@@ -698,15 +720,18 @@ function liveRank(){
   const sort=m=>[...m.values()].sort((a,b)=>b.value-a.value||b.GP-a.GP||b.O-a.O||b.P-a.P||b.B-a.B||a.label.localeCompare(b.label));
   return{ag:sort(ag),cmp:sort(cmp),adv:sort(adv)}}
 function renderLive(){
-  const has=RES.length>0;
+  const has=RES.length>0,started=now()>=START;
+  $('#lv-count').style.display=(!has&&!started)?'block':'none';
+  $('#lv-grid').style.display=(!has&&!started)?'none':'grid';
+  if(!has&&!started)tickCount();
   $('#lv-test').style.display=RESMETA.prueba?'block':'none';
-  $('#lv-status').textContent=RESMETA.estado||(has?'En vivo':'La gala aún no empieza');
-  $$('.livedot').forEach(d=>d.classList.toggle('off',!has));
+  $('#lv-status').textContent=RESMETA.estado||(has?'En vivo':'Empezamos en pocos minutos');
+  
   $('#lv-upd').textContent=(RESMETA.actualizado?'Actualizado '+RESMETA.actualizado+' · ':'')+'La página se actualiza sola cada 30 segundos.';
   const cnt=k=>RES.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
   $('#lv-kpis').innerHTML=[[RES.length,'premios entregados','T',['O','P','B']],[cnt('GP'),'Grand Prix','GP',['O']],[cnt('O'),'oros','O',['O']],[cnt('P'),'platas','P',['P']],[cnt('B'),'bronces','B',['B']]].map(([v,l,k,tr])=>`<div class="kpi k-${k}"><div><div class="v">${v}</div><div class="l">${l}</div></div><div class="kt">${tr.map(t=>`<img src="${TROFEO[t]}" alt="">`).join('')}</div></div>`).join('');
   const last=[...RES].sort((a,b)=>b.n-a.n)[0];
-  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="la"><img src="${TROFEO[last.metal]}" alt="Trofeo ${MNAME[last.metal]}"><div><div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div></div></div>`})():`<div class="k">Último premio</div><div class="t">Aquí aparecerá cada premio apenas se anuncie</div><div class="m">${SL.length} piezas en shortlist esperan su turno.</div>`;
+  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="la"><img src="${TROFEO[last.metal]}" alt="Trofeo ${MNAME[last.metal]}"><div><div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div></div></div>`})():`<div class="k">Gala Cóndor 2026</div><div class="t">La ceremonia está por empezar</div><div class="m">Aquí aparecerá cada premio apenas se anuncie. ${SL.length} piezas en shortlist esperan su turno.</div>`;
   $('#lv-metal').innerHTML=[['','Todos'],['GP','Grand Prix'],['O','Oro'],['P','Plata'],['B','Bronce']].map(([k,l])=>`<button class="${LF.metal===k?'on':''}" data-m="${k}">${l}</button>`).join('');
   $$('#lv-metal button').forEach(b=>b.onclick=()=>{LF.metal=b.dataset.m;track('filtro_agregar',{seccion:'envivo',dimension:'Metal',valor:b.textContent});renderLive()});
   const chips=[];LF.cat.forEach(v=>chips.push(`<span class="chip c-cat"><span class="k">Categoría:</span> ${esc(v)} <button data-k="cat" data-v="${esc(v)}">×</button></span>`));LF.ag.forEach(v=>chips.push(`<span class="chip c-ag"><span class="k">Agencia:</span> ${esc(v)} <button data-k="ag" data-v="${esc(v)}">×</button></span>`));
@@ -724,7 +749,7 @@ function renderLive(){
   bars($('#lv-rank-adv'),R.adv.map(d=>({...d,segs:seg(d)})),{limit:10,tipFn:tipR});
   const feed=[...RES].sort((a,b)=>b.n-a.n).filter(p=>{const x=pieceOf(p);return(!LF.metal||p.metal===LF.metal)&&(!LF.cat.size||LF.cat.has(x.cat))&&(!LF.ag.size||x.agencies.some(a=>LF.ag.has(a)))});
   $('#lv-feed-s').textContent=has?`${feed.length} premio${feed.length===1?'':'s'}, del más reciente al más antiguo`:'Todavía no hay premios anunciados.';
-  $('#lv-feed').innerHTML=feed.map(p=>{const x=pieceOf(p);const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}"><img class="tr" src="${TROFEO[p.metal]}" alt=""><div class="tt"><span class="mb" style="background:${MCOL[p.metal]}">${MNAME[p.metal]}</span>${esc(x.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(x.cat)} · ${esc(x.adv)} · ${esc(x.agency)}${effSet.has(p)?'':' · <i>no suma: cuenta su Grand Prix</i>'}</div></div>`}).join('')||'<p class="hint">Sin premios con estos filtros.</p>';
+  $('#lv-feed').innerHTML=feed.map(p=>{const x=pieceOf(p);const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}"><img class="tr" src="${TROFEO[p.metal]}" alt=""><div class="tt"><span class="mb" style="background:${MCOL[p.metal]}">${MNAME[p.metal]}</span>${esc(x.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(x.cat)} · ${esc(x.adv)} · ${esc(x.agency)}${effSet.has(p)?'':' · <i>no suma: cuenta su Grand Prix</i>'}</div></div>`}).join('')||(has?'<p class="hint">Sin premios con estos filtros.</p>':'');
   RES.forEach(p=>seenN.add(p.n));firstLoad=false;
 }
 $$('[data-lpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.lpop;
@@ -732,10 +757,18 @@ $$('[data-lpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.lpop;
   popover(b,opts,LF[k],(v,on)=>{on?LF[k].add(v):LF[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'envivo',dimension:k==='cat'?'Categoría':'Agencia',valor:v,origen:'menu'});renderLive()})});
 async function loadRes(){try{const r=await fetch('data/resultados.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();
   const sig=JSON.stringify(j);if(sig===loadRes.last)return;loadRes.last=sig;RESMETA=j;RES=(j.premios||[]).filter(p=>MPTS[p.metal]);renderLive();renderSL()}catch(e){if(firstLoad)renderLive()}}
+function tickCount(){const ms=Math.max(0,START-now());const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),sg=Math.floor(ms%60000/1000);
+  $('#cd-h').textContent=String(h).padStart(2,'0');$('#cd-m').textContent=String(m).padStart(2,'0');$('#cd-s').textContent=String(sg).padStart(2,'0')}
+let wasOpen=null,wasStarted=null;
+function gate(){const o=liveOpen(),st=now()>=START;
+  if(o!==wasOpen){wasOpen=o;$$('nav a[data-v="envivo"]').forEach(a=>a.style.display=o?'':'none');if(!o&&location.hash==='#envivo')location.hash='#inicio'}
+  if(st!==wasStarted){wasStarted=st;if(wasOpen)renderLive()}
+  if(o&&!RES.length&&!st&&$('#v-envivo').classList.contains('on'))tickCount()}
+gate();setInterval(gate,1000);
 loadRes();setInterval(loadRes,30000);
 
 /* =========================== NAVEGACIÓN =========================== */
-let lastView='';function route(){const v=(location.hash||'#inicio').slice(1);const ok=['inicio','envivo','shortlist','historico'].includes(v)?v:'inicio';if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
+let lastView='';function route(){const v=(location.hash||'#inicio').slice(1);const ok=(['inicio','shortlist','historico'].includes(v)||(v==='envivo'&&liveOpen()))?v:'inicio';if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
   $$('section.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+ok));document.body.classList.toggle('on-inicio',ok==='inicio');$$('nav.tabs a').forEach(a=>a.classList.toggle('on',a.dataset.v===ok));
   if(ok==='historico')renderH();closePop();hideTip();if(ok!=='inicio')scrollTo(0,0)}
 addEventListener('hashchange',route);

@@ -249,6 +249,48 @@ table.ht td.na{color:var(--muted)}
 body{overflow-x:hidden}
 @media (max-width:900px){.home2{grid-template-columns:1fr;grid-template-areas:"t" "k"}.h-condor{display:none}.h-cards{grid-template-columns:1fr}.door2.wide{grid-template-columns:1fr}}
 .htitle{font-size:clamp(26px,3.4vw,42px)!important;margin:0!important}
+/* en vivo */
+.livedot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--red);margin-right:8px;vertical-align:middle;animation:pulse 1.6s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(238,10,22,.55)}70%{box-shadow:0 0 0 9px rgba(238,10,22,0)}100%{box-shadow:0 0 0 0 rgba(238,10,22,0)}}
+.livedot.off{background:var(--muted);animation:none}
+.livehead{display:grid;grid-template-columns:1fr 1.1fr;gap:20px;align-items:center;margin-bottom:18px}
+.livehead h2{font-size:clamp(34px,4.6vw,56px);margin:4px 0 2px}
+.lastaward{background:var(--ink);color:#fff;border-radius:18px;padding:16px 18px;min-height:120px}
+.lastaward .k{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--sand);font-weight:700}
+.lastaward .t{font-family:Anton,sans-serif;font-size:30px;line-height:1.2;margin:6px 0 2px}
+.lastaward .m{font-size:14px;opacity:.85}
+.feed{display:flex;flex-direction:column;gap:4px}
+.livegrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.livestats{display:flex;flex-direction:column;gap:14px}
+.livefeed{display:flex;flex-direction:column;gap:12px}
+.lvk{grid-template-columns:1fr 1fr!important;margin:0!important;gap:10px!important}
+.lvk .kpi:first-child{grid-column:1 / -1}
+.lvk .kpi{padding:8px 14px;display:flex;align-items:center;justify-content:space-between;gap:8px}
+.lvk .kt{display:flex;gap:2px;align-items:flex-end}.lvk .kt img{height:52px;width:auto}
+.lvk .k-T{border-top:5px solid var(--ink)!important}.lvk .k-GP{border-top:5px solid var(--gp)!important}.lvk .k-O{border-top:5px solid var(--oro)!important}.lvk .k-P{border-top:5px solid var(--plata)!important}.lvk .k-B{border-top:5px solid var(--bronce)!important}
+.lvk .k-GP .kt img{filter:drop-shadow(0 0 0 transparent)}.lvk .kpi .v{font-size:28px}.lvk .kpi .l{margin-top:0}
+.lvf{position:static!important;padding:0 0 6px!important;margin:0!important}
+@media (min-width:901px){.livestats{position:sticky;top:12px;max-height:calc(100vh - 24px);overflow:auto;padding-right:4px}}
+.win{display:grid;grid-template-columns:34px 1fr auto;gap:2px 12px;align-items:center;border-bottom:1px solid var(--line);padding:8px 2px}
+.win .tr{grid-row:1 / span 2;height:62px;width:34px;object-fit:contain}
+.win .tt .mb{display:inline-block;margin-right:8px;vertical-align:2px}
+.la{display:flex;gap:16px;align-items:center}.la img{height:96px;width:auto;flex:none}
+.win .mb{border-radius:999px;color:#fff;font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:2px 8px;text-align:center}
+.win .tt{font-weight:700}
+.win .ds{grid-column:2;font-size:13px;color:var(--ink2)}
+.win .hr{font-size:12px;color:var(--muted);grid-row:1 / span 2;grid-column:3}
+.win.new{animation:flash 2.4s ease-out}
+@keyframes flash{0%{background:rgba(237,191,0,.55)}100%{background:transparent}}
+@media (max-width:900px){.livehead,.livegrid{grid-template-columns:1fr}}
+@media (max-width:600px){.win{gap:2px 8px}.la img{height:72px}}
+.countdown{text-align:center;padding:30px 10px 40px;background:var(--card);border:1.5px solid var(--ink);border-radius:22px}
+.countdown h2{font-size:clamp(34px,5vw,64px);margin:10px 0 6px}
+.cd-sub{color:var(--ink2);font-size:17px;margin:6px auto;max-width:52ch}
+.cd-boxes{display:flex;justify-content:center;gap:14px;margin:14px 0}
+.cd-boxes div{background:var(--ink);color:#fff;border-radius:16px;padding:14px 18px;min-width:110px}
+.cd-boxes b{display:block;font-family:Anton,sans-serif;font-weight:400;font-size:clamp(44px,7vw,76px);line-height:1.15;color:var(--yellow);font-variant-numeric:tabular-nums}
+.cd-boxes span{font-size:12px;letter-spacing:2px;text-transform:uppercase}
+.cd-tr{display:flex;justify-content:center;gap:10px;margin:16px 0 10px}.cd-tr img{height:110px}
 footer{border-top:3px solid var(--ink);padding:18px 0 40px;font-size:14px;color:var(--ink2)}
 footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -275,6 +317,7 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
   </div>
   <nav class="tabs" role="tablist">
     <a href="#inicio" data-v="inicio">Inicio</a>
+    <a href="#envivo" data-v="envivo"><span class="livedot"></span>En vivo</a>
     <a href="#shortlist" data-v="shortlist">Shortlist 2026</a>
     <a href="#historico" data-v="historico">Histórico</a>
   </nav>
@@ -295,6 +338,42 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
     <a class="door" href="#shortlist"><span class="bar" style="background:var(--orange)"></span><div class="kicker">2026</div><h3>Shortlist</h3><p>Agencias, campañas y categorías con más presencia.</p><div class="facts" id="d-sl"></div><div class="go">Ver estadísticas →</div></a>
     <a class="door" href="#historico"><span class="bar" style="background:var(--blue)"></span><div class="kicker">2019 → 2025</div><h3>Histórico</h3><p>Rankings oficiales y agencia del año.</p><div class="facts" id="d-h"></div><div class="go">Comparar años →</div></a>
   </div>
+  </div>
+</section>
+
+<!-- EN VIVO -->
+<section class="view" id="v-envivo">
+  <div class="note" id="lv-test" style="display:none;margin-bottom:14px"><b>Datos de prueba.</b> Estos premios no son reales; sirven para ensayar la carga en vivo.</div>
+  <div class="countdown" id="lv-count" style="display:none">
+    <div class="kicker"><span class="livedot"></span>Hoy · Premios Cóndor 2026</div>
+    <h2 class="display">La ceremonia empieza a las 19:30</h2>
+    <p class="cd-sub">Faltan</p>
+    <div class="cd-boxes"><div><b id="cd-h">00</b><span>horas</span></div><div><b id="cd-m">00</b><span>minutos</span></div><div><b id="cd-s">00</b><span>segundos</span></div></div>
+    <p class="cd-sub">para conocer a los ganadores. Cuando empiece la gala, aquí verás cada premio apenas se anuncie.</p>
+    <div class="cd-tr"><img src="img/trofeo_O.png" alt=""><img src="img/trofeo_P.png" alt=""><img src="img/trofeo_B.png" alt=""></div>
+    <p class="hint">Mientras tanto, revisa quién llega con más piezas en <a href="#shortlist">Shortlist 2026</a> o compara años en <a href="#historico">Histórico</a>.</p>
+  </div>
+  <div class="livegrid" id="lv-grid">
+    <div class="livefeed">
+      <div class="kicker"><span class="livedot"></span><span id="lv-status">En vivo</span></div>
+      <div class="lastaward" id="lv-last"></div>
+      <div class="card"><h3>Ganadores</h3><p class="sub" id="lv-feed-s"></p><div id="lv-feed" class="feed"></div></div>
+    </div>
+    <div class="livestats">
+      <div class="kpis lvk" id="lv-kpis"></div>
+      <div class="filters lvf">
+        <div class="frow">
+          <span class="seg" id="lv-metal"></span>
+          <button class="fbtn" data-lpop="cat">+ Categoría</button>
+          <button class="fbtn" data-lpop="ag">+ Agencia</button>
+        </div>
+        <div class="chips" id="lv-chips"></div>
+        <p class="hint" id="lv-upd" style="margin:4px 0 0"></p>
+      </div>
+      <div class="card"><h3>Ranking de agencias</h3><p class="sub" id="lv-rank-s"></p><div class="legend" id="lv-leg"></div><div id="lv-rank-ag" class="bars"></div></div>
+      <div class="card"><h3>Campañas con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-cmp" class="bars"></div></div>
+      <div class="card"><h3>Anunciantes con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-adv" class="bars"></div></div>
+    </div>
   </div>
 </section>
 
@@ -419,7 +498,16 @@ const RAW=[
 const SL=RAW.map((r,i)=>{const ag=A[r[1]];return{id:i,cat:CATS[r[0]][0],agency:ag,agencies:ag.split(' / '),adv:r[2],title:r[3],cmp:r[4]||r[3]}});
 
 // Resultados en vivo (se completan durante la gala): {id de pieza o título, cat, metal:'GP'|'O'|'P'|'B'}
-const RESULTS=[];
+// Premios en vivo: se cargan desde data/resultados.json y se actualizan solos cada 30 s
+let RES=[],RESMETA={},seenN=new Set(),firstLoad=true;
+const MRANK={GP:4,O:3,P:2,B:1};
+const MPTS={GP:15,O:10,P:5,B:3};
+// Horarios de la gala (hora de Ecuador). ?simular=2026-11-25T18:00 permite probar otros momentos
+const OPEN=new Date('2026-11-25T00:00:00-05:00'),START=new Date('2026-11-25T19:30:00-05:00');
+const SIM=(()=>{try{const v=new URLSearchParams(location.search).get('simular');return v?new Date(v+(v.length<=16?':00':'')+'-05:00').getTime()-Date.now():0}catch(e){return 0}})();
+const now=()=>new Date(Date.now()+SIM);
+const liveOpen=()=>now()>=OPEN;
+const TROFEO={GP:'img/trofeo_O.png',O:'img/trofeo_O.png',P:'img/trofeo_P.png',B:'img/trofeo_B.png'};
 
 // Puntaje por año (reglamentos de cada edición, deducido de los rankings publicados)
 const PTS26={GP:15,O:10,P:5,B:3,SL:1};
@@ -438,7 +526,7 @@ const FAMILY={'Paradais DDB':'Paradais','Paradais TBWA':'Paradais','Maruri':'Mar
 
 /* =========================== UTILIDADES =========================== */
 function track(ev,params){try{if(window.gtag)gtag('event',ev,params||{})}catch(e){}}
-const TABNAME={inicio:'Inicio',shortlist:'Shortlist 2026',historico:'Histórico'};
+const TABNAME={inicio:'Inicio',envivo:'En vivo',shortlist:'Shortlist 2026',historico:'Histórico'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const SERIES=['--s1','--s2','--s3','--s4','--s5','--s6'].map(v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim());
@@ -485,7 +573,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')closePop()});
 const F={cat:new Set(),ag:new Set(),adv:new Set(),cmp:new Set(),q:''};
 const FLAB={cat:'Categoría',ag:'Agencia',adv:'Anunciante',cmp:'Campaña'};
 function slFiltered(skip){return SL.filter(r=>(skip==='cat'||!F.cat.size||F.cat.has(r.cat))&&(skip==='ag'||!F.ag.size||r.agencies.some(a=>F.ag.has(a)))&&(skip==='adv'||!F.adv.size||F.adv.has(r.adv))&&(skip==='cmp'||!F.cmp.size||F.cmp.has(r.cmp))&&(!F.q||(r.title+' '+r.agency+' '+r.adv+' '+r.cat).toLowerCase().includes(F.q)))}
-function medalOf(r){const m=RESULTS.find(x=>(x.id===r.id)||(x.cat===r.cat&&x.title===r.title&&x.agency===r.agency));return m&&m.metal}
+function medalOf(r){const ms=RES.filter(x=>x.sl===r.id).map(x=>x.metal).sort((a,b)=>MRANK[b]-MRANK[a]);return ms[0]}
 function toggleF(k,v,via){const on=!F[k].has(v);on?F[k].add(v):F[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'shortlist',dimension:FLAB[k],valor:v,origen:via||'grafico'});renderSL()}
 function renderSL(){
   const rows=slFiltered();
@@ -621,8 +709,71 @@ $$('[data-hpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.hpop;
 $('#h-unify').onchange=e=>{H.unify=e.target.checked;track('unir_nombres',{seccion:'historico',activo:H.unify?'si':'no'});H.touched=false;colorOf.clear();renderH()};
 function showToast(t){const d=document.createElement('div');d.className='tip';d.style.cssText='display:block;left:50%;bottom:24px;top:auto;transform:translateX(-50%)';d.textContent=t;document.body.appendChild(d);setTimeout(()=>d.remove(),2200)}
 
+/* =========================== EN VIVO =========================== */
+const LF={metal:'',cat:new Set(),ag:new Set()};
+function pieceOf(p){const r=p.sl!=null?SL[p.sl]:null;return r?{title:r.title,cat:r.cat,agencies:r.agencies,agency:r.agency,adv:r.adv,cmp:r.cmp}:{title:p.title,cat:p.cat,agencies:(p.agency||'').split(' / '),agency:p.agency,adv:p.adv,cmp:p.cmp||p.title}}
+// Si una misma pieza gana Oro y Grand Prix, cuenta solo el Grand Prix
+function effective(list){const gp=new Set(list.filter(p=>p.metal==='GP'&&p.sl!=null).map(p=>p.sl));return list.filter(p=>!(p.metal==='O'&&p.sl!=null&&gp.has(p.sl)))}
+function liveRank(){
+  const catOk=c=>!LF.cat.size||LF.cat.has(c);
+  const ag=new Map(),cmp=new Map(),adv=new Map();
+  const add=(m,k,pts,metal)=>{const o=m.get(k)||{key:k,label:k,value:0,GP:0,O:0,P:0,B:0,SL:0};o.value+=pts;o[metal]+=metal==='SL'?1:1;m.set(k,o)};
+  effective(RES).forEach(p=>{const x=pieceOf(p);if(!catOk(x.cat))return;if(LF.metal&&p.metal!==LF.metal)return;
+    x.agencies.forEach(a=>add(ag,a,MPTS[p.metal],p.metal));add(cmp,x.cmp,MPTS[p.metal],p.metal);add(adv,x.adv,MPTS[p.metal],p.metal)});
+  if(!LF.metal){const won=new Set(RES.filter(p=>p.sl!=null).map(p=>p.sl));
+    SL.forEach(r=>{if(won.has(r.id)||!catOk(r.cat))return;r.agencies.forEach(a=>add(ag,a,1,'SL'));add(cmp,r.cmp,1,'SL');add(adv,r.adv,1,'SL')})}
+  const sort=m=>[...m.values()].sort((a,b)=>b.value-a.value||b.GP-a.GP||b.O-a.O||b.P-a.P||b.B-a.B||a.label.localeCompare(b.label));
+  return{ag:sort(ag),cmp:sort(cmp),adv:sort(adv)}}
+function renderLive(){
+  const has=RES.length>0,started=now()>=START;
+  $('#lv-count').style.display=(!has&&!started)?'block':'none';
+  $('#lv-grid').style.display=(!has&&!started)?'none':'grid';
+  if(!has&&!started)tickCount();
+  $('#lv-test').style.display=RESMETA.prueba?'block':'none';
+  $('#lv-status').textContent=RESMETA.estado||(has?'En vivo':'Empezamos en pocos minutos');
+  
+  $('#lv-upd').textContent=(RESMETA.actualizado?'Actualizado '+RESMETA.actualizado+' · ':'')+'La página se actualiza sola cada 30 segundos.';
+  const cnt=k=>RES.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
+  $('#lv-kpis').innerHTML=[[RES.length,'premios entregados','T',['O','P','B']],[cnt('GP'),'Grand Prix','GP',['O']],[cnt('O'),'oros','O',['O']],[cnt('P'),'platas','P',['P']],[cnt('B'),'bronces','B',['B']]].map(([v,l,k,tr])=>`<div class="kpi k-${k}"><div><div class="v">${v}</div><div class="l">${l}</div></div><div class="kt">${tr.map(t=>`<img src="${TROFEO[t]}" alt="">`).join('')}</div></div>`).join('');
+  const last=[...RES].sort((a,b)=>b.n-a.n)[0];
+  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="la"><img src="${TROFEO[last.metal]}" alt="Trofeo ${MNAME[last.metal]}"><div><div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div></div></div>`})():`<div class="k">Gala Cóndor 2026</div><div class="t">La ceremonia está por empezar</div><div class="m">Aquí aparecerá cada premio apenas se anuncie. ${SL.length} piezas en shortlist esperan su turno.</div>`;
+  $('#lv-metal').innerHTML=[['','Todos'],['GP','Grand Prix'],['O','Oro'],['P','Plata'],['B','Bronce']].map(([k,l])=>`<button class="${LF.metal===k?'on':''}" data-m="${k}">${l}</button>`).join('');
+  $$('#lv-metal button').forEach(b=>b.onclick=()=>{LF.metal=b.dataset.m;track('filtro_agregar',{seccion:'envivo',dimension:'Metal',valor:b.textContent});renderLive()});
+  const chips=[];LF.cat.forEach(v=>chips.push(`<span class="chip c-cat"><span class="k">Categoría:</span> ${esc(v)} <button data-k="cat" data-v="${esc(v)}">×</button></span>`));LF.ag.forEach(v=>chips.push(`<span class="chip c-ag"><span class="k">Agencia:</span> ${esc(v)} <button data-k="ag" data-v="${esc(v)}">×</button></span>`));
+  $('#lv-chips').innerHTML=chips.length?chips.join('')+'<button class="clear" id="lv-clear">Limpiar</button>':'<span class="hint">Filtra por metal, categoría o agencia. Los filtros se suman.</span>';
+  $$('#lv-chips .chip button').forEach(b=>b.onclick=()=>{LF[b.dataset.k].delete(b.dataset.v);renderLive()});
+  const c=$('#lv-clear');if(c)c.onclick=()=>{LF.cat.clear();LF.ag.clear();LF.metal='';renderLive()};
+  const R=liveRank();
+  $('#lv-rank-s').textContent=LF.metal?`Solo ${MNAME[LF.metal].toLowerCase()}s (${MPTS[LF.metal]} pts c/u).`:'Puntaje oficial 2026: GP 15 · Oro 10 · Plata 5 · Bronce 3 · Shortlist 1. Si una pieza gana Oro y Grand Prix, cuenta solo el Grand Prix.';
+  $('#lv-leg').innerHTML=['GP','O','P','B','SL'].map(k=>`<span><i style="background:${MCOL[k]};height:10px;width:10px"></i>${MNAME[k]}</span>`).join('');
+  const seg=d=>['GP','O','P','B','SL'].map(k=>({v:d[k]*(k==='SL'?1:MPTS[k]),c:MCOL[k]}));
+  const tipR=d=>`<b>${esc(d.label)}</b><br>${d.value} puntos<br>${['GP','O','P','B','SL'].filter(k=>d[k]).map(k=>`<span class="sw" style="background:${MCOL[k]}"></span>${MNAME[k]}: ${d[k]}`).join('<br>')}`;
+  const agItems=R.ag.filter(d=>!LF.ag.size||LF.ag.has(d.key)).map(d=>({...d,segs:seg(d)}));
+  bars($('#lv-rank-ag'),agItems,{limit:12,selected:LF.ag,tipFn:tipR,onClick:d=>{LF.ag.has(d.key)?LF.ag.delete(d.key):LF.ag.add(d.key);track('filtro_agregar',{seccion:'envivo',dimension:'Agencia',valor:d.key,origen:'grafico'});renderLive()}});
+  bars($('#lv-rank-cmp'),R.cmp.map(d=>({...d,segs:seg(d)})),{limit:10,tipFn:tipR});
+  bars($('#lv-rank-adv'),R.adv.map(d=>({...d,segs:seg(d)})),{limit:10,tipFn:tipR});
+  const feed=[...RES].sort((a,b)=>b.n-a.n).filter(p=>{const x=pieceOf(p);return(!LF.metal||p.metal===LF.metal)&&(!LF.cat.size||LF.cat.has(x.cat))&&(!LF.ag.size||x.agencies.some(a=>LF.ag.has(a)))});
+  $('#lv-feed-s').textContent=has?`${feed.length} premio${feed.length===1?'':'s'}, del más reciente al más antiguo`:'Todavía no hay premios anunciados.';
+  $('#lv-feed').innerHTML=feed.map(p=>{const x=pieceOf(p);const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}"><img class="tr" src="${TROFEO[p.metal]}" alt=""><div class="tt"><span class="mb" style="background:${MCOL[p.metal]}">${MNAME[p.metal]}</span>${esc(x.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(x.cat)} · ${esc(x.adv)} · ${esc(x.agency)}${effSet.has(p)?'':' · <i>no suma: cuenta su Grand Prix</i>'}</div></div>`}).join('')||(has?'<p class="hint">Sin premios con estos filtros.</p>':'');
+  RES.forEach(p=>seenN.add(p.n));firstLoad=false;
+}
+$$('[data-lpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.lpop;
+  const opts=k==='cat'?CATS.map(c=>({key:c[0],label:c[0],count:RES.filter(p=>pieceOf(p).cat===c[0]).length+' premios'})):[...new Set(SL.flatMap(r=>r.agencies))].sort().map(a=>({key:a,label:a}));
+  popover(b,opts,LF[k],(v,on)=>{on?LF[k].add(v):LF[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'envivo',dimension:k==='cat'?'Categoría':'Agencia',valor:v,origen:'menu'});renderLive()})});
+async function loadRes(){try{const r=await fetch('data/resultados.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();
+  const sig=JSON.stringify(j);if(sig===loadRes.last)return;loadRes.last=sig;RESMETA=j;RES=(j.premios||[]).filter(p=>MPTS[p.metal]);renderLive();renderSL()}catch(e){if(firstLoad)renderLive()}}
+function tickCount(){const ms=Math.max(0,START-now());const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),sg=Math.floor(ms%60000/1000);
+  $('#cd-h').textContent=String(h).padStart(2,'0');$('#cd-m').textContent=String(m).padStart(2,'0');$('#cd-s').textContent=String(sg).padStart(2,'0')}
+let wasOpen=null,wasStarted=null;
+function gate(){const o=liveOpen(),st=now()>=START;
+  if(o!==wasOpen){wasOpen=o;$$('nav a[data-v="envivo"]').forEach(a=>a.style.display=o?'':'none');if(!o&&location.hash==='#envivo')location.hash='#inicio'}
+  if(st!==wasStarted){wasStarted=st;if(wasOpen)renderLive()}
+  if(o&&!RES.length&&!st&&$('#v-envivo').classList.contains('on'))tickCount()}
+gate();setInterval(gate,1000);
+loadRes();setInterval(loadRes,30000);
+
 /* =========================== NAVEGACIÓN =========================== */
-let lastView='';function route(){const v=(location.hash||'#inicio').slice(1);const ok=['inicio','shortlist','historico'].includes(v)?v:'inicio';if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
+let lastView='';function route(){const v=(location.hash||'#inicio').slice(1);const ok=(['inicio','shortlist','historico'].includes(v)||(v==='envivo'&&liveOpen()))?v:'inicio';if(ok!==lastView){lastView=ok;try{if(window.gtag)gtag('event','page_view',{page_title:'Cóndor 2026 · '+TABNAME[ok],page_location:location.origin+location.pathname+location.search+'#'+ok,page_path:'/'+ok})}catch(e){}}
   $$('section.view').forEach(s=>s.classList.toggle('on',s.id==='v-'+ok));document.body.classList.toggle('on-inicio',ok==='inicio');$$('nav.tabs a').forEach(a=>a.classList.toggle('on',a.dataset.v===ok));
   if(ok==='historico')renderH();closePop();hideTip();if(ok!=='inicio')scrollTo(0,0)}
 addEventListener('hashchange',route);

@@ -329,7 +329,7 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
   <div class="home">
   <div class="intro">
     <div>
-      <div class="kicker">Gala Cóndor 2026</div>
+      <div class="kicker">Gala El Cóndor 2026</div>
       <h2 class="display">Explora el Cóndor antes de la gala</h2>
       <p>Revisa quién llega con más piezas al shortlist, compara cómo se movió el ranking de agencias desde 2019 y quién llega con más fuerza a la gala.</p>
     </div>
@@ -736,7 +736,7 @@ function renderLive(){
   const cnt=k=>RES.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
   $('#lv-kpis').innerHTML=[[RES.length,'premios entregados','T',['O','P','B']],[cnt('GP'),'Grand Prix','GP',['O']],[cnt('O'),'oros','O',['O']],[cnt('P'),'platas','P',['P']],[cnt('B'),'bronces','B',['B']]].map(([v,l,k,tr])=>`<div class="kpi k-${k}"><div><div class="v">${v}</div><div class="l">${l}</div></div><div class="kt">${tr.map(t=>`<img src="${TROFEO[t]}" alt="">`).join('')}</div></div>`).join('');
   const last=[...RES].sort((a,b)=>b.n-a.n)[0];
-  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="la"><img src="${TROFEO[last.metal]}" alt="Trofeo ${MNAME[last.metal]}"><div><div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div></div></div>`})():`<div class="k">Gala Cóndor 2026</div><div class="t">La ceremonia está por empezar</div><div class="m">Aquí aparecerá cada premio apenas se anuncie. ${SL.length} piezas en shortlist esperan su turno.</div>`;
+  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="la"><img src="${TROFEO[last.metal]}" alt="Trofeo ${MNAME[last.metal]}"><div><div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div></div></div>`})():`<div class="k">Gala El Cóndor 2026</div><div class="t">La ceremonia está por empezar</div><div class="m">Aquí aparecerá cada premio apenas se anuncie. ${SL.length} piezas en shortlist esperan su turno.</div>`;
   $('#lv-metal').innerHTML=[['','Todos'],['GP','Grand Prix'],['O','Oro'],['P','Plata'],['B','Bronce']].map(([k,l])=>`<button class="${LF.metal===k?'on':''}" data-m="${k}">${l}</button>`).join('');
   $$('#lv-metal button').forEach(b=>b.onclick=()=>{LF.metal=b.dataset.m;track('filtro_agregar',{seccion:'envivo',dimension:'Metal',valor:b.textContent});renderLive()});
   const chips=[];LF.cat.forEach(v=>chips.push(`<span class="chip c-cat"><span class="k">Categoría:</span> ${esc(v)} <button data-k="cat" data-v="${esc(v)}">×</button></span>`));LF.ag.forEach(v=>chips.push(`<span class="chip c-ag"><span class="k">Agencia:</span> ${esc(v)} <button data-k="ag" data-v="${esc(v)}">×</button></span>`));

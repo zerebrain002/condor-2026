@@ -254,15 +254,19 @@ body{overflow-x:hidden}
 .lastaward .k{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--sand);font-weight:700}
 .lastaward .t{font-family:Anton,sans-serif;font-size:30px;line-height:1.2;margin:6px 0 2px}
 .lastaward .m{font-size:14px;opacity:.85}
-.feed{display:flex;flex-direction:column;gap:8px;max-height:640px;overflow:auto;padding-right:4px}
+.feed{display:flex;flex-direction:column;gap:4px}
+.livegrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px;align-items:start}
+.livestats{display:flex;flex-direction:column;gap:16px}
+@media (min-width:901px){.livestats{position:sticky;top:96px;max-height:calc(100vh - 110px);overflow:auto}}
 .win{display:grid;grid-template-columns:auto 1fr auto;gap:4px 12px;align-items:center;border-bottom:1px solid var(--line);padding:8px 2px}
-.win .mb{border-radius:999px;color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 10px;min-width:64px;text-align:center}
+.win .mb{border-radius:999px;color:#fff;font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:4px 8px;width:96px;text-align:center}
 .win .tt{font-weight:700}
 .win .ds{grid-column:2;font-size:13px;color:var(--ink2)}
 .win .hr{font-size:12px;color:var(--muted);grid-row:1 / span 2;grid-column:3}
 .win.new{animation:flash 2.4s ease-out}
 @keyframes flash{0%{background:rgba(237,191,0,.55)}100%{background:transparent}}
-@media (max-width:900px){.livehead{grid-template-columns:1fr}}
+@media (max-width:900px){.livehead,.livegrid{grid-template-columns:1fr}}
+@media (max-width:600px){.win .mb{width:74px;font-size:10px;letter-spacing:.5px;padding:3px 4px}.win{gap:4px 8px}}
 footer{border-top:3px solid var(--ink);padding:18px 0 40px;font-size:14px;color:var(--ink2)}
 footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;align-items:center}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
@@ -333,13 +337,13 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
     </div>
     <div class="chips" id="lv-chips"></div>
   </div>
-  <div class="grid2">
-    <div class="card"><h3>Ranking de agencias</h3><p class="sub" id="lv-rank-s"></p><div class="legend" id="lv-leg"></div><div id="lv-rank-ag" class="bars"></div></div>
+  <div class="livegrid">
     <div class="card"><h3>Ganadores</h3><p class="sub" id="lv-feed-s"></p><div id="lv-feed" class="feed"></div></div>
-  </div>
-  <div class="grid2 mt">
-    <div class="card"><h3>Campañas con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-cmp" class="bars"></div></div>
-    <div class="card"><h3>Anunciantes con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-adv" class="bars"></div></div>
+    <div class="livestats">
+      <div class="card"><h3>Ranking de agencias</h3><p class="sub" id="lv-rank-s"></p><div class="legend" id="lv-leg"></div><div id="lv-rank-ag" class="bars"></div></div>
+      <div class="card"><h3>Campañas con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-cmp" class="bars"></div></div>
+      <div class="card"><h3>Anunciantes con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-adv" class="bars"></div></div>
+    </div>
   </div>
 </section>
 

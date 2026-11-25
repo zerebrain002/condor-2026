@@ -49,7 +49,42 @@
    "cat": "Deportes",
    "metal": "O",
    "sl": 37
+  },
+  {
+   "n": 8,
+   "hora": "20:34",
+   "cat": "Media",
+   "metal": "B",
+   "sl": 103
+  },
+  {
+   "n": 9,
+   "hora": "20:38",
+   "cat": "Design",
+   "metal": "O",
+   "sl": 71
+  },
+  {
+   "n": 10,
+   "hora": "20:41",
+   "cat": "Health & Wellness",
+   "metal": "P",
+   "sl": 100
+  },
+  {
+   "n": 11,
+   "hora": "20:45",
+   "cat": "Direct",
+   "metal": "B",
+   "sl": 48
+  },
+  {
+   "n": 12,
+   "hora": "20:49",
+   "cat": "Culture & Context: Ecuatorianidad",
+   "metal": "P",
+   "sl": 116
   }
  ],
- "actualizado": "22:00"
+ "actualizado": "22:18"
 }

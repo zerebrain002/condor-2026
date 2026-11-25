@@ -498,7 +498,7 @@ let RES=[],RESMETA={},seenN=new Set(),firstLoad=true;
 const MRANK={GP:4,O:3,P:2,B:1};
 const MPTS={GP:15,O:10,P:5,B:3};
 // Horarios de la gala (hora de Ecuador). ?simular=2026-11-25T18:00 permite probar otros momentos
-const OPEN=new Date('2026-11-25T00:00:00-05:00'),START=new Date('2026-11-25T19:30:00-05:00');
+const OPEN=new Date('2026-01-01T00:00:00-05:00'),START=new Date('2026-11-25T19:30:00-05:00'); // en pruebas En vivo está siempre visible
 const SIM=(()=>{try{const v=new URLSearchParams(location.search).get('simular');return v?new Date(v+(v.length<=16?':00':'')+'-05:00').getTime()-Date.now():0}catch(e){return 0}})();
 const now=()=>new Date(Date.now()+SIM);
 const liveOpen=()=>now()>=OPEN;

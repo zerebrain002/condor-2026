@@ -1,1 +1,13 @@
-{"prueba":true,"premios":[]}
+{
+ "prueba": true,
+ "premios": [
+  {
+   "n": 1,
+   "hora": "22:40",
+   "cat": "Film",
+   "metal": "O",
+   "sl": 3
+  }
+ ],
+ "actualizado": "22:40"
+}

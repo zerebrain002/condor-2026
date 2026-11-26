@@ -151,7 +151,14 @@
    "cat": "Outdoor",
    "metal": "B",
    "sl": 79
+  },
+  {
+   "n": 22,
+   "hora": "21:45",
+   "cat": "Health & Wellness",
+   "metal": "B",
+   "sl": 94
   }
  ],
- "actualizado": "21:44"
+ "actualizado": "21:45"
 }

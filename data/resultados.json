@@ -39,7 +39,14 @@
    "cat": "Film",
    "metal": "B",
    "sl": 3
+  },
+  {
+   "n": 6,
+   "hora": "21:25",
+   "cat": "Film",
+   "metal": "B",
+   "sl": 0
   }
  ],
- "actualizado": "21:24"
+ "actualizado": "21:25"
 }

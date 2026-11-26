@@ -371,7 +371,7 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
         <div class="chips" id="lv-chips"></div>
         <p class="hint" id="lv-upd" style="margin:4px 0 0"></p>
       </div>
-      <div class="card"><h3>Ranking de agencias</h3><p class="sub" id="lv-rank-s"></p><div class="legend" id="lv-leg"></div><div id="lv-rank-ag" class="bars"></div></div>
+      <div class="card"><h3>Ranking de agencias</h3><p class="sub" id="lv-rank-s" style="display:none"></p><div class="legend" id="lv-leg"></div><div id="lv-rank-ag" class="bars"></div></div>
       <div class="card"><h3>Campañas con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-cmp" class="bars"></div></div>
       <div class="card"><h3>Anunciantes con más puntos</h3><p class="sub">Metales + shortlist de todas sus piezas</p><div id="lv-rank-adv" class="bars"></div></div>
     </div>
@@ -750,7 +750,7 @@ function renderLive(){
   $$('#lv-chips .chip button').forEach(b=>b.onclick=()=>{LF[b.dataset.k].delete(b.dataset.v);renderLive()});
   const c=$('#lv-clear');if(c)c.onclick=()=>{LF.cat.clear();LF.ag.clear();LF.metal='';renderLive()};
   const R=liveRank();
-  $('#lv-rank-s').textContent=LF.metal?`Solo ${MNAME[LF.metal].toLowerCase()}s (${MPTS[LF.metal]} pts c/u).`:'Puntaje oficial 2026: GP 15 · Oro 10 · Plata 5 · Bronce 3 · Shortlist 1. Si una pieza gana Oro y Grand Prix, cuenta solo el Grand Prix.';
+  $('#lv-rank-s').textContent='';
   $('#lv-leg').innerHTML=['GP','O','P','B','SL'].map(k=>`<span><i style="background:${MCOL[k]};height:10px;width:10px"></i>${MNAME[k]}</span>`).join('');
   const seg=d=>['GP','O','P','B','SL'].map(k=>({v:d[k]*(k==='SL'?1:MPTS[k]),c:MCOL[k]}));
   const tipR=d=>`<b>${esc(d.label)}</b><br>${d.value} puntos<br>${['GP','O','P','B','SL'].filter(k=>d[k]).map(k=>`<span class="sw" style="background:${MCOL[k]}"></span>${MNAME[k]}: ${d[k]}`).join('<br>')}`;

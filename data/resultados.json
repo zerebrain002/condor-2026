@@ -312,7 +312,14 @@
    "cat": "Outdoor",
    "metal": "P",
    "sl": 81
+  },
+  {
+   "n": 45,
+   "hora": "22:16",
+   "cat": "Outdoor",
+   "metal": "P",
+   "sl": 89
   }
  ],
- "actualizado": "22:15"
+ "actualizado": "22:16"
 }

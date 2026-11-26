@@ -500,7 +500,7 @@ const SL=RAW.map((r,i)=>{const ag=A[r[1]];return{id:i,cat:CATS[r[0]][0],agency:a
 
 // Resultados en vivo (se completan durante la gala): {id de pieza o título, cat, metal:'GP'|'O'|'P'|'B'}
 // Premios en vivo: se cargan desde data/resultados.json y se actualizan solos cada 30 s
-let RES=[],RESMETA={},seenN=new Set(),firstLoad=true;
+let RES=[],ESP=[],RESMETA={},seenN=new Set(),firstLoad=true;
 const MRANK={GP:4,O:3,P:2,B:1};
 const MPTS={GP:15,O:10,P:5,B:3};
 // Horarios de la gala (hora de Ecuador). ?simular=2026-11-25T18:00 permite probar otros momentos
@@ -726,7 +726,7 @@ function liveRank(){
   const sort=m=>[...m.values()].sort((a,b)=>b.value-a.value||b.GP-a.GP||b.O-a.O||b.P-a.P||b.B-a.B||a.label.localeCompare(b.label));
   return{ag:sort(ag),cmp:sort(cmp),adv:sort(adv)}}
 function renderLive(){
-  const has=RES.length>0,started=now()>=START;
+  const has=RES.length+ESP.length>0,started=now()>=START;
   $('#lv-count').style.display=(!has&&!started)?'block':'none';
   $('#lv-grid').style.display=(!has&&!started)?'none':'grid';
   if(!has&&!started)tickCount();
@@ -736,8 +736,8 @@ function renderLive(){
   $('#lv-upd').textContent=(RESMETA.actualizado?'Actualizado '+RESMETA.actualizado+' · ':'')+'La página se actualiza sola cada 30 segundos.';
   const cnt=k=>RES.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
   $('#lv-kpis').innerHTML=[[RES.length,'premios entregados','T',['O','P','B']],[cnt('GP'),'Grand Prix','GP',['O']],[cnt('O'),'oros','O',['O']],[cnt('P'),'platas','P',['P']],[cnt('B'),'bronces','B',['B']]].map(([v,l,k,tr])=>`<div class="kpi k-${k}"><div><div class="v">${v}</div><div class="l">${l}</div></div><div class="kt">${tr.map(t=>`<img src="${TROFEO[t]}" alt="">`).join('')}</div></div>`).join('');
-  const last=[...RES].sort((a,b)=>b.n-a.n)[0];
-  $('#lv-last').innerHTML=last?(()=>{const x=pieceOf(last);return`<div class="la"><img src="${TROFEO[last.metal]}" alt="Trofeo ${MNAME[last.metal]}"><div><div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div></div></div>`})():`<div class="k">Gala El Cóndor 2026</div><div class="t">La ceremonia está por empezar</div><div class="m">Aquí aparecerá cada premio apenas se anuncie. ${SL.length} piezas en shortlist esperan su turno.</div>`;
+  const last=[...RES,...ESP].sort((a,b)=>b.n-a.n)[0];
+  $('#lv-last').innerHTML=last&&last.especial?`<div class="la">${last.metal&&TROFEO[last.metal]?`<img src="${TROFEO[last.metal]}" alt="">`:''}<div><div class="k">Último premio · ${esc(last.especial)}</div><div class="t">${esc(last.title)}</div><div class="m"><span class="medal" style="background:var(--blue);margin:0 8px 0 0">${esc(last.especial)}${last.metal&&MNAME[last.metal]?' · '+MNAME[last.metal]:''}</span>${esc(last.autor||'')}</div></div></div>`:last?(()=>{const x=pieceOf(last);return`<div class="la"><img src="${TROFEO[last.metal]}" alt="Trofeo ${MNAME[last.metal]}"><div><div class="k">Último premio · ${esc(x.cat)}</div><div class="t">${esc(x.title)}</div><div class="m"><span class="medal" style="background:${MCOL[last.metal]};margin:0 8px 0 0">${MNAME[last.metal]}</span>${esc(x.adv)} · ${esc(x.agency)}</div></div></div>`})():`<div class="k">Gala El Cóndor 2026</div><div class="t">La ceremonia está por empezar</div><div class="m">Aquí aparecerá cada premio apenas se anuncie. ${SL.length} piezas en shortlist esperan su turno.</div>`;
   $('#lv-metal').innerHTML=[['','Todos'],['GP','Grand Prix'],['O','Oro'],['P','Plata'],['B','Bronce']].map(([k,l])=>`<button class="${LF.metal===k?'on':''}" data-m="${k}">${l}</button>`).join('');
   $$('#lv-metal button').forEach(b=>b.onclick=()=>{LF.metal=b.dataset.m;track('filtro_agregar',{seccion:'envivo',dimension:'Metal',valor:b.textContent});renderLive()});
   const chips=[];LF.cat.forEach(v=>chips.push(`<span class="chip c-cat"><span class="k">Categoría:</span> ${esc(v)} <button data-k="cat" data-v="${esc(v)}">×</button></span>`));LF.ag.forEach(v=>chips.push(`<span class="chip c-ag"><span class="k">Agencia:</span> ${esc(v)} <button data-k="ag" data-v="${esc(v)}">×</button></span>`));
@@ -753,16 +753,16 @@ function renderLive(){
   bars($('#lv-rank-ag'),agItems,{limit:12,selected:LF.ag,tipFn:tipR,onClick:d=>{LF.ag.has(d.key)?LF.ag.delete(d.key):LF.ag.add(d.key);track('filtro_agregar',{seccion:'envivo',dimension:'Agencia',valor:d.key,origen:'grafico'});renderLive()}});
   bars($('#lv-rank-cmp'),R.cmp.map(d=>({...d,segs:seg(d)})),{limit:10,tipFn:tipR});
   bars($('#lv-rank-adv'),R.adv.map(d=>({...d,segs:seg(d)})),{limit:10,tipFn:tipR});
-  const feed=[...RES].sort((a,b)=>b.n-a.n).filter(p=>{const x=pieceOf(p);return(!LF.metal||p.metal===LF.metal)&&(!LF.cat.size||LF.cat.has(x.cat))&&(!LF.ag.size||x.agencies.some(a=>LF.ag.has(a)))});
+  const feed=[...RES,...ESP].sort((a,b)=>b.n-a.n).filter(p=>{if(p.especial)return !LF.metal&&!LF.cat.size&&!LF.ag.size;const x=pieceOf(p);return(!LF.metal||p.metal===LF.metal)&&(!LF.cat.size||LF.cat.has(x.cat))&&(!LF.ag.size||x.agencies.some(a=>LF.ag.has(a)))});
   $('#lv-feed-s').textContent=has?`${feed.length} premio${feed.length===1?'':'s'}, del más reciente al más antiguo`:'Todavía no hay premios anunciados.';
-  $('#lv-feed').innerHTML=feed.map(p=>{const x=pieceOf(p);const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}"><img class="tr" src="${TROFEO[p.metal]}" alt=""><div class="tt"><span class="mb" style="background:${MCOL[p.metal]}">${MNAME[p.metal]}</span>${esc(x.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(x.cat)} · ${esc(x.adv)} · ${esc(x.agency)}${effSet.has(p)?'':' · <i>no suma: cuenta su Grand Prix</i>'}</div></div>`}).join('')||(has?'<p class="hint">Sin premios con estos filtros.</p>':'');
-  RES.forEach(p=>seenN.add(p.n));firstLoad=false;
+  $('#lv-feed').innerHTML=feed.map(p=>{if(p.especial){const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}">${p.metal&&TROFEO[p.metal]?`<img class="tr" src="${TROFEO[p.metal]}" alt="">`:'<span></span>'}<div class="tt"><span class="mb" style="background:var(--blue)">${esc(p.especial)}${p.metal&&MNAME[p.metal]?' · '+MNAME[p.metal]:''}</span>${esc(p.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(p.autor||'')}${p.autor?' · ':''}<i>no suma al ranking</i></div></div>`}const x=pieceOf(p);const isNew=!firstLoad&&!seenN.has(p.n);return`<div class="win${isNew?' new':''}"><img class="tr" src="${TROFEO[p.metal]}" alt=""><div class="tt"><span class="mb" style="background:${MCOL[p.metal]}">${MNAME[p.metal]}</span>${esc(x.title)}</div><div class="hr">${esc(p.hora||'')}</div><div class="ds">${esc(x.cat)} · ${esc(x.adv)} · ${esc(x.agency)}${effSet.has(p)?'':' · <i>no suma: cuenta su Grand Prix</i>'}</div></div>`}).join('')||(has?'<p class="hint">Sin premios con estos filtros.</p>':'');
+  [...RES,...ESP].forEach(p=>seenN.add(p.n));firstLoad=false;
 }
 $$('[data-lpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.lpop;
   const opts=k==='cat'?CATS.map(c=>({key:c[0],label:c[0],count:RES.filter(p=>pieceOf(p).cat===c[0]).length+' premios'})):[...new Set(SL.flatMap(r=>r.agencies))].sort().map(a=>({key:a,label:a}));
   popover(b,opts,LF[k],(v,on)=>{on?LF[k].add(v):LF[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'envivo',dimension:k==='cat'?'Categoría':'Agencia',valor:v,origen:'menu'});renderLive()})});
 async function loadRes(){try{const r=await fetch('data/resultados.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();
-  const sig=JSON.stringify(j);if(sig===loadRes.last)return;loadRes.last=sig;RESMETA=j;RES=(j.premios||[]).filter(p=>MPTS[p.metal]);renderLive();renderSL()}catch(e){if(firstLoad)renderLive()}}
+  const sig=JSON.stringify(j);if(sig===loadRes.last)return;loadRes.last=sig;RESMETA=j;RES=(j.premios||[]).filter(p=>MPTS[p.metal]&&!p.especial);ESP=(j.premios||[]).filter(p=>p.especial);renderLive();renderSL()}catch(e){if(firstLoad)renderLive()}}
 function tickCount(){const ms=Math.max(0,START-now());const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),sg=Math.floor(ms%60000/1000);
   $('#cd-h').textContent=String(h).padStart(2,'0');$('#cd-m').textContent=String(m).padStart(2,'0');$('#cd-s').textContent=String(sg).padStart(2,'0')}
 let wasOpen=null,wasStarted=null;

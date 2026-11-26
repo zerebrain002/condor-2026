@@ -333,7 +333,14 @@
    "cat": "Media",
    "metal": "P",
    "sl": 110
+  },
+  {
+   "n": 48,
+   "hora": "22:22",
+   "cat": "Direct",
+   "metal": "P",
+   "sl": 47
   }
  ],
- "actualizado": "22:21"
+ "actualizado": "22:22"
 }

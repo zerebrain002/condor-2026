@@ -766,8 +766,17 @@ function renderLive(){
 $$('[data-lpop]').forEach(b=>b.onclick=()=>{const k=b.dataset.lpop;
   const opts=k==='cat'?CATS.map(c=>({key:c[0],label:c[0],count:RES.filter(p=>pieceOf(p).cat===c[0]).length+' premios'})):[...new Set(SL.flatMap(r=>r.agencies))].sort().map(a=>({key:a,label:a}));
   popover(b,opts,LF[k],(v,on)=>{on?LF[k].add(v):LF[k].delete(v);track(on?'filtro_agregar':'filtro_quitar',{seccion:'envivo',dimension:k==='cat'?'Categoría':'Agencia',valor:v,origen:'menu'});renderLive()})});
+function fiesta(){const C=['#EDBF00','#FF4D00','#0A36C8','#EE0A16','#05A812','#C99A00','#ffffff'];
+  const cv=document.createElement('canvas');cv.style.cssText='position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:9999';document.body.appendChild(cv);
+  const ctx=cv.getContext('2d'),dpr=devicePixelRatio||1;const W=cv.width=innerWidth*dpr,H=cv.height=innerHeight*dpr;
+  const P=[];const burst=(x,y,n,ang,spr,v)=>{for(let i=0;i<n;i++){const a=(ang+(Math.random()-.5)*spr)*Math.PI/180,s=(v*(.6+Math.random()*.6))*dpr;P.push({x,y,vx:Math.cos(a)*s,vy:-Math.sin(a)*s,w:(6+Math.random()*6)*dpr,h:(10+Math.random()*8)*dpr,r:Math.random()*6,vr:(Math.random()-.5)*.3,c:C[i%C.length],l:220+Math.random()*80})}};
+  burst(0,H*.75,90,60,50,18);burst(W,H*.75,90,120,50,18);setTimeout(()=>burst(W/2,H*.4,160,90,140,16),350);setTimeout(()=>{burst(0,H*.6,60,55,40,17);burst(W,H*.6,60,125,40,17)},900);
+  (function loop(){ctx.clearRect(0,0,W,H);for(let i=P.length-1;i>=0;i--){const p=P[i];p.vy+=.35*dpr;p.vx*=.99;p.vy*=.99;p.x+=p.vx;p.y+=p.vy;p.r+=p.vr;p.l--;
+    ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.r);ctx.fillStyle=p.c;ctx.globalAlpha=Math.min(1,p.l/60);ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h*Math.abs(Math.cos(p.r*2)));ctx.restore();if(p.l<=0||p.y>H+50)P.splice(i,1)}
+    if(P.length)requestAnimationFrame(loop);else cv.remove()})();
+  track('fiesta_cierre')}
 async function loadRes(){try{const r=await fetch('data/resultados.json?t='+Date.now(),{cache:'no-store'});if(!r.ok)throw 0;const j=await r.json();
-  const sig=JSON.stringify(j);if(sig===loadRes.last)return;loadRes.last=sig;RESMETA=j;RES=(j.premios||[]).filter(p=>MPTS[p.metal]&&!p.especial);ESP=(j.premios||[]).filter(p=>p.especial);renderLive();renderSL()}catch(e){if(firstLoad)renderLive()}}
+  const sig=JSON.stringify(j);if(sig===loadRes.last)return;loadRes.last=sig;RESMETA=j;if(j.cerrado&&!window._fiesta){window._fiesta=1;setTimeout(fiesta,600)}RES=(j.premios||[]).filter(p=>MPTS[p.metal]&&!p.especial);ESP=(j.premios||[]).filter(p=>p.especial);renderLive();renderSL()}catch(e){if(firstLoad)renderLive()}}
 function tickCount(){const ms=Math.max(0,START-now());const h=Math.floor(ms/3600000),m=Math.floor(ms%3600000/60000),sg=Math.floor(ms%60000/1000);
   $('#cd-h').textContent=String(h).padStart(2,'0');$('#cd-m').textContent=String(m).padStart(2,'0');$('#cd-s').textContent=String(sg).padStart(2,'0')}
 let wasOpen=null,wasStarted=null;

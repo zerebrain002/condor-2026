@@ -137,7 +137,14 @@
    "cat": "Outdoor",
    "metal": "B",
    "sl": 82
+  },
+  {
+   "n": 20,
+   "hora": "21:43",
+   "cat": "Outdoor",
+   "metal": "B",
+   "sl": 78
   }
  ],
- "actualizado": "21:42"
+ "actualizado": "21:43"
 }

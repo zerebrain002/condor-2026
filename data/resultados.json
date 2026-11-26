@@ -438,7 +438,14 @@
    "cat": "Outdoor",
    "metal": "O",
    "sl": 90
+  },
+  {
+   "n": 63,
+   "hora": "22:43",
+   "cat": "Media",
+   "metal": "O",
+   "sl": 109
   }
  ],
- "actualizado": "22:42"
+ "actualizado": "22:43"
 }

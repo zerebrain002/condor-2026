@@ -46,7 +46,14 @@
    "cat": "Film",
    "metal": "B",
    "sl": 0
+  },
+  {
+   "n": 7,
+   "hora": "21:26",
+   "cat": "Radio & Audio",
+   "metal": "B",
+   "sl": 7
   }
  ],
- "actualizado": "21:25"
+ "actualizado": "21:26"
 }

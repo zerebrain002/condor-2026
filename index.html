@@ -716,7 +716,11 @@ function showToast(t){const d=document.createElement('div');d.className='tip';d.
 const LF={metal:'',cat:new Set(),ag:new Set()};
 function pieceOf(p){const r=p.sl!=null?SL[p.sl]:null;return r?{title:r.title,cat:r.cat,agencies:r.agencies,agency:r.agency,adv:r.adv,cmp:r.cmp}:{title:p.title,cat:p.cat,agencies:(p.agency||'').split(' / '),agency:p.agency,adv:p.adv,cmp:p.cmp||p.title}}
 // Si una misma pieza gana Oro y Grand Prix, cuenta solo el Grand Prix
-function effective(list){const gp=new Set(list.filter(p=>p.metal==='GP'&&p.sl!=null).map(p=>p.sl));return list.filter(p=>!(p.metal==='O'&&p.sl!=null&&gp.has(p.sl)))}
+function effective(list){const gp=new Set(list.filter(p=>p.metal==='GP'&&p.sl!=null).map(p=>p.sl));
+  const drop=new Set();
+  // Grand Prix a la campaña: absorbe un oro de esa misma campaña y agencia (regla oficial)
+  list.filter(p=>p.metal==='GP'&&p.sl==null).forEach(g=>{const o=list.filter(p=>p.metal==='O'&&!drop.has(p)&&p.sl!=null).sort((a,b)=>a.n-b.n).find(p=>{const x=pieceOf(p);return x.cmp===g.cmp&&x.agency===g.agency});if(o)drop.add(o)});
+  return list.filter(p=>!drop.has(p)&&!(p.metal==='O'&&p.sl!=null&&gp.has(p.sl)))}
 function liveRank(){
   const catOk=c=>!LF.cat.size||LF.cat.has(c);
   const ag=new Map(),cmp=new Map(),adv=new Map();
@@ -736,8 +740,8 @@ function renderLive(){
   $('#lv-status').textContent=RESMETA.estado||(has?'En vivo':'Empezamos en pocos minutos');
   
   $('#lv-upd').textContent=(RESMETA.actualizado?'Actualizado '+RESMETA.actualizado+' · ':'')+'La página se actualiza sola cada 30 segundos.';
-  const cnt=k=>RES.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
-  $('#lv-kpis').innerHTML=[[RES.length,'premios entregados','T',['O','P','B']],[cnt('GP'),'Grand Prix','GP',['O']],[cnt('O'),'oros','O',['O']],[cnt('P'),'platas','P',['P']],[cnt('B'),'bronces','B',['B']]].map(([v,l,k,tr])=>`<div class="kpi k-${k}"><div><div class="v">${v}</div><div class="l">${l}</div></div><div class="kt">${tr.map(t=>`<img src="${TROFEO[t]}" alt="">`).join('')}</div></div>`).join('');
+  const EFF=effective(RES),cnt=k=>EFF.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
+  $('#lv-kpis').innerHTML=[[EFF.length,'premios entregados','T',['O','P','B']],[cnt('GP'),'Grand Prix','GP',['O']],[cnt('O'),'oros','O',['O']],[cnt('P'),'platas','P',['P']],[cnt('B'),'bronces','B',['B']]].map(([v,l,k,tr])=>`<div class="kpi k-${k}"><div><div class="v">${v}</div><div class="l">${l}</div></div><div class="kt">${tr.map(t=>`<img src="${TROFEO[t]}" alt="">`).join('')}</div></div>`).join('');
   const EST=ESP.filter(p=>/estudiantil/i.test(p.especial));
   if(EST.length){const em=['GP','O','P','B'].map(k=>[k,EST.filter(p=>p.metal===k).length]).filter(x=>x[1]);
     $('#lv-kpis').insertAdjacentHTML('beforeend',`<div class="kpi k-E"><div><div class="v">${EST.length}</div><div class="l">Cóndor Estudiantil${em.length?' · '+em.map(([k,c])=>c+' '+(c===1?MNAME[k].toLowerCase():{GP:'grand prix',O:'oros',P:'platas',B:'bronces'}[k])).join(', '):''} · no suman al ranking</div></div><div class="kt">${em.map(([k])=>`<img src="${TROFEO[k]}" alt="">`).join('')}</div></div>`)}

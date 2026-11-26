@@ -1,1 +1,14 @@
-{"prueba":false,"premios":[]}
+{
+ "prueba": false,
+ "premios": [
+  {
+   "n": 1,
+   "hora": "21:15",
+   "especial": "Cóndor Estudiantil",
+   "title": "La fábrica del silencio",
+   "autor": "USFQ",
+   "metal": "B"
+  }
+ ],
+ "actualizado": "21:15"
+}

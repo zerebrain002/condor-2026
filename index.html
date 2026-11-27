@@ -496,7 +496,7 @@ const RAW=[
 [17,'P99','KFC','Dating con la Community Manager'],[17,'B','Mercedes-Benz','Precision Sight'],[17,'H','Licoram','Una de Norteño'],
 [18,'N','MINTUR','Profetas'],[18,'D',AB,'Duelo de Energías'],[18,'M','Lavazza','Elizabeth Street'],[18,'GP',RM,RB],[18,'M',NG,NLQ+' – Presidente',NLQ],[18,'M',NG,NLQ+' – Familia',NLQ],[18,'G',MI,'Built for China'],[18,'PA',HE,'Bienvenida la temporada','Bienvenida la temporada'],[18,'CF','Cinta Scotch','Mirror Experiments']
 ];
-const SL=RAW.map((r,i)=>{const ag=A[r[1]];return{id:i,cat:CATS[r[0]][0],agency:ag,agencies:ag.split(' / '),adv:r[2],title:r[3],cmp:r[4]||r[3]}});
+const SL=RAW.map((r,i)=>{const ag=A[r[1]];return{id:i,cat:CATS[r[0]][0],agency:ag,agencies:[ag],adv:r[2],title:r[3],cmp:r[4]||r[3]}});
 
 // Resultados en vivo (se completan durante la gala): {id de pieza o título, cat, metal:'GP'|'O'|'P'|'B'}
 // Premios en vivo: se cargan desde data/resultados.json y se actualizan solos cada 30 s

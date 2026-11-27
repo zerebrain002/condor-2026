@@ -641,7 +641,7 @@ function renderH(){
   // agencia del año
   const AOYLOGO={'Maruri':'img/maruri.png','Paradais DDB':'img/paradais.png'};
   $('#h-aoy').innerHTML=YEARS.map(y=>{const r=HIST[y][0],lg=AOYLOGO[r[0]];return`<div><div class="y">${y}</div>${lg?`<div class="lg"><img src="${lg}" alt="${esc(r[0])}"></div>`:`<div class="a">${esc(r[0])}</div>`}<div class="p">${r[6]} puntos</div></div>`}).join('');
-  $('#h-aoy').insertAdjacentHTML('beforeend',`<div class="now"><div class="y">2026</div><div class="lg"><span class="tw">paradais<br><b>TBWA</b></span></div><div class="p">81 puntos</div></div>`);
+  $('#h-aoy').insertAdjacentHTML('beforeend',`<div class="now"><div class="y">2026</div><div class="lg"><img src="img/paradais_tbwa.png" alt="Paradais TBWA"></div><div class="p">81 puntos</div></div>`);
   // controles
   $('#h-metric').innerHTML=METRICS.map(([k,l])=>`<button class="${H.metric===k?'on':''}" data-m="${k}">${l}</button>`).join('');
   $$('#h-metric button').forEach(b=>b.onclick=()=>{H.metric=b.dataset.m;track('metrica_cambiar',{seccion:'historico',metrica:b.textContent});renderH()});

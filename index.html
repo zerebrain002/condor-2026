@@ -320,7 +320,7 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
   </div>
   <nav class="tabs" role="tablist">
     <a href="#inicio" data-v="inicio">Inicio</a>
-    <a href="#envivo" data-v="envivo"><span class="livedot"></span>En vivo</a>
+    <a href="#envivo" data-v="envivo">Resultados finales</a>
     <a href="#shortlist" data-v="shortlist">Shortlist 2026</a>
     <a href="#historico" data-v="historico">Histórico</a>
   </nav>
@@ -532,7 +532,7 @@ const FAMILY={'Paradais DDB':'Paradais','Paradais TBWA':'Paradais','Maruri':'Mar
 
 /* =========================== UTILIDADES =========================== */
 function track(ev,params){try{if(window.gtag)gtag('event',ev,params||{})}catch(e){}}
-const TABNAME={inicio:'Inicio',envivo:'En vivo',shortlist:'Shortlist 2026',historico:'Histórico'};
+const TABNAME={inicio:'Inicio',envivo:'Resultados finales',shortlist:'Shortlist 2026',historico:'Histórico'};
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const SERIES=['--s1','--s2','--s3','--s4','--s5','--s6'].map(v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim());

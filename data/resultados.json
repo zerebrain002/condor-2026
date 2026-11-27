@@ -528,9 +528,37 @@
    "especial": "Excelencia · Agencia del Año",
    "title": "Paradais TBWA",
    "autor": ""
+  },
+  {
+   "n": 75,
+   "hora": "23:59",
+   "cat": "Radio & Audio",
+   "metal": "B",
+   "sl": 11
+  },
+  {
+   "n": 76,
+   "hora": "23:59",
+   "cat": "Experiencia de Marca & Activación",
+   "metal": "P",
+   "sl": 20
+  },
+  {
+   "n": 77,
+   "hora": "23:59",
+   "cat": "Deportes",
+   "metal": "B",
+   "sl": 39
+  },
+  {
+   "n": 78,
+   "hora": "23:59",
+   "cat": "Deportes",
+   "metal": "P",
+   "sl": 42
   }
  ],
- "actualizado": "23:07",
+ "actualizado": "23:35",
  "cerrado": true,
  "estado": "Gala finalizada · Resultados oficiales"
 }

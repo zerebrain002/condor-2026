@@ -339,7 +339,7 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
   </div>
   <div class="doors">
     <a class="door" href="#shortlist"><span class="bar" style="background:var(--orange)"></span><div class="kicker">2026</div><h3>Shortlist</h3><p>Agencias, campañas y categorías con más presencia.</p><div class="facts" id="d-sl"></div><div class="go">Ver estadísticas →</div></a>
-    <a class="door" href="#historico"><span class="bar" style="background:var(--blue)"></span><div class="kicker">2019 → 2025</div><h3>Histórico</h3><p>Rankings oficiales y agencia del año.</p><div class="facts" id="d-h"></div><div class="go">Comparar años →</div></a>
+    <a class="door" href="#historico"><span class="bar" style="background:var(--blue)"></span><div class="kicker">2019 → 2026</div><h3>Histórico</h3><p>Rankings oficiales y agencia del año.</p><div class="facts" id="d-h"></div><div class="go">Comparar años →</div></a>
   </div>
   </div>
 </section>
@@ -422,7 +422,7 @@ footer .row{display:flex;gap:20px;flex-wrap:wrap;justify-content:space-between;a
 <section class="view" id="v-historico">
   <div class="hero">
     <div>
-      <div class="kicker">2019 → 2025</div>
+      <div class="kicker">2019 → 2026</div>
       <h2 class="display">Así se movió el ranking de agencias</h2>
       <p>Rankings oficiales publicados por El Cóndor. Suma años, agencias y métricas para comparar; toca una barra para agregar o quitar esa agencia del gráfico de evolución.</p>
     </div>
@@ -516,14 +516,15 @@ const TROFEO={GP:'img/trofeo_O.png',O:'img/trofeo_O.png',P:'img/trofeo_P.png',B:
 
 // Puntaje por año (reglamentos de cada edición, deducido de los rankings publicados)
 const PTS26={GP:15,O:10,P:5,B:3,SL:1};
-const SCALES={2019:{GP:30,O:15,P:7,B:3,SL:1},2021:{GP:30,O:15,P:7,B:3,SL:1},2023:{GP:15,O:15,P:7,B:3,SL:1},2024:{GP:15,O:15,P:7,B:3,SL:1},2025:{GP:15,O:10,P:5,B:3,SL:1}};
+const SCALES={2019:{GP:30,O:15,P:7,B:3,SL:1},2021:{GP:30,O:15,P:7,B:3,SL:1},2023:{GP:15,O:15,P:7,B:3,SL:1},2024:{GP:15,O:15,P:7,B:3,SL:1},2025:{GP:15,O:10,P:5,B:3,SL:1},2026:{GP:15,O:10,P:5,B:3,SL:1}};
 // [agencia, GP, oro, plata, bronce, SL, puntaje oficial]
 const HIST={
 2019:[['Maruri',3,4,5,6,7,210],['Ogilvy',0,3,2,5,5,79],['McCann Erickson',2,1,0,0,3,78],['Paradais DDB',0,0,4,1,3,34],['BBA',0,0,2,4,2,28],['Publicitas Saatchi & Saatchi',0,0,0,2,7,13],['Límbiko',0,0,0,2,1,7],['Central',0,0,0,1,3,6],['Grupo Creativo Herrera / FCB&Fire',0,0,0,2,0,6],['Koenig Comunicación',0,0,0,1,1,4],['Norlop JWT',0,0,0,1,0,3],['Chalaco Films',0,0,0,0,2,2],['Léttera',0,0,0,0,1,1],['Ludikom',0,0,0,0,1,1],['Santuario Agencia',0,0,0,0,1,1]],
 2021:[['Maruri',1,4,6,9,6,165],['Paradais DDB',0,7,2,3,11,139],['Paper',1,2,1,7,5,93],['Agencia Límbiko',0,1,2,0,0,29],['BBA',0,0,2,1,5,22],['GC Herrera / FCB&Fire',0,1,1,0,0,22],['Bombai Ecuador',0,0,3,0,0,21],['McCann',0,0,0,4,3,15],['Laika',0,0,1,1,3,13],['Publicitas',0,0,0,4,1,13],['BPN',0,0,1,0,0,7],['Levector S.A.',0,0,0,1,4,7],['Amperson',0,0,0,2,0,6],['Mayday AD',0,0,0,1,1,4],['Norlop JWT',0,0,0,1,1,4]],
 2023:[['Paradais DDB',1,12,9,0,1,259],['McCann',0,0,11,1,1,81],['MullenLowe Delta',0,2,4,3,9,76],['BBA',0,2,1,3,13,59],['Draftline Ecuador',0,0,2,6,5,37],['Punto 99',0,0,3,2,2,29],['GOD',0,1,1,0,0,22],['BBDO Ecuador',0,1,0,1,2,20],['Paper',0,0,0,5,4,19],['Geeks Ecuador',0,1,0,0,0,15],['Central',0,0,1,2,1,14],['WMG',0,0,0,3,5,14],['Napkin',0,0,0,2,1,7],['Mayday AD',0,0,0,2,0,6],['Norlop Wunderman Thompson',0,0,0,0,5,5]],
 2024:[['Maruri',1,7,6,7,8,191],['Paradais DDB',1,5,5,5,11,151],['BBA',0,1,6,5,14,86],['BBDO Ecuador',0,1,0,6,2,35],['Norlop VML Ecuador',0,0,3,2,6,33],['La Facultad',0,0,2,1,1,18],['Beflamingo',0,0,2,0,2,16],['McCann Ecuador',0,0,0,2,5,11],['Draftline',0,0,1,1,0,10],['Herrera Havas',0,0,0,2,4,10]],
-2025:[['Paradais DDB',1,6,8,5,5,135],['Maruri',0,2,6,6,17,85],['Draftline',0,1,1,7,5,41],['Breinjart',0,0,2,4,11,33],['Norlop VML',0,1,1,2,3,24],['Paper',0,0,1,4,2,19],['Garnier BBDO Ecuador',0,0,0,5,0,15],['Ogilvy Ecuador / Herrera Havas',0,1,1,0,0,15],['McCann',0,0,0,2,2,8],['Cafeína',0,0,0,1,0,3],['WMG',0,0,0,0,2,2],['Destilería',0,0,0,0,0,0],['Herrera Havas',0,0,0,0,0,0],['Initiative',0,0,0,0,0,0],['LUP Studio',0,0,0,0,0,0],['Neo Ambiental',0,0,0,0,0,0]]
+2025:[['Paradais DDB',1,6,8,5,5,135],['Maruri',0,2,6,6,17,85],['Draftline',0,1,1,7,5,41],['Breinjart',0,0,2,4,11,33],['Norlop VML',0,1,1,2,3,24],['Paper',0,0,1,4,2,19],['Garnier BBDO Ecuador',0,0,0,5,0,15],['Ogilvy Ecuador / Herrera Havas',0,1,1,0,0,15],['McCann',0,0,0,2,2,8],['Cafeína',0,0,0,1,0,3],['WMG',0,0,0,0,2,2],['Destilería',0,0,0,0,0,0],['Herrera Havas',0,0,0,0,0,0],['Initiative',0,0,0,0,0,0],['LUP Studio',0,0,0,0,0,0],['Neo Ambiental',0,0,0,0,0,0]],
+2026:[['Paradais TBWA',1,3,2,7,5,81],['BBA',0,1,9,4,12,79],['Herrera Havas',1,2,5,1,5,68],['Maruri',0,3,1,7,11,67],['Draftline',0,0,0,4,7,19],['Paper',0,0,2,1,1,14],['Garnier',0,0,0,3,4,13],['Circo',0,0,1,1,3,11],['Norlop VML',0,0,0,2,5,11],['McCann',0,0,0,1,6,9],['Publicis Groupe',0,0,1,0,1,6],['Punto 99',0,0,1,0,1,6],['Breinjart',0,0,0,1,1,4],['Delta Flint',0,0,0,1,1,4],['Granidea',0,0,0,0,3,3],['Cafeína',0,0,0,0,1,1],['WMG',0,0,0,0,1,1]]
 };
 const YEARS=Object.keys(HIST).map(Number);
 // Nombres que corresponden a la misma agencia a lo largo de los años
@@ -639,9 +640,8 @@ function renderH(){
   [...colorOf.keys()].forEach(k=>{if(!H.ags.has(k))colorOf.delete(k)});[...H.ags].forEach(colorFor);
   const yrs=[...H.years].sort();
   // agencia del año
-  const AOYLOGO={'Maruri':'img/maruri.png','Paradais DDB':'img/paradais.png'};
-  $('#h-aoy').innerHTML=YEARS.map(y=>{const r=HIST[y][0],lg=AOYLOGO[r[0]];return`<div><div class="y">${y}</div>${lg?`<div class="lg"><img src="${lg}" alt="${esc(r[0])}"></div>`:`<div class="a">${esc(r[0])}</div>`}<div class="p">${r[6]} puntos</div></div>`}).join('');
-  $('#h-aoy').insertAdjacentHTML('beforeend',`<div class="now"><div class="y">2026</div><div class="lg"><img src="img/paradais_tbwa.png" alt="Paradais TBWA"></div><div class="p">81 puntos</div></div>`);
+  const AOYLOGO={'Maruri':'img/maruri.png','Paradais DDB':'img/paradais.png','Paradais TBWA':'img/paradais_tbwa.png'};
+  $('#h-aoy').innerHTML=YEARS.map(y=>{const r=HIST[y][0],lg=AOYLOGO[r[0]];return`<div class="${y===YEARS[YEARS.length-1]?'now':''}"><div class="y">${y}</div>${lg?`<div class="lg"><img src="${lg}" alt="${esc(r[0])}"></div>`:`<div class="a">${esc(r[0])}</div>`}<div class="p">${r[6]} puntos</div></div>`}).join('');
   // controles
   $('#h-metric').innerHTML=METRICS.map(([k,l])=>`<button class="${H.metric===k?'on':''}" data-m="${k}">${l}</button>`).join('');
   $$('#h-metric button').forEach(b=>b.onclick=()=>{H.metric=b.dataset.m;track('metrica_cambiar',{seccion:'historico',metrica:b.textContent});renderH()});
@@ -743,8 +743,8 @@ function renderLive(){
   $('#lv-status').textContent=RESMETA.estado||(has?'En vivo':'Empezamos en pocos minutos');
   
   $('#lv-upd').textContent=(RESMETA.actualizado?'Actualizado '+RESMETA.actualizado+' · ':'')+'La página se actualiza sola cada 30 segundos.';
-  const EFF=effective(RES),cnt=k=>EFF.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
-  $('#lv-kpis').innerHTML=[[EFF.length,'premios entregados','T',['O','P','B']],[cnt('GP'),'Grand Prix','GP',['O']],[cnt('O'),'oros','O',['O']],[cnt('P'),'platas','P',['P']],[cnt('B'),'bronces','B',['B']]].map(([v,l,k,tr])=>`<div class="kpi k-${k}"><div><div class="v">${v}</div><div class="l">${l}</div></div><div class="kt">${tr.map(t=>`<img src="${TROFEO[t]}" alt="">`).join('')}</div></div>`).join('');
+  const EFF=effective(RES),cnt=k=>RES.filter(p=>p.metal===k).length,effSet=new Set(effective(RES));
+  $('#lv-kpis').innerHTML=[[RES.length-cnt('GP'),'premios + '+cnt('GP')+' Grand Prix','T',['O','P','B']],[cnt('GP'),'Grand Prix','GP',['O']],[cnt('O'),'oros','O',['O']],[cnt('P'),'platas','P',['P']],[cnt('B'),'bronces','B',['B']]].map(([v,l,k,tr])=>`<div class="kpi k-${k}"><div><div class="v">${v}</div><div class="l">${l}</div></div><div class="kt">${tr.map(t=>`<img src="${TROFEO[t]}" alt="">`).join('')}</div></div>`).join('');
   const EST=ESP.filter(p=>/estudiantil/i.test(p.especial));
   if(EST.length){const em=['GP','O','P','B'].map(k=>[k,EST.filter(p=>p.metal===k).length]).filter(x=>x[1]);
     $('#lv-kpis').insertAdjacentHTML('beforeend',`<div class="kpi k-E"><div><div class="v">${EST.length}</div><div class="l">Cóndor Estudiantil${em.length?' · '+em.map(([k,c])=>c+' '+(c===1?MNAME[k].toLowerCase():{GP:'grand prix',O:'oros',P:'platas',B:'bronces'}[k])).join(', '):''} · no suman al ranking</div></div><div class="kt">${em.map(([k])=>`<img src="${TROFEO[k]}" alt="">`).join('')}</div></div>`)}

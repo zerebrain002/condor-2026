@@ -252,237 +252,265 @@
   },
   {
    "n": 36,
+   "hora": "22:00",
+   "cat": "Radio & Audio",
+   "metal": "B",
+   "sl": 11
+  },
+  {
+   "n": 37,
+   "hora": "22:00",
+   "cat": "Deportes",
+   "metal": "B",
+   "sl": 39
+  },
+  {
+   "n": 38,
    "hora": "22:03",
    "especial": "Cóndor a la Trayectoria Profesional",
    "title": "Jorge Herrera Sánchez",
    "autor": ""
   },
   {
-   "n": 37,
+   "n": 39,
    "hora": "22:08",
    "cat": "Experiencia de Marca & Activación",
    "metal": "P",
    "sl": 17
   },
   {
-   "n": 38,
+   "n": 40,
    "hora": "22:09",
    "cat": "Experiencia de Marca & Activación",
    "metal": "P",
    "sl": 16
   },
   {
-   "n": 39,
+   "n": 41,
    "hora": "22:11",
    "cat": "PR",
    "metal": "P",
    "sl": 21
   },
   {
-   "n": 40,
+   "n": 42,
    "hora": "22:11",
    "cat": "Print & Publishing",
    "metal": "P",
    "sl": 68
   },
   {
-   "n": 41,
+   "n": 43,
    "hora": "22:12",
    "cat": "Print & Publishing",
    "metal": "P",
    "sl": 57
   },
   {
-   "n": 42,
+   "n": 44,
    "hora": "22:13",
    "cat": "Print & Publishing",
    "metal": "P",
    "sl": 62
   },
   {
-   "n": 43,
+   "n": 45,
    "hora": "22:14",
    "cat": "Design",
    "metal": "P",
    "sl": 74
   },
   {
-   "n": 44,
+   "n": 46,
    "hora": "22:15",
    "cat": "Outdoor",
    "metal": "P",
    "sl": 81
   },
   {
-   "n": 45,
+   "n": 47,
    "hora": "22:16",
    "cat": "Outdoor",
    "metal": "P",
    "sl": 89
   },
   {
-   "n": 46,
+   "n": 48,
    "hora": "22:17",
    "cat": "Health & Wellness",
    "metal": "P",
    "sl": 92
   },
   {
-   "n": 47,
+   "n": 49,
    "hora": "22:21",
    "cat": "Media",
    "metal": "P",
    "sl": 110
   },
   {
-   "n": 48,
+   "n": 50,
    "hora": "22:22",
    "cat": "Direct",
    "metal": "P",
    "sl": 47
   },
   {
-   "n": 49,
+   "n": 51,
    "hora": "22:22",
    "cat": "For Good",
    "metal": "P",
    "sl": 25
   },
   {
-   "n": 50,
+   "n": 52,
    "hora": "22:22",
    "cat": "For Good",
    "metal": "P",
    "sl": 23
   },
   {
-   "n": 51,
+   "n": 53,
    "hora": "22:24",
    "cat": "Creative Data",
    "metal": "P",
    "sl": 28
   },
   {
-   "n": 52,
+   "n": 54,
    "hora": "22:25",
    "cat": "Inteligencia Artificial",
    "metal": "P",
    "sl": 45
   },
   {
-   "n": 53,
+   "n": 55,
    "hora": "22:26",
    "cat": "Culture & Context: Ecuatorianidad",
    "metal": "P",
    "sl": 119
   },
   {
-   "n": 54,
+   "n": 56,
    "hora": "22:27",
    "cat": "Entretenimiento",
    "metal": "P",
    "sl": 122
   },
   {
-   "n": 55,
+   "n": 57,
    "hora": "22:28",
    "cat": "Deportes",
    "metal": "P",
    "sl": 38
   },
   {
-   "n": 56,
+   "n": 58,
    "hora": "22:29",
    "cat": "Craft",
    "metal": "P",
    "sl": 132
   },
   {
-   "n": 57,
+   "n": 59,
+   "hora": "22:29",
+   "cat": "Experiencia de Marca & Activación",
+   "metal": "P",
+   "sl": 20
+  },
+  {
+   "n": 60,
+   "hora": "22:29",
+   "cat": "Deportes",
+   "metal": "P",
+   "sl": 42
+  },
+  {
+   "n": 61,
    "hora": "22:33",
    "especial": "Cóndor a la Trayectoria Creativa",
    "title": "Adrián \"Pipo\" Morano",
    "autor": ""
   },
   {
-   "n": 58,
+   "n": 62,
    "hora": "22:37",
    "cat": "Radio & Audio",
    "metal": "O",
    "sl": 6
   },
   {
-   "n": 59,
+   "n": 63,
    "hora": "22:39",
    "cat": "Experiencia de Marca & Activación",
    "metal": "O",
    "sl": 19
   },
   {
-   "n": 60,
+   "n": 64,
    "hora": "22:40",
    "cat": "Design",
    "metal": "O",
    "sl": 73
   },
   {
-   "n": 61,
+   "n": 65,
    "hora": "22:41",
    "cat": "Design",
    "metal": "O",
    "sl": 76
   },
   {
-   "n": 62,
+   "n": 66,
    "hora": "22:42",
    "cat": "Outdoor",
    "metal": "O",
    "sl": 90
   },
   {
-   "n": 63,
+   "n": 67,
    "hora": "22:43",
    "cat": "Media",
    "metal": "O",
    "sl": 109
   },
   {
-   "n": 64,
+   "n": 68,
    "hora": "22:44",
    "cat": "Media",
    "metal": "O",
    "sl": 101
   },
   {
-   "n": 65,
+   "n": 69,
    "hora": "22:48",
    "cat": "Direct",
    "metal": "O",
    "sl": 48
   },
   {
-   "n": 66,
+   "n": 70,
    "hora": "22:50",
    "cat": "Redes Sociales & Influencer",
    "metal": "O",
    "sl": 32
   },
   {
-   "n": 67,
+   "n": 71,
    "hora": "22:51",
    "cat": "Entretenimiento",
    "metal": "O",
    "sl": 124
   },
   {
-   "n": 68,
+   "n": 72,
    "hora": "22:53",
    "cat": "Deportes",
    "metal": "O",
    "sl": 36
   },
   {
-   "n": 69,
+   "n": 73,
    "hora": "22:59",
    "cat": "Grand Prix (campaña)",
    "metal": "GP",
@@ -492,7 +520,7 @@
    "cmp": "Safety Ads"
   },
   {
-   "n": 70,
+   "n": 74,
    "hora": "23:02",
    "cat": "Grand Prix (campaña)",
    "metal": "GP",
@@ -502,60 +530,32 @@
    "cmp": "Say Our Name"
   },
   {
-   "n": 71,
+   "n": 75,
    "hora": "23:04",
    "especial": "Excelencia · Productora del Año",
    "title": "Fabryca",
    "autor": ""
   },
   {
-   "n": 72,
+   "n": 76,
    "hora": "23:05",
    "especial": "Excelencia · Anunciante del Año",
    "title": "Suzuki",
    "autor": ""
   },
   {
-   "n": 73,
+   "n": 77,
    "hora": "23:05",
    "especial": "Excelencia · Agencia Independiente del Año",
    "title": "BBA",
    "autor": ""
   },
   {
-   "n": 74,
+   "n": 78,
    "hora": "23:07",
    "especial": "Excelencia · Agencia del Año",
    "title": "Paradais TBWA",
    "autor": ""
-  },
-  {
-   "n": 75,
-   "hora": "23:59",
-   "cat": "Radio & Audio",
-   "metal": "B",
-   "sl": 11
-  },
-  {
-   "n": 76,
-   "hora": "23:59",
-   "cat": "Experiencia de Marca & Activación",
-   "metal": "P",
-   "sl": 20
-  },
-  {
-   "n": 77,
-   "hora": "23:59",
-   "cat": "Deportes",
-   "metal": "B",
-   "sl": 39
-  },
-  {
-   "n": 78,
-   "hora": "23:59",
-   "cat": "Deportes",
-   "metal": "P",
-   "sl": 42
   }
  ],
  "actualizado": "23:35",
